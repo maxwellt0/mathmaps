@@ -29,7 +29,6 @@ public class App {
 //        user.setPassword("qwerty25");
 //        user.setName("Vasya Korabel");
 //
-//        Note note = new Note();
 //        note.setNoteId(1);
 //        note.setName("Teorema 1");
 //        note.setText("asdasd asdasd asdasd asdasdasd asdasd asdasdasd asdasdasd asdasdasd asdasdasdasd asdasd");
@@ -37,16 +36,21 @@ public class App {
 ////        note.setUsers(Arrays.asList(user));
 ////        session.save(note);
 ////
-//        Note note2 = new Note();
-//        Note note3 = new Note();
-////
-//        note2.setNoteId(15);
-//        note2.setName("Teorema 15");
-//        note2.setText("asdas15");
-//
-//        note3.setNoteId(16);
-//        note3.setName("Teorema 16");
-//        note3.setText("asdas16");
+        int id3 = 37;
+        int id2 = id3 + 1;
+        int id1 = id3 + 2;
+
+        Note note2 = new Note();
+        Note note3 = new Note();
+
+        note2.setNoteId(id2);
+        note2.setName("Teorema "+id2);
+        note2.setText("asdas" +id2);
+
+        note3.setNoteId(id3);
+        note3.setName("Teorema "+id3);
+        note3.setText("Doved "+ id3);
+
 ////        note2.setUsers(Arrays.asList(user));
 ////        session.save(note2);
 //        List<Note> notes = new ArrayList<Note>();
@@ -55,22 +59,27 @@ public class App {
 //
 //        user.setNotes(notes);
 //        session.save(user);
-//        Note note = new Note();
-//        note.setNoteId(17);
-//        note.setName("Teorema17");
-//        note.setText("asdasd17");
-//        note.setRank(10);
-//
-//        List<Note> notes = new ArrayList<Note>();
-//        notes.add(note2);
-//        List<Note> notes2 = new ArrayList<Note>();
-//        notes2.add(note3);
-//        note.setAsFactIn(notes2);
-//        note.setUses(notes);
-//        session.save(note);
 
-        List<Note> notes = session.createQuery("FROM Note").list();
-        for (Note n : notes){
+        Note note = new Note();
+
+        note.setNoteId(id1);
+        note.setName("Teorema " + id1);
+        note.setText("Doved " + id1);
+        note.setRank(10);
+
+        List<Note> notesF = new ArrayList<Note>();
+        notesF.add(note2);
+//        notesF.add(note3);
+
+        List<Note> notesU = new ArrayList<Note>();
+        notesU.add(note3);
+
+        note.setAsFactIn(notesF);
+        note.setUses(notesU);
+        session.save(note);
+
+        List<Note> notesSel = session.createQuery("FROM Note").list();
+        for (Note n : notesSel){
             System.out.println(n);
         }
 

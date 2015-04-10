@@ -28,6 +28,18 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `mathmaps`.`note`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mathmaps`.`note` (
+  `note_id` INT UNSIGNED NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `text` VARCHAR(10000) NOT NULL,
+  `rank` INT UNSIGNED NULL,
+  PRIMARY KEY (`note_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `mathmaps`.`link`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mathmaps`.`link` (
@@ -38,25 +50,6 @@ CREATE TABLE IF NOT EXISTS `mathmaps`.`link` (
   CONSTRAINT `FK_LINK_NOTE`
     FOREIGN KEY (`note_id`)
     REFERENCES `mathmaps`.`note` (`note_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mathmaps`.`note`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mathmaps`.`note` (
-  `note_id` INT UNSIGNED NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `text` VARCHAR(10000) NOT NULL,
-  `rank` INT UNSIGNED NULL,
-  `link_id` INT UNSIGNED NULL,
-  PRIMARY KEY (`note_id`),
-  INDEX `FK_NOTE_LINK_idx` (`link_id` ASC),
-  CONSTRAINT `FK_NOTE_LINK`
-    FOREIGN KEY (`link_id`)
-    REFERENCES `mathmaps`.`link` (`link_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
