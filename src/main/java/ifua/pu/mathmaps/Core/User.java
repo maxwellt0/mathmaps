@@ -1,17 +1,48 @@
-package ifua.pu.mathmaps.Core;
+package ifua.pu.mathmaps.core;
 
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * Created by Maxwellt on 10.04.2015.
  */
-public class User {
+@Entity
+@Table(name = "USER", catalog = "mathmaps", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "LOGIN"),
+        @UniqueConstraint(columnNames = "EMAIL") })
+public class User implements java.io.Serializable {
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "USER_ID", unique = true, nullable = false)
     private int userId;
+
+    @Column(name = "LOGIN", unique = true, nullable = false, length = 12)
     private String login;
+
+    @Column(name = "EMAIL", unique = true, nullable = false, length = 20)
     private String email;
+
+    @Column(name = "PASSWORD", nullable = false, length = 16)
     private String password;
+
+    @Column(name = "NAME", nullable = false, length = 35)
     private String name;
-    private List<Note> notes;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userId")
+    private List<Note> notes = new ArrayList<Note>();
+
+    public User() {
+    }
+
+    public User(int userId, String login, String email, String password, String name) {
+        this.userId = userId;
+        this.login = login;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+    }
 
     public int getUserId() {
         return userId;
@@ -53,11 +84,4 @@ public class User {
         this.name = name;
     }
 
-    public List<Note> getNotes() {
-        return notes;
-    }
-
-    public void setNotes(List<Note> notes) {
-        this.notes = notes;
-    }
 }
