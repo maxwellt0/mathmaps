@@ -1,29 +1,30 @@
 package ifua.pu.mathmaps.core;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Maxwellt on 10.04.2015.
  */
 @Entity
-@Table(name = "NOTE")
+@Table(name = "NOTE", catalog = "mathmaps")
 public class Note implements java.io.Serializable {
     @Id
     @Column(name = "NOTE_ID", unique = true, nullable = false, precision = 5, scale = 0)
     private int noteId;
+
     @Column(name = "NAME", nullable = false, length = 45)
     private String name;
+
     @Column(name = "TEXT", nullable = false, length = 10000)
     private String text;
+
     @Column(name = "RANK", nullable = true)
     private int rank;
-    @Column(name = "LINK_ID", nullable = true)
-    private int linkId;
-    @Column(name = "USER_ID", nullable = true)
-    private int userId;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "notes")
+    private List<User> users = new ArrayList<User>();
 
     public Note() {
     }
@@ -32,21 +33,12 @@ public class Note implements java.io.Serializable {
         return name;
     }
 
-    public Note(int noteId, String name, String text, int rank, int linkId, int userId) {
+    public Note(int noteId, String name, String text, int rank, List<User> users) {
         this.noteId = noteId;
         this.name = name;
         this.text = text;
         this.rank = rank;
-        this.linkId = linkId;
-        this.userId = userId;
-    }
-
-    public Note(String name, String text, int rank, int linkId, int userId) {
-        this.name = name;
-        this.text = text;
-        this.rank = rank;
-        this.linkId = linkId;
-        this.userId = userId;
+        this.users = users;
     }
 
     public void setName(String name) {
@@ -77,19 +69,13 @@ public class Note implements java.io.Serializable {
         this.rank = rank;
     }
 
-    public int getLinkId() {
-        return linkId;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setLinkId(int linkId) {
-        this.linkId = linkId;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
-    public int getUserId() {
-        return userId;
-    }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 }

@@ -30,18 +30,22 @@ public class User implements java.io.Serializable {
     @Column(name = "NAME", nullable = false, length = 35)
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userId")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_note", catalog = "mathmaps", joinColumns = {
+            @JoinColumn(name = "USER_ID", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "NOTE_ID",
+                    nullable = false, updatable = false) })
     private List<Note> notes = new ArrayList<Note>();
 
     public User() {
     }
 
-    public User(int userId, String login, String email, String password, String name) {
-        this.userId = userId;
+    public User(String login, String email, String password, String name, List<Note> notes) {
         this.login = login;
         this.email = email;
         this.password = password;
         this.name = name;
+        this.notes = notes;
     }
 
     public int getUserId() {
@@ -82,6 +86,14 @@ public class User implements java.io.Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Note> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
     }
 
 }
