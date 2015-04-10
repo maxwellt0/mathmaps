@@ -31,7 +31,14 @@ public class Note implements java.io.Serializable {
             @JoinColumn(name = "NOTE_ID", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "LINK_ID",
                     nullable = false, updatable = false) })
-    private List<Note> usedIn = new ArrayList<Note>();
+    private List<Note> asFactIn = new ArrayList<Note>();
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "link", catalog = "mathmaps", joinColumns = {
+            @JoinColumn(name = "LINK_ID", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "NOTE_ID",
+                    nullable = false, updatable = false) })
+    private List<Note> uses = new ArrayList<Note>();
 
     public Note() {
     }
@@ -84,11 +91,31 @@ public class Note implements java.io.Serializable {
         this.users = users;
     }
 
-    public List<Note> getUsedIn() {
-        return usedIn;
+    public List<Note> getAsFactIn() {
+        return asFactIn;
     }
 
-    public void setUsedIn(List<Note> usedIn) {
-        this.usedIn = usedIn;
+    public void setAsFactIn(List<Note> asFactIn) {
+        this.asFactIn = asFactIn;
+    }
+
+    public List<Note> getUses() {
+        return uses;
+    }
+
+    public void setUses(List<Note> uses) {
+        this.uses = uses;
+    }
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "noteId=" + noteId +
+                ", name='" + name + '\'' +
+                ", text='" + text + '\'' +
+                ", rank=" + rank +
+                ", asFactIn=" + asFactIn.size() +
+                ", uses=" + uses.size() +
+                '}';
     }
 }

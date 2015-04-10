@@ -96,4 +96,15 @@ public class User implements java.io.Serializable {
         this.notes = notes;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", login='" + login + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", notes=" + notes.size() +
+                '}';
+    }
 }
