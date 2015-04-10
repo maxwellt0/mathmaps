@@ -26,6 +26,13 @@ public class Note implements java.io.Serializable {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "notes")
     private List<User> users = new ArrayList<User>();
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "link", catalog = "mathmaps", joinColumns = {
+            @JoinColumn(name = "NOTE_ID", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "LINK_ID",
+                    nullable = false, updatable = false) })
+    private List<Note> usedIn = new ArrayList<Note>();
+
     public Note() {
     }
 
@@ -77,5 +84,11 @@ public class Note implements java.io.Serializable {
         this.users = users;
     }
 
+    public List<Note> getUsedIn() {
+        return usedIn;
+    }
 
+    public void setUsedIn(List<Note> usedIn) {
+        this.usedIn = usedIn;
+    }
 }
