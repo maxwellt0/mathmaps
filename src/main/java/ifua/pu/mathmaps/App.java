@@ -1,7 +1,7 @@
 package ifua.pu.mathmaps;
 
-import ifua.core.Note;
-import ifua.core.User;
+import ifua.pu.mathmaps.core.Note;
+import ifua.pu.mathmaps.core.User;
 import ifua.pu.mathmaps.util.HibernateUtil;
 import org.hibernate.Session;
 

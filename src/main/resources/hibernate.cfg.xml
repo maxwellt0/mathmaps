@@ -15,8 +15,8 @@
         <property name="show_sql">true</property>
 
         <!-- List of XML mapping files -->
-        <mapping class="ifua.core.User"></mapping>
-        <mapping class="ifua.core.Note"></mapping>
+        <mapping class="ifua.pu.mathmaps.core.User"></mapping>
+        <mapping class="ifua.pu.mathmaps.core.Note"></mapping>
         <!--<mapping class="ifua.pu.mathmaps.core.Link"></mapping>-->
     </session-factory>
 </hibernate-configuration>
