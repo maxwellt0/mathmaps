@@ -41,7 +41,7 @@ public class NoteDaoImpl implements NoteDao {
     }
 
     private Session getSession() {
-        Session sess = getSessionFactory().openSession();
+        Session sess = getSessionFactory().getCurrentSession();
         if (sess == null) {
             sess = getSessionFactory().openSession();
         }
