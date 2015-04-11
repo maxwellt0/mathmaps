@@ -1,13 +1,10 @@
 package ifua.pu.mathmaps;
 
-import ifua.pu.mathmaps.core.Note;
-import ifua.pu.mathmaps.core.User;
+import ifua.pu.mathmaps.Core.Note;
 import ifua.pu.mathmaps.util.HibernateUtil;
 import org.hibernate.Session;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /**

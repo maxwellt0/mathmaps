@@ -1,4 +1,4 @@
-package ifua.pu.mathmaps.core;
+package ifua.pu.mathmaps.Core;
 
 import javax.persistence.*;
 import java.util.ArrayList;
