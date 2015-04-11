@@ -1,6 +1,6 @@
 package ifua.pu.mathmaps;
 
-import ifua.pu.mathmaps.Core.Note;
+import ifua.pu.mathmaps.pojo.Note;
 import ifua.pu.mathmaps.util.HibernateUtil;
 import org.hibernate.Session;
 
