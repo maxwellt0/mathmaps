@@ -69,18 +69,26 @@ public class App {
 
         List<Note> notesF = new ArrayList<Note>();
         notesF.add(note2);
-//        notesF.add(note3);
+
 
         List<Note> notesU = new ArrayList<Note>();
         notesU.add(note3);
 
         note.setAsFactIn(notesF);
         note.setUses(notesU);
-        session.save(note);
+//        session.save(note);
 
         List<Note> notesSel = session.createQuery("FROM Note").list();
         for (Note n : notesSel){
             System.out.println(n);
+            for (Note n1: n.getAsFactIn()){
+                System.out.print("--> ");
+                System.out.println(n1);
+            }
+            for (Note n2: n.getUses()){
+                System.out.print("--< ");
+                System.out.println(n2);
+            }
         }
 
         session.getTransaction().commit();
