@@ -1,6 +1,7 @@
 package ifua.pu.mathmaps.controller;
 
 import ifua.pu.mathmaps.model.User;
+import ifua.pu.mathmaps.service.NoteService;
 import ifua.pu.mathmaps.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private NoteService noteService;
 
     @RequestMapping(value = { "/", "/listUsers" })
     public String listUsers(Map<String, Object> map) {
@@ -46,6 +50,7 @@ public class UserController {
     public String saveUser(@ModelAttribute("user") User user,
                            BindingResult result) {
 
+        user.setNotes(noteService.listNotes());
         userService.saveUser(user);
 
               /*

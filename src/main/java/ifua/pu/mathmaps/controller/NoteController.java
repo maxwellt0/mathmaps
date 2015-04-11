@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,8 +29,17 @@ public class NoteController {
 
         map.put("note", new Note());
 
-        map.put("noteList", noteService.listNotes());
+        List<Note> list = noteService.listNotes();
 
+        map.put("noteList", list);
+
+        for (Note n : list){
+            System.out.println(n);
+            for (Note lower : n.getLowerNotes()){
+                System.out.print("--<");
+                System.out.println(lower);
+            }
+        }
         return "/note/listNotes";
     }
 
@@ -47,6 +57,9 @@ public class NoteController {
     public String saveNote(@ModelAttribute("note") Note note,
                            BindingResult result) {
 
+        List<Note> list = noteService.listNotes();
+        note.setHigherNotes(list);
+        note.setLowerNotes(list);
         noteService.saveNote(note);
 
               /*

@@ -11,6 +11,8 @@
     <title>Index Page</title>
 </head>
 <body>
-
+    <H1><a href="http://localhost:8080/note/listNotes">List Of Notes</a></H1>
+<br>
+    <H1><a href="http://localhost:8080/user/listUsers">List Of Users</a></H1>
 </body>
 </html>

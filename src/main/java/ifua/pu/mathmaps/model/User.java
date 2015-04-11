@@ -15,7 +15,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class User implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "USER_ID", unique = true, nullable = false)
+    @Column(name = "USER_ID", nullable = false)
     private int userId;
 
     @Column(name = "LOGIN", unique = true, nullable = false, length = 12)
@@ -31,7 +31,7 @@ public class User implements java.io.Serializable {
     private String name;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_note", catalog = "mathmaps", joinColumns = {
+    @JoinTable(name = "USER_NOTE", catalog = "mathmaps", joinColumns = {
             @JoinColumn(name = "USER_ID", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "NOTE_ID",
                     nullable = false, updatable = false) })

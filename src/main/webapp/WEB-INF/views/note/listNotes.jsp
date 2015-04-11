@@ -42,24 +42,33 @@
   <table class="pure-table pure-table-bordered pure-table-striped">
     <thead>
     <tr>
-      <th width="4%">S.N</th>
+      <th width="4%">ID</th>
       <th width="12%">Name</th>
-      <th width="12%">Login</th>
-      <th width="12%">Email</th>
-      <th width="12%">Password</th>
-      <th width="12%">ID</th>
+      <th width="12%">Text</th>
+      <th width="12%">Rank</th>
+      <%--<th width="12%">Higher Note</th>--%>
+      <%--<th width="12%">Lower Note</th>--%>
       <th width="12%"></th>
     </tr>
     </thead>
     <tbody>
     <c:forEach items="${noteList}" var="note" varStatus="loopCounter">
       <tr>
-        <td><c:out value="${loopCounter.count}" /></td>
+        <td><c:out value="${note.noteId}" /></td>
         <td><c:out value="${note.name}" /></td>
         <td><c:out value="${note.text}" /></td>
         <td><c:out value="${note.rank}" /></td>
-        <td><c:out value="${note.noteId}" /></td>
-
+        <%--<td>--%>
+      <%--<c:forEach items="${noteList}" var="higher_note">--%>
+        <%--&lt;%&ndash;<c:out value="${higher_note.name}" />&ndash;%&gt;--%>
+        <%--,--%>
+      <%--</c:forEach>--%>
+        <%--</td>--%>
+        <%--<td>--%>
+          <%--<c:forEach items="${note.uses}" var="lower_note">--%>
+            <%--<c:out value="${lower_note.name}" /> ,--%>
+          <%--</c:forEach>--%>
+        <%--</td>--%>
         <td>
           <nobr>
             <button onclick="editNote(${note.noteId});"

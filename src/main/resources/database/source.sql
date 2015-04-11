@@ -40,22 +40,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mathmaps`.`link`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mathmaps`.`link` (
-  `link_id` INT UNSIGNED NOT NULL,
-  `note_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`link_id`, `note_id`),
-  INDEX `FK_LINK_NOTE_idx` (`note_id` ASC),
-  CONSTRAINT `FK_LINK_NOTE`
-    FOREIGN KEY (`note_id`)
-    REFERENCES `mathmaps`.`note` (`note_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `mathmaps`.`user_note`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mathmaps`.`user_note` (
@@ -70,6 +54,22 @@ CREATE TABLE IF NOT EXISTS `mathmaps`.`user_note` (
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_NOTE_ID`
     FOREIGN KEY (`note_id`)
+    REFERENCES `mathmaps`.`note` (`note_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mathmaps`.`link`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mathmaps`.`link` (
+  `higher_note_id` INT UNSIGNED NOT NULL,
+  `lower_note_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`higher_note_id`, `lower_note_id`),
+  INDEX `fk_link_note_idx` (`higher_note_id` ASC),
+  CONSTRAINT `fk_link_higher_note`
+    FOREIGN KEY (`higher_note_id`)
     REFERENCES `mathmaps`.`note` (`note_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)

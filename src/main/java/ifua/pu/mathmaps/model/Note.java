@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 /**
  * Created by Maxwellt on 10.04.2015.
  */
@@ -11,7 +13,8 @@ import java.util.List;
 @Table(name = "NOTE", catalog = "mathmaps")
 public class Note implements java.io.Serializable {
     @Id
-    @Column(name = "NOTE_ID", unique = true, nullable = false, precision = 5, scale = 0)
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "NOTE_ID", nullable = false)
     private int noteId;
 
     @Column(name = "NAME", nullable = false, length = 45)
@@ -27,18 +30,18 @@ public class Note implements java.io.Serializable {
     private List<User> users = new ArrayList<User>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "link", catalog = "mathmaps", joinColumns = {
+    @JoinTable(name = "LINK", catalog = "mathmaps", joinColumns = {
             @JoinColumn(name = "NOTE_ID", nullable = false, updatable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "LINK_ID",
+            inverseJoinColumns = { @JoinColumn(name = "USED_NOTE_ID",
                     nullable = false, updatable = false) })
-    private List<Note> asFactIn = new ArrayList<Note>();
+    private List<Note> higherNotes = new ArrayList<Note>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "link", catalog = "mathmaps", joinColumns = {
-            @JoinColumn(name = "LINK_ID", nullable = false, updatable = false) },
+    @JoinTable(name = "LINK", catalog = "mathmaps", joinColumns = {
+            @JoinColumn(name = "USED_NOTE_ID", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "NOTE_ID",
                     nullable = false, updatable = false) })
-    private List<Note> uses = new ArrayList<Note>();
+    private List<Note> lowerNotes = new ArrayList<Note>();
 
     public Note() {
     }
@@ -47,12 +50,14 @@ public class Note implements java.io.Serializable {
         return name;
     }
 
-    public Note(int noteId, String name, String text, int rank, List<User> users) {
+    public Note(int noteId, String name, String text, int rank, List<User> users, List<Note> higherNotes, List<Note> lowerNotes) {
         this.noteId = noteId;
         this.name = name;
         this.text = text;
         this.rank = rank;
         this.users = users;
+        this.higherNotes = higherNotes;
+        this.lowerNotes = lowerNotes;
     }
 
     public void setName(String name) {
@@ -91,20 +96,20 @@ public class Note implements java.io.Serializable {
         this.users = users;
     }
 
-    public List<Note> getAsFactIn() {
-        return asFactIn;
+    public List<Note> getHigherNotes() {
+        return higherNotes;
     }
 
-    public void setAsFactIn(List<Note> asFactIn) {
-        this.asFactIn = asFactIn;
+    public void setHigherNotes(List<Note> higherNotes) {
+        this.higherNotes = higherNotes;
     }
 
-    public List<Note> getUses() {
-        return uses;
+    public List<Note> getLowerNotes() {
+        return lowerNotes;
     }
 
-    public void setUses(List<Note> uses) {
-        this.uses = uses;
+    public void setLowerNotes(List<Note> lowerNotes) {
+        this.lowerNotes = lowerNotes;
     }
 
     @Override
@@ -114,8 +119,8 @@ public class Note implements java.io.Serializable {
                 ", name='" + name + '\'' +
                 ", text='" + text + '\'' +
                 ", rank=" + rank +
-                ", asFactIn=" + asFactIn.size() +
-                ", uses=" + uses.size() +
+                ", higherNotes=" + higherNotes.size() +
+                ", lowerNotes=" + lowerNotes.size() +
                 '}';
     }
 }
