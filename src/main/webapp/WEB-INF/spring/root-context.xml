@@ -36,7 +36,7 @@
 
         <property name="packagesToScan">
             <list>
-                <value>ifua.pu.mathmaps.pojo</value>
+                <value>ifua.pu.mathmaps.model</value>
             </list>
         </property>
         <property name="hibernateProperties">

@@ -1,7 +1,7 @@
 package ifua.pu.mathmaps.service.impl;
 
 import ifua.pu.mathmaps.dao.UserDao;
-import ifua.pu.mathmaps.pojo.User;
+import ifua.pu.mathmaps.model.User;
 import ifua.pu.mathmaps.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package ifua.pu.mathmaps.dao.impl;
 
-import ifua.pu.mathmaps.dao.UserDao;
-import ifua.pu.mathmaps.model.User;
+import ifua.pu.mathmaps.dao.NoteDao;
+import ifua.pu.mathmaps.model.Note;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,31 +13,30 @@ import java.util.List;
  * Created by Maxwellt on 11.04.2015.
  */
 @Repository
-public class UserDaoImpl implements UserDao {
-
+public class NoteDaoImpl implements NoteDao {
     @Autowired
     SessionFactory sessionFactory;
 
-    public void saveUser(User user) {
+    public void saveNote(Note note) {
 
-        getSession().merge(user);
+        getSession().merge(note);
     }
 
-    public List<User> listUsers() {
+    public List<Note> listNotes() {
 
-        return getSession().createCriteria(User.class).list();
+        return getSession().createCriteria(Note.class).list();
     }
 
-    public User getUser(int userId) {
-        return (User) getSession().get(User.class, userId);
+    public Note getNote(int noteId) {
+        return (Note) getSession().get(Note.class, noteId);
     }
 
-    public void deleteUser(int userId) {
+    public void deleteNote(int noteId) {
 
-        User User = getUser(userId);
+        Note Note = getNote(noteId);
 
-        if (null != User) {
-            getSession().delete(User);
+        if (null != Note) {
+            getSession().delete(Note);
         }
     }
 

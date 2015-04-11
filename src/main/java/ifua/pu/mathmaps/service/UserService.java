@@ -1,6 +1,6 @@
 package ifua.pu.mathmaps.service;
 
-import ifua.pu.mathmaps.pojo.User;
+import ifua.pu.mathmaps.model.User;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ifua.pu.mathmaps.pojo;
+package ifua.pu.mathmaps.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;

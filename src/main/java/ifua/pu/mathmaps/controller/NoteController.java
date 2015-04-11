@@ -1,8 +1,9 @@
 package ifua.pu.mathmaps.controller;
 
-import ifua.pu.mathmaps.model.User;
-import ifua.pu.mathmaps.service.UserService;
+import ifua.pu.mathmaps.model.Note;
+import ifua.pu.mathmaps.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,59 +17,59 @@ import java.util.Map;
  * Created by Maxwellt on 11.04.2015.
  */
 @Controller
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/note")
+public class NoteController {
 
     @Autowired
-    private UserService userService;
+    private NoteService noteService;
 
-    @RequestMapping(value = { "/", "/listUsers" })
-    public String listUsers(Map<String, Object> map) {
+    @RequestMapping(value = { "/", "/listNotes" })
+    public String listNotes(Map<String, Object> map) {
 
-        map.put("user", new User());
+        map.put("note", new Note());
 
-        map.put("userList", userService.listUsers());
+        map.put("noteList", noteService.listNotes());
 
-        return "/user/listUsers";
+        return "/note/listNotes";
     }
 
-    @RequestMapping("/get/{userId}")
-    public String getUser(@PathVariable int userId, Map<String, Object> map) {
+    @RequestMapping("/get/{noteId}")
+    public String getNote(@PathVariable int noteId, Map<String, Object> map) {
 
-        User user = userService.getUser(userId);
+        Note note = noteService.getNote(noteId);
 
-        map.put("user", user);
+        map.put("note", note);
 
-        return "/user/userForm";
+        return "/note/noteForm";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveUser(@ModelAttribute("user") User user,
+    public String saveNote(@ModelAttribute("note") Note note,
                            BindingResult result) {
 
-        userService.saveUser(user);
+        noteService.saveNote(note);
 
               /*
                * Note that there is no slash "/" right after "redirect:"
                * So, it redirects to the path relative to the current path
                */
-        return "redirect:listUsers";
+        return "redirect:listNotes";
     }
 
-    @RequestMapping("/delete/{userId}")
-    public String deleteUser(@PathVariable("userId") int id) {
+    @RequestMapping("/delete/{noteId}")
+    public String deleteNote(@PathVariable("noteId") int id) {
 
-        userService.deleteUser(id);
+        noteService.deleteNote(id);
 
               /*
                * redirects to the path relative to the current path
                */
-        // return "redirect:../listUsers";
+        // return "redirect:../listNotes";
 
               /*
                * Note that there is the slash "/" right after "redirect:"
                * So, it redirects to the path relative to the project root path
                */
-        return "redirect:/user/listUsers";
+        return "redirect:/note/listNotes";
     }
 }
