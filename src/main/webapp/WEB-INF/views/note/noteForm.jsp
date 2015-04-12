@@ -16,7 +16,7 @@
         </div>
         <div class="pure-control-group">
             <label for="text">Text</label>
-            <form:input path="text" placeholder="Text" maxlength="15" />
+            <form:input path="text" placeholder="Text" />
         </div>
         <div class="pure-control-group">
             <label for="rank">Rank</label>

@@ -2,15 +2,17 @@ package ifua.pu.mathmaps.controller;
 
 import ifua.pu.mathmaps.model.Note;
 import ifua.pu.mathmaps.service.NoteService;
+import ifua.pu.mathmaps.util.LatexRender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +28,6 @@ public class NoteController {
 
     @RequestMapping(value = { "/", "/listNotes" })
     public String listNotes(Map<String, Object> map) {
-
         map.put("note", new Note());
 
         List<Note> list = noteService.listNotes();
@@ -59,7 +60,7 @@ public class NoteController {
 
         List<Note> list = noteService.listNotes();
         note.setHigherNotes(list);
-        note.setLowerNotes(list);
+//        note.setLowerNotes(list);
         noteService.saveNote(note);
 
               /*
@@ -70,9 +71,9 @@ public class NoteController {
     }
 
     @RequestMapping("/delete/{noteId}")
-    public String deleteNote(@PathVariable("noteId") int id) {
+    public String deleteNote(@PathVariable("noteId") int noteId) {
 
-        noteService.deleteNote(id);
+        noteService.deleteNote(noteId);
 
               /*
                * redirects to the path relative to the current path
@@ -84,5 +85,25 @@ public class NoteController {
                * So, it redirects to the path relative to the project root path
                */
         return "redirect:/note/listNotes";
+    }
+
+    @RequestMapping(method=RequestMethod.GET, value="/image/{noteId}.png")
+    @ResponseBody
+    public byte[] getImage(@PathVariable("noteId") int noteId) {
+        Note note = noteService.getNote(noteId);
+        String text = note.getText();
+        LatexRender latexRender = new LatexRender();
+        BufferedImage image = latexRender.render(note.getText());
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(image, "png", baos);
+            baos.flush();
+            byte[] imageInByte = baos.toByteArray();
+            baos.close();
+            return imageInByte;
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return new byte[1];
+        }
     }
 }

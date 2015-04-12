@@ -22,12 +22,12 @@ public class NoteServiceImpl implements NoteService{
         noteDao.saveNote(note);
     }
 
-    @Transactional( readOnly = true)
+    @Transactional(readOnly = true)
     public List<Note> listNotes() {
         return noteDao.listNotes();
     }
 
-    @Transactional( readOnly = true)
+    @Transactional(readOnly = true)
     public Note getNote(int noteId) {
         return noteDao.getNote(noteId);
     }
@@ -35,6 +35,5 @@ public class NoteServiceImpl implements NoteService{
     @Transactional
     public void deleteNote(int noteId) {
         noteDao.deleteNote(noteId);
-
     }
 }

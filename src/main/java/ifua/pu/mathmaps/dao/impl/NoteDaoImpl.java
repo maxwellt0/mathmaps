@@ -20,6 +20,7 @@ public class NoteDaoImpl implements NoteDao {
     public void saveNote(Note note) {
 
         getSession().merge(note);
+        System.out.println(note.getName());
     }
 
     public List<Note> listNotes() {

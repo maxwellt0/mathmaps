@@ -56,7 +56,8 @@
       <tr>
         <td><c:out value="${note.noteId}" /></td>
         <td><c:out value="${note.name}" /></td>
-        <td><c:out value="${note.text}" /></td>
+        <%--<td><c:out value="${note.text}" /></td>--%>
+        <td><img src="/note/image/${note.noteId}.png"></td>
         <td><c:out value="${note.rank}" /></td>
         <%--<td>--%>
       <%--<c:forEach items="${noteList}" var="higher_note">--%>

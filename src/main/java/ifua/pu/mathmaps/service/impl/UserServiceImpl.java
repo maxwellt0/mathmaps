@@ -23,12 +23,12 @@ public class UserServiceImpl implements UserService{
         userDao.saveUser(user);
     }
 
-    @Transactional( readOnly = true)
+    @Transactional(readOnly = true)
     public List<User> listUsers() {
         return userDao.listUsers();
     }
 
-    @Transactional( readOnly = true)
+    @Transactional(readOnly = true)
     public User getUser(int userId) {
         return userDao.getUser(userId);
     }

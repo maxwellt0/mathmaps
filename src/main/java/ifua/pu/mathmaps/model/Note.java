@@ -31,15 +31,15 @@ public class Note implements java.io.Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "LINK", catalog = "mathmaps", joinColumns = {
-            @JoinColumn(name = "NOTE_ID", nullable = false, updatable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "USED_NOTE_ID",
+            @JoinColumn(name = "HIGHER_NOTE_ID", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "LOWER_NOTE_ID",
                     nullable = false, updatable = false) })
     private List<Note> higherNotes = new ArrayList<Note>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "LINK", catalog = "mathmaps", joinColumns = {
-            @JoinColumn(name = "USED_NOTE_ID", nullable = false, updatable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "NOTE_ID",
+            @JoinColumn(name = "LOWER_NOTE_ID", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "HIGHER_NOTE_ID",
                     nullable = false, updatable = false) })
     private List<Note> lowerNotes = new ArrayList<Note>();
 
