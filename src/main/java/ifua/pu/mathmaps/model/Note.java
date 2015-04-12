@@ -1,8 +1,12 @@
 package ifua.pu.mathmaps.model;
 
+import org.hibernate.annotations.ForeignKey;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -27,21 +31,24 @@ public class Note implements java.io.Serializable {
     private int rank;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "notes")
-    private List<User> users = new ArrayList<User>();
+    private Set<User> users = new HashSet<User>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "LINK", catalog = "mathmaps", joinColumns = {
-            @JoinColumn(name = "HIGHER_NOTE_ID", nullable = false, updatable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "LOWER_NOTE_ID",
-                    nullable = false, updatable = false) })
-    private List<Note> higherNotes = new ArrayList<Note>();
+    @ManyToMany(targetEntity=Note.class)
+    @ForeignKey(name="FK_H_NOTE_TO_L_NOTE", inverseName = "FK_L_NOTE_TO_H_NOTE")
+    @JoinTable(
+            name = "LINK",
+            joinColumns = @JoinColumn(name = "HIGHER_NOTE_ID"),
+            inverseJoinColumns = @JoinColumn(name = "LOWER_NOTE_ID")
+    )
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Note> higherNotes = new HashSet<Note>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "LINK", catalog = "mathmaps", joinColumns = {
-            @JoinColumn(name = "LOWER_NOTE_ID", nullable = false, updatable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "HIGHER_NOTE_ID",
-                    nullable = false, updatable = false) })
-    private List<Note> lowerNotes = new ArrayList<Note>();
+    @ManyToMany(
+            mappedBy = "higherNotes",
+            targetEntity = Note.class
+    )
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Note> lowerNotes = new HashSet<Note>();
 
     public Note() {
     }
@@ -50,7 +57,7 @@ public class Note implements java.io.Serializable {
         return name;
     }
 
-    public Note(int noteId, String name, String text, int rank, List<User> users, List<Note> higherNotes, List<Note> lowerNotes) {
+    public Note(int noteId, String name, String text, int rank, Set<User> users, Set<Note> higherNotes, Set<Note> lowerNotes) {
         this.noteId = noteId;
         this.name = name;
         this.text = text;
@@ -88,27 +95,27 @@ public class Note implements java.io.Serializable {
         this.rank = rank;
     }
 
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 
-    public List<Note> getHigherNotes() {
+    public Set<Note> getHigherNotes() {
         return higherNotes;
     }
 
-    public void setHigherNotes(List<Note> higherNotes) {
+    public void setHigherNotes(Set<Note> higherNotes) {
         this.higherNotes = higherNotes;
     }
 
-    public List<Note> getLowerNotes() {
+    public Set<Note> getLowerNotes() {
         return lowerNotes;
     }
 
-    public void setLowerNotes(List<Note> lowerNotes) {
+    public void setLowerNotes(Set<Note> lowerNotes) {
         this.lowerNotes = lowerNotes;
     }
 

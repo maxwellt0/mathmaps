@@ -21,21 +21,6 @@
     <H1><a href="http://localhost:8080/note/listNotes">List Of Notes</a></H1>
 <br>
     <H1><a href="http://localhost:8080/user/listUsers">List Of Users</a></H1>
-    $$ \Omega = \{(q,\beta h\alpha^{-1}(q))\} \subset \alpha(A) \times \beta(A)$$
-
-    \[ f(n) = \left\{
-    \begin{array}{l l}
-    n/2 & \quad \text{if $n$ is even}\\
-    -(n+1)/2 & \quad \text{if $n$ is odd}
-    \end{array} \right.\]
-
-    <div style="width: 600px;" >
-        \[
-        \begin{multline}
-    x = \\
-        = \Omega - \{(q,\beta h\alpha^{-1}(q))\} \subset \alpha(A) \times \beta(A)
-    \end{multline}
-        \]
     </div>
 </body>
 </html>

@@ -46,8 +46,8 @@
       <th width="12%">Name</th>
       <th width="12%">Text</th>
       <th width="12%">Rank</th>
-      <%--<th width="12%">Higher Note</th>--%>
-      <%--<th width="12%">Lower Note</th>--%>
+      <th width="12%">Higher Notes</th>
+      <th width="12%">Lower Notes</th>
       <th width="12%"></th>
     </tr>
     </thead>
@@ -56,20 +56,18 @@
       <tr>
         <td><c:out value="${note.noteId}" /></td>
         <td><c:out value="${note.name}" /></td>
-        <%--<td><c:out value="${note.text}" /></td>--%>
-        <td><img src="/note/image/${note.noteId}.png"></td>
+        <td><c:out value="${note.text}" /></td>
         <td><c:out value="${note.rank}" /></td>
-        <%--<td>--%>
-      <%--<c:forEach items="${noteList}" var="higher_note">--%>
-        <%--&lt;%&ndash;<c:out value="${higher_note.name}" />&ndash;%&gt;--%>
-        <%--,--%>
-      <%--</c:forEach>--%>
-        <%--</td>--%>
-        <%--<td>--%>
-          <%--<c:forEach items="${note.uses}" var="lower_note">--%>
-            <%--<c:out value="${lower_note.name}" /> ,--%>
-          <%--</c:forEach>--%>
-        <%--</td>--%>
+        <td>
+          <c:forEach items="${note.lowerNotes}" var="lower_note">
+            <c:out value="${lower_note.name}" /> ,
+          </c:forEach>
+        </td>
+        <td>
+          <c:forEach items="${note.higherNotes}" var="higherNote">
+            <c:out value="${higherNote.name}" /> ,
+          </c:forEach>
+        </td>
         <td>
           <nobr>
             <button onclick="editNote(${note.noteId});"

@@ -2,19 +2,15 @@ package ifua.pu.mathmaps.controller;
 
 import ifua.pu.mathmaps.model.Note;
 import ifua.pu.mathmaps.service.NoteService;
-import ifua.pu.mathmaps.util.LatexRender;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Maxwellt on 11.04.2015.
@@ -34,13 +30,13 @@ public class NoteController {
 
         map.put("noteList", list);
 
-        for (Note n : list){
-            System.out.println(n);
-            for (Note lower : n.getLowerNotes()){
-                System.out.print("--<");
-                System.out.println(lower);
-            }
-        }
+//        for (Note n : list){
+//            System.out.println(n);
+//            for (Note lower : n.getLowerNotes()){
+//                System.out.print("--<");
+//                System.out.println(lower);
+//            }
+//        }
         return "/note/listNotes";
     }
 
@@ -59,8 +55,18 @@ public class NoteController {
                            BindingResult result) {
 
         List<Note> list = noteService.listNotes();
-        note.setHigherNotes(list);
-//        note.setLowerNotes(list);
+        Set<Note> set = new HashSet<Note>();
+        for (Note n : list){
+            System.out.println("-----" +n);
+            set.add(n);
+            for (Note lower : n.getLowerNotes()){
+                System.out.print("--<");
+                System.out.println(lower);
+            }
+        }
+
+        note.setHigherNotes(set);
+        note.setLowerNotes(set);
         noteService.saveNote(note);
 
               /*
@@ -85,25 +91,5 @@ public class NoteController {
                * So, it redirects to the path relative to the project root path
                */
         return "redirect:/note/listNotes";
-    }
-
-    @RequestMapping(method=RequestMethod.GET, value="/image/{noteId}.png")
-    @ResponseBody
-    public byte[] getImage(@PathVariable("noteId") int noteId) {
-        Note note = noteService.getNote(noteId);
-        String text = note.getText();
-        LatexRender latexRender = new LatexRender();
-        BufferedImage image = latexRender.render(note.getText());
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try {
-            ImageIO.write(image, "png", baos);
-            baos.flush();
-            byte[] imageInByte = baos.toByteArray();
-            baos.close();
-            return imageInByte;
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            return new byte[1];
-        }
     }
 }

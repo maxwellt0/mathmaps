@@ -1,8 +1,8 @@
 package ifua.pu.mathmaps.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
@@ -35,12 +35,12 @@ public class User implements java.io.Serializable {
             @JoinColumn(name = "USER_ID", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "NOTE_ID",
                     nullable = false, updatable = false) })
-    private List<Note> notes = new ArrayList<Note>();
+    private Set<Note> notes = new HashSet<Note>();
 
     public User() {
     }
 
-    public User(String login, String email, String password, String name, List<Note> notes) {
+    public User(String login, String email, String password, String name, Set<Note> notes) {
         this.login = login;
         this.email = email;
         this.password = password;
@@ -88,11 +88,11 @@ public class User implements java.io.Serializable {
         this.name = name;
     }
 
-    public List<Note> getNotes() {
+    public Set<Note> getNotes() {
         return notes;
     }
 
-    public void setNotes(List<Note> notes) {
+    public void setNotes(Set<Note> notes) {
         this.notes = notes;
     }
 

@@ -1,5 +1,6 @@
 package ifua.pu.mathmaps.controller;
 
+import ifua.pu.mathmaps.model.Note;
 import ifua.pu.mathmaps.model.User;
 import ifua.pu.mathmaps.service.NoteService;
 import ifua.pu.mathmaps.service.UserService;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Maxwellt on 11.04.2015.
@@ -50,7 +51,13 @@ public class UserController {
     public String saveUser(@ModelAttribute("user") User user,
                            BindingResult result) {
 
-        user.setNotes(noteService.listNotes());
+        List<Note> list = noteService.listNotes();
+        Set<Note> set = user.getNotes();
+        for (Note n : list) {
+            set.add(n);
+        }
+        user.setNotes(set);
+
         userService.saveUser(user);
 
               /*
