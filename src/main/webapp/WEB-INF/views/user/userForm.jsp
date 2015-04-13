@@ -20,7 +20,7 @@
         </div>
         <div class="pure-control-group">
             <label for="email">Email</label>
-            <form:input path="email" placeholder="Email" maxlength="10" />
+            <form:input path="email" placeholder="Email" maxlength="30" />
         </div>
         <%--<div class="pure-control-group">--%>
             <%--<label for="authors">Author(s)</label>--%>

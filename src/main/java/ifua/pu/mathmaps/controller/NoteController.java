@@ -25,26 +25,22 @@ public class NoteController {
     @RequestMapping(value = { "/", "/listNotes" })
     public String listNotes(Map<String, Object> map) {
         map.put("note", new Note());
+        map.put("noteList", noteService.listNotes());
 
-        List<Note> list = noteService.listNotes();
-
-        map.put("noteList", list);
-
-//        for (Note n : list){
-//            System.out.println(n);
-//            for (Note lower : n.getLowerNotes()){
-//                System.out.print("--<");
-//                System.out.println(lower);
-//            }
-//        }
         return "note/noteList";
+    }
+
+    @RequestMapping("/page/{noteId}")
+    public String getNotePage(@PathVariable int noteId, Map<String, Object> map) {
+        Note note = noteService.getNote(noteId);
+        map.put("note", note);
+
+        return "note/notePage";
     }
 
     @RequestMapping("/get/{noteId}")
     public String getNote(@PathVariable int noteId, Map<String, Object> map) {
-
         Note note = noteService.getNote(noteId);
-
         map.put("note", note);
 
         return "/note/noteForm";
@@ -53,9 +49,9 @@ public class NoteController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveNote(@ModelAttribute("note") Note note,
                            BindingResult result) {
-
         List<Note> list = noteService.listNotes();
         Set<Note> set = new HashSet<Note>();
+
         for (Note n : list){
             System.out.println("-----" +n);
             set.add(n);
@@ -64,32 +60,17 @@ public class NoteController {
                 System.out.println(lower);
             }
         }
-
         note.setHigherNotes(set);
         note.setLowerNotes(set);
         noteService.saveNote(note);
 
-              /*
-               * Note that there is no slash "/" right after "redirect:"
-               * So, it redirects to the path relative to the current path
-               */
         return "redirect:listNotes";
     }
 
     @RequestMapping("/delete/{noteId}")
     public String deleteNote(@PathVariable("noteId") int noteId) {
-
         noteService.deleteNote(noteId);
 
-              /*
-               * redirects to the path relative to the current path
-               */
-        // return "redirect:../listNotes";
-
-              /*
-               * Note that there is the slash "/" right after "redirect:"
-               * So, it redirects to the path relative to the project root path
-               */
         return "redirect:/note/listNotes";
     }
 }

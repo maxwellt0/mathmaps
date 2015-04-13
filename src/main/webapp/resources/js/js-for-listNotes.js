@@ -40,7 +40,7 @@ $(document).ready(function() {
         position : 'center',
         modal : true,
         resizable : false,
-        width : 440,
+        width : 700,
         buttons : {
             "Save" : function() {
                 $('#noteForm').submit();

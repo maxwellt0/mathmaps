@@ -35,7 +35,6 @@ function resetDialog(form) {
 $(document).ready(function() {
 
     $('#userDialog').dialog({
-
         autoOpen : false,
         position : 'center',
         modal : true,

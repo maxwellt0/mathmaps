@@ -11,16 +11,16 @@
         <legend></legend>
 
         <div class="pure-control-group">
-            <label for="name">Name</label>
-            <form:input path="name" placeholder="Note Name" />
+            <label for="name">Назва</label>
+            <form:input path="name" placeholder="Назва" />
         </div>
         <div class="pure-control-group">
             <label for="text">Text</label>
-            <form:input path="text" placeholder="Text" />
+            <form:textarea path="text" placeholder="Текст" />
         </div>
         <div class="pure-control-group">
-            <label for="rank">Rank</label>
-            <form:input path="rank" placeholder="Rank" maxlength="10" />
+            <label for="rank">Складність</label>
+            <form:input path="rank" placeholder="Складність" maxlength="10" />
         </div>
         <%--<div class="pure-control-group">--%>
             <%--<label for="authors">Author(s)</label>--%>
