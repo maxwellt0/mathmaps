@@ -12,12 +12,8 @@
 <head>
   <title>List Of Notes</title>
 
-  <link rel="stylesheet" href='<c:url value="/web-resources/css/pure-0.4.2.css"/>'>
-
   <link rel="stylesheet"
-        href='<c:url value="/web-resources/css/font-awesome-4.0.3/css/font-awesome.css"/>'>
-  <link rel="stylesheet"
-        href='<c:url value="/web-resources/css/jquery-ui-1.10.4.custom.css"/>'>
+        href='<c:url value="/resources/css/jquery-ui.min.css"/>'>
   <style type="text/css">
     th {
       text-align: left
@@ -90,12 +86,12 @@
 <!--  It is advised to put the <script> tags at the end of the document body so that they don't block rendering of the page -->
 
 <script type="text/javascript"
-        src='<c:url value="/web-resources/js/lib/jquery-1.10.2.js"/>'></script>
+        src='<c:url value="/resources/js/jquery/jquery-1.11.2.min.js"/>'></script>
 <script type="text/javascript"
-        src='<c:url value="/web-resources/js/lib/jquery-ui-1.10.4.custom.js"/>'></script>
+        src='<c:url value="/resources/js/jquery/jquery-ui.min.js"/>'></script>
 <script type="text/javascript"
-        src='<c:url value="/web-resources/js/lib/jquery.ui.datepicker.js"/>'></script>
+        src='<c:url value="/resources/js/jquery/jquery.ui.datepicker.js"/>'></script>
 <script type="text/javascript"
-        src='<c:url value="/web-resources/js/js-for-listNotes.js"/>'></script>
+        src='<c:url value="/resources/js/js-for-listNotes.js"/>'></script>
 </body>
 </html>

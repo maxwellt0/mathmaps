@@ -37,7 +37,7 @@ public class NoteController {
 //                System.out.println(lower);
 //            }
 //        }
-        return "/note/listNotes";
+        return "note/noteList";
     }
 
     @RequestMapping("/get/{noteId}")

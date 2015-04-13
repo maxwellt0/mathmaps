@@ -1,0 +1,17 @@
+body {
+    background: url("../images/custom/dark_embroidery.png");
+}
+.menu {
+    background: white;
+}
+.body {
+    background: white;
+}
+
+.col-md-2, .col-md-10 {
+    padding: 15px;
+}
+
+.header {
+    background: white;
+}
