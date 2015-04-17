@@ -6,13 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-
-<script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
-<script type="text/javascript" src='<c:url value="/resources/js/jquery/jquery-ui.min.js"/>'></script>
-<script type="text/javascript" src='<c:url value="/resources/js/jquery/jquery.ui.datepicker.js"/>'></script>
-
-<footer>
     <div class="page-header"></div>
     <div class="container">
     <div class="row">
@@ -26,6 +19,3 @@
         </div>
     </div>
     </div>
-</footer>
-</body>
-</html>

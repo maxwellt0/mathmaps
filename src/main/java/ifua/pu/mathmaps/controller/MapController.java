@@ -23,7 +23,6 @@ public class MapController {
         return "map/globalMap";
     }
 
-
     @RequestMapping("/{noteId}")
     public String getNoteMap(@PathVariable int noteId, Map<String, Object> map) {
         Note note = noteService.getNote(noteId);

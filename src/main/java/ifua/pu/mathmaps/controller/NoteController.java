@@ -12,9 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Created by Maxwellt on 11.04.2015.
- */
 @Controller
 @RequestMapping("/note")
 public class NoteController {

@@ -33,6 +33,7 @@
         <hibernate.version>4.2.7.Final</hibernate.version>
         <mysql-version>5.1.27</mysql-version>
         <apache-connection-pooling-version>1.4</apache-connection-pooling-version>
+        <tiles.version>3.0.5</tiles.version>
     </properties>
 
     <dependencies>
@@ -130,6 +131,13 @@
             <artifactId>junit</artifactId>
             <version>4.8.2</version>
             <scope>test</scope>
+        </dependency>
+
+        <!--Apache Tiles-->
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-extras</artifactId>
+            <version>${tiles.version}</version>
         </dependency>
 
     </dependencies>
