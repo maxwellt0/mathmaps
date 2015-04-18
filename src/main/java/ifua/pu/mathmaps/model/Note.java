@@ -37,8 +37,8 @@ public class Note implements java.io.Serializable {
     @ForeignKey(name="FK_H_NOTE_TO_L_NOTE", inverseName = "FK_L_NOTE_TO_H_NOTE")
     @JoinTable(
             name = "LINK",
-            joinColumns = @JoinColumn(name = "HIGHER_NOTE_ID"),
-            inverseJoinColumns = @JoinColumn(name = "LOWER_NOTE_ID")
+            joinColumns = @JoinColumn(name = "LOWER_NOTE_ID"),
+            inverseJoinColumns = @JoinColumn(name = "HIGHER_NOTE_ID")
     )
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Note> higherNotes = new HashSet<Note>();

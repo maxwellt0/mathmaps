@@ -12,11 +12,6 @@
     </context-param>
 
     <!-- Creates the Spring Container shared by all Servlets and Filters -->
-    <listener>
-        <listener-class>
-            org.springframework.web.context.ContextLoaderListener
-        </listener-class>
-    </listener>
 
     <!-- Processes application requests -->
     <servlet>
@@ -55,5 +50,11 @@
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
 
 </web-app>
