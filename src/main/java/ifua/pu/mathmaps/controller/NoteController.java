@@ -46,19 +46,19 @@ public class NoteController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveNote(@ModelAttribute("note") Note note,
                            BindingResult result) {
-        List<Note> list = noteService.listNotes();
-        Set<Note> set = new HashSet<Note>();
-
-        for (Note n : list){
-            System.out.println("-----" +n);
-            set.add(n);
-            for (Note lower : n.getLowerNotes()){
-                System.out.print("--<");
-                System.out.println(lower);
-            }
-        }
-        note.setHigherNotes(set);
-        note.setLowerNotes(set);
+//        List<Note> list = noteService.listNotes();
+//        Set<Note> set = new HashSet<Note>();
+//
+//        for (Note n : list){
+//            System.out.println("-----" +n);
+//            set.add(n);
+//            for (Note lower : n.getLowerNotes()){
+//                System.out.print("--<");
+//                System.out.println(lower);
+//            }
+//        }
+//        note.setHigherNotes(set);
+//        note.setLowerNotes(set);
         noteService.saveNote(note);
 
         return "redirect:listNotes";

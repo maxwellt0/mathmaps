@@ -122,6 +122,36 @@ public class Note implements java.io.Serializable {
         this.lowerNotes = lowerNotes;
     }
 
+    public void addHigherNote(Note note) {
+        this.higherNotes.add(note);
+    }
+
+    public void addLowerNote(Note note) {
+        this.lowerNotes.add(note);
+    }
+
+    public void removeHigherNote(Note note) {
+        if (this.higherNotes.contains(note)) {
+            this.higherNotes.remove(note);
+        }
+    }
+
+    public void removeLowerNote(Note note) {
+        if (this.lowerNotes.contains(note)) {
+            this.lowerNotes.remove(note);
+        }
+    }
+
+    public void addUser(User user) {
+        this.users.add(user);
+    }
+
+    public void removeUser(User user) {
+        if (this.users.contains(user)) {
+            this.users.remove(user);
+        }
+    }
+
     @Override
     public String toString() {
         return "Note{" +

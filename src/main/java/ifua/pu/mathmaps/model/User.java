@@ -96,6 +96,16 @@ public class User implements java.io.Serializable {
         this.notes = notes;
     }
 
+    public void addNote(Note note) {
+        this.notes.add(note);
+    }
+
+    public void removeNote(Note note) {
+        if (this.notes.contains(note)) {
+            this.notes.remove(note);
+        }
+    }
+
     @Override
     public String toString() {
         return "User{" +
