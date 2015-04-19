@@ -32,6 +32,11 @@ public class NoteServiceImpl implements NoteService{
         return noteDao.getNote(noteId);
     }
 
+    @Transactional(readOnly = true)
+    public Note getNoteByName(String name) {
+        return noteDao.getNoteByName(name);
+    }
+
     @Transactional
     public void deleteNote(int noteId) {
         noteDao.deleteNote(noteId);

@@ -18,6 +18,7 @@ public interface NoteDao {
      */
     public List<Note> listNotes();
     public Note getNote(int noteId);
+    public Note getNoteByName(String name);
 
     /*
      * DELETE

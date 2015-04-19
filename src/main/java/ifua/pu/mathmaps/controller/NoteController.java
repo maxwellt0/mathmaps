@@ -44,21 +44,32 @@ public class NoteController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveNote(@ModelAttribute("note") Note note,
-                           BindingResult result) {
-//        List<Note> list = noteService.listNotes();
-//        Set<Note> set = new HashSet<Note>();
-//
-//        for (Note n : list){
-//            System.out.println("-----" +n);
-//            set.add(n);
-//            for (Note lower : n.getLowerNotes()){
-//                System.out.print("--<");
-//                System.out.println(lower);
-//            }
-//        }
-//        note.setHigherNotes(set);
-//        note.setLowerNotes(set);
+    public String saveNote(
+            @ModelAttribute("note") Note note,
+            BindingResult result,
+            @RequestParam String higherNotesStr,
+            @RequestParam String lowerNotesStr ){
+
+        String[] higherNotesNames = higherNotesStr.split(",");
+        for (String name : higherNotesNames) {
+            System.out.println("213123");
+            if (!name.equals("")) {
+                Note hNote = noteService.getNoteByName(name);
+                if (hNote.getName()!=null) {
+                    note.addHigherNote(hNote);
+                }
+            }
+        }
+        String[] lowerNotesNames = lowerNotesStr.split(",");
+        for (String name : lowerNotesNames) {
+            if (!name.equals("")) {
+                System.out.println("45345345345");
+                Note lNote = noteService.getNoteByName(name);
+                if (lNote.getName()!=null) {
+                    note.addLowerNote(lNote);
+                }
+            }
+        }
         noteService.saveNote(note);
 
         return "redirect:listNotes";

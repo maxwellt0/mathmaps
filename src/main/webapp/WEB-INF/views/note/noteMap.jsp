@@ -9,13 +9,13 @@
            style="width:1200px; height:1000px; background-color: #DAE4E4;"></div>
       <script>
         var noteName = '${noteName}';
-        alert(noteName);
+//        alert(noteName);
         var higherNamesStr = '${higherNames}';
         var higherNames = higherNamesStr.split("~");
         var mapData = [];
         var linkData = [];
         for (var i=0; i<higherNames.length; i++){
-          alert(higherNames[i]);
+//          alert(higherNames[i]);
           mapData[i] = { key: higherNames[i] };
           linkData[i] = { from: higherNames[i] , to: noteName};
         }

@@ -2,11 +2,14 @@ package ifua.pu.mathmaps.dao.impl;
 
 import ifua.pu.mathmaps.dao.NoteDao;
 import ifua.pu.mathmaps.model.Note;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.From;
 import java.util.List;
 
 /**
@@ -28,6 +31,12 @@ public class NoteDaoImpl implements NoteDao {
 
     public Note getNote(int noteId) {
         return (Note) getSession().get(Note.class, noteId);
+    }
+
+    public Note getNoteByName(String name) {
+        Criteria criteria = getSession().createCriteria(Note.class);
+
+        return (Note) criteria.add(Restrictions.eq("name", name)).uniqueResult();
     }
 
     public void deleteNote(int noteId) {

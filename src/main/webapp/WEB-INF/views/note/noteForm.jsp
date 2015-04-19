@@ -10,22 +10,26 @@
     <fieldset>
         <legend></legend>
 
-        <div class="pure-control-group">
+        <div >
             <label for="name">Назва</label>
-            <form:input path="name" placeholder="Назва" />
+            <form:input  class="form-control" path="name" placeholder="Назва" />
         </div>
-        <div class="pure-control-group">
-            <label for="text">Text</label>
-            <form:textarea path="text" placeholder="Текст" />
+        <div >
+            <label for="text">Текст</label>
+            <form:textarea class="form-control" path="text" placeholder="Текст" />
         </div>
-        <div class="pure-control-group">
+        <div >
             <label for="rank">Складність</label>
-            <form:input path="rank" placeholder="Складність" maxlength="10" />
+            <form:input class="form-control" path="rank" placeholder="Складність"/>
         </div>
-        <%--<div class="pure-control-group">--%>
-            <%--<label for="authors">Author(s)</label>--%>
-            <%--<form:input path="authors" placeholder="Authors" />--%>
-        <%--</div>--%>
+        <div>
+            <%--<label for="lowerNotesStr">Використані факти</label>--%>
+            <input  class="form-control" name="lowerNotesStr" placeholder="Використані факти" />
+        </div>
+        <div>
+            <%--<label for="higherNotesStr">Використовується у</label>--%>
+            <input  class="form-control" name="higherNotesStr" placeholder="Використовується у" />
+        </div>
         <%--<div class="pure-control-group">--%>
             <%--<label for="publisher">Publisher</label>--%>
             <%--<form:input path="publisher" placeholder="Publisher" />--%>
