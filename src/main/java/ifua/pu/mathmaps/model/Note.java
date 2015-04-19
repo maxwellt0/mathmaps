@@ -43,9 +43,12 @@ public class Note implements java.io.Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Note> higherNotes = new HashSet<Note>();
 
-    @ManyToMany(
-            mappedBy = "higherNotes",
-            targetEntity = Note.class
+    @ManyToMany(targetEntity=Note.class)
+    @ForeignKey(name="FK_L_NOTE_TO_H_NOTE", inverseName = "FK_H_NOTE_TO_L_NOTE")
+    @JoinTable(
+            name = "LINK",
+            joinColumns = @JoinColumn(name = "HIGHER_NOTE_ID"),
+            inverseJoinColumns = @JoinColumn(name = "LOWER_NOTE_ID")
     )
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Note> lowerNotes = new HashSet<Note>();
