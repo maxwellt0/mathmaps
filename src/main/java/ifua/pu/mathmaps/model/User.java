@@ -27,6 +27,8 @@ public class User implements java.io.Serializable {
     @Column(name = "PASSWORD", nullable = false, length = 16)
     private String password;
 
+    private Set<UserRole> userRole = new HashSet<UserRole>(0);
+
     @Column(name = "NAME", nullable = false, length = 35)
     private String name;
 
@@ -35,6 +37,8 @@ public class User implements java.io.Serializable {
             @JoinColumn(name = "USER_ID", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "NOTE_ID",
                     nullable = false, updatable = false) })
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Note> notes = new HashSet<Note>();
 
     public User() {
@@ -94,6 +98,14 @@ public class User implements java.io.Serializable {
 
     public void setNotes(Set<Note> notes) {
         this.notes = notes;
+    }
+
+    public Set<UserRole> getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(Set<UserRole> userRole) {
+        this.userRole = userRole;
     }
 
     public void addNote(Note note) {
