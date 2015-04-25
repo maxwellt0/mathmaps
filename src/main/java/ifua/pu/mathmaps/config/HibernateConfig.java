@@ -9,13 +9,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-@EnableWebMvc
 @Configuration
-@ComponentScan({ "ifua.pu.mathmaps.*" })
 @EnableTransactionManagement
-@Import({ SecurityConfig.class })
 @PropertySource("classpath:database.properties")
 public class HibernateConfig {
 

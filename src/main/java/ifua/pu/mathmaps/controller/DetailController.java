@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Map;
 
-/**
- * Created by Maxwellt on 11.04.2015.
- */
 @Controller
 public class DetailController {
 

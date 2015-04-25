@@ -7,8 +7,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 
 @Configuration
-@ComponentScan(basePackages = {"ifua.pu.mathmaps"})
+@ComponentScan({ "ifua.pu.mathmaps.*" })
 @EnableWebMvc
+@Import({ SecurityConfig.class })
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
 
