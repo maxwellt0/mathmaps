@@ -1,12 +1,16 @@
 package ifua.pu.mathmaps.dao.impl;
 
 import ifua.pu.mathmaps.dao.UserDao;
+import ifua.pu.mathmaps.model.Note;
 import ifua.pu.mathmaps.model.User;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +20,7 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
 
     @Autowired
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     public void saveUser(User user) {
 
@@ -39,6 +43,13 @@ public class UserDaoImpl implements UserDao {
         if (null != User) {
             getSession().delete(User);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public User findByUserName(String username) {
+        Criteria criteria = getSession().createCriteria(User.class);
+
+        return (User) criteria.add(Restrictions.eq("name", username)).uniqueResult();
     }
 
     private Session getSession() {

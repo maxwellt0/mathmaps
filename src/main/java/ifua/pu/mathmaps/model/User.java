@@ -5,9 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import static javax.persistence.GenerationType.IDENTITY;
 
-/**
- * Created by Maxwellt on 10.04.2015.
- */
+
 @Entity
 @Table(name = "USER", catalog = "mathmaps", uniqueConstraints = {
         @UniqueConstraint(columnNames = "LOGIN"),
@@ -27,28 +25,32 @@ public class User implements java.io.Serializable {
     @Column(name = "PASSWORD", nullable = false, length = 16)
     private String password;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<UserRole> userRole = new HashSet<UserRole>(0);
 
     @Column(name = "NAME", nullable = false, length = 35)
     private String name;
+
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "USER_NOTE", catalog = "mathmaps", joinColumns = {
             @JoinColumn(name = "USER_ID", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "NOTE_ID",
                     nullable = false, updatable = false) })
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Note> notes = new HashSet<Note>();
 
     public User() {
     }
 
-    public User(String login, String email, String password, String name, Set<Note> notes) {
+    public User(String login, String email, String password, Set<UserRole> userRole, String name, boolean enabled, Set<Note> notes) {
         this.login = login;
         this.email = email;
         this.password = password;
+        this.userRole = userRole;
         this.name = name;
+        this.enabled = enabled;
         this.notes = notes;
     }
 
@@ -106,6 +108,14 @@ public class User implements java.io.Serializable {
 
     public void setUserRole(Set<UserRole> userRole) {
         this.userRole = userRole;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public void addNote(Note note) {
