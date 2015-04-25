@@ -4,9 +4,7 @@ import java.util.Properties;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
@@ -39,6 +37,11 @@ public class HibernateConfig {
         prop.put("hibernate.format_sql", "true");
         prop.put("hibernate.show_sql", env.getProperty("show_sql"));
         prop.put("hibernate.dialect", env.getProperty("dialect"));
+        prop.put("hibernate.enable_lazy_load_no_trans", env.getProperty("enable_lazy_load_no_trans"));
+        prop.put("hibernate.connection.CharSet", env.getProperty("charSet"));
+        prop.put("hibernate.connection.characterEncoding", env.getProperty("characterEncoding"));
+        prop.put("hibernate.connection.useUnicode", env.getProperty("useUnicode"));
+        prop.put("hibernate.hbm2ddl.auto", env.getProperty("hbm2ddl.auto"));
         return prop;
     }
 
@@ -47,8 +50,8 @@ public class HibernateConfig {
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName(env.getProperty("driverClassName"));
         ds.setUrl(env.getProperty("url"));
-        ds.setUsername(env.getProperty("username"));
-        ds.setPassword(env.getProperty("password"));
+        ds.setUsername(env.getProperty("jdbc.username"));
+        ds.setPassword(env.getProperty("jdbc.password"));
         return ds;
     }
 
