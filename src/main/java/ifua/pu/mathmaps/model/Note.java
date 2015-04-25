@@ -10,12 +10,9 @@ import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-/**
- * Created by Maxwellt on 10.04.2015.
- */
 @Entity
 @Table(name = "NOTE", catalog = "mathmaps")
-public class Note implements java.io.Serializable {
+public class Note {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "NOTE_ID", nullable = false)

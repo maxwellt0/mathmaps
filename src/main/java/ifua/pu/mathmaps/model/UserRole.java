@@ -4,9 +4,7 @@ import javax.persistence.*;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name = "user_roles", catalog = "mathmaps",
-        uniqueConstraints = @UniqueConstraint(
-                columnNames = { "role", "name" }))
+@Table(name = "user_roles", catalog = "mathmaps")
 public class UserRole {
 
     @Id
@@ -16,7 +14,7 @@ public class UserRole {
     private Integer userRoleId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "name", nullable = false)
+    @JoinColumn(name = "USERNAME", nullable = false)
     private User user;
 
     @Column(name = "role", nullable = false, length = 45)
@@ -52,5 +50,13 @@ public class UserRole {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "UserRole{" +
+                "userRoleId=" + userRoleId +
+                ", role='" + role + '\'' +
+                '}';
     }
 }

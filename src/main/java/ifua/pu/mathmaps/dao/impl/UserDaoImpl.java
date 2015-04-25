@@ -49,7 +49,7 @@ public class UserDaoImpl implements UserDao {
     public User findByUserName(String username) {
         Criteria criteria = getSession().createCriteria(User.class);
 
-        return (User) criteria.add(Restrictions.eq("name", username)).uniqueResult();
+        return (User) criteria.add(Restrictions.eq("username", username)).uniqueResult();
     }
 
     private Session getSession() {

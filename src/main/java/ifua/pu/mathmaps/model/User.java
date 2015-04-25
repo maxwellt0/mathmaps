@@ -8,16 +8,12 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "USER", catalog = "mathmaps", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "LOGIN"),
+        @UniqueConstraint(columnNames = "USERNAME"),
         @UniqueConstraint(columnNames = "EMAIL") })
-public class User implements java.io.Serializable {
+public class User {
     @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "USER_ID", nullable = false)
-    private int userId;
-
-    @Column(name = "LOGIN", unique = true, nullable = false, length = 12)
-    private String login;
+    @Column(name = "USERNAME", unique = true, nullable = false, length = 12)
+    private String username;
 
     @Column(name = "EMAIL", unique = true, nullable = false, length = 20)
     private String email;
@@ -28,15 +24,12 @@ public class User implements java.io.Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<UserRole> userRole = new HashSet<UserRole>(0);
 
-    @Column(name = "NAME", nullable = false, length = 35)
-    private String name;
-
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "USER_NOTE", catalog = "mathmaps", joinColumns = {
-            @JoinColumn(name = "USER_ID", nullable = false, updatable = false) },
+            @JoinColumn(name = "USERNAME", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "NOTE_ID",
                     nullable = false, updatable = false) })
     private Set<Note> notes = new HashSet<Note>();
@@ -44,30 +37,21 @@ public class User implements java.io.Serializable {
     public User() {
     }
 
-    public User(String login, String email, String password, Set<UserRole> userRole, String name, boolean enabled, Set<Note> notes) {
-        this.login = login;
+    public User(String username, String email, String password, Set<UserRole> userRole, boolean enabled, Set<Note> notes) {
+        this.username = username;
         this.email = email;
         this.password = password;
         this.userRole = userRole;
-        this.name = name;
         this.enabled = enabled;
         this.notes = notes;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -84,14 +68,6 @@ public class User implements java.io.Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Set<Note> getNotes() {
@@ -131,11 +107,11 @@ public class User implements java.io.Serializable {
     @Override
     public String toString() {
         return "User{" +
-                "userId=" + userId +
-                ", login='" + login + '\'' +
+                ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
+                ", userRole=" + userRole +
+                ", enabled=" + enabled +
                 ", notes=" + notes.size() +
                 '}';
     }
