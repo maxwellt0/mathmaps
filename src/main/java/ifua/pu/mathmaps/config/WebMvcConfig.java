@@ -1,19 +1,10 @@
 package ifua.pu.mathmaps.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.*;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.http.MediaType;
-import org.springframework.web.accept.ContentNegotiationManagerFactoryBean;
-import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
-import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
-
-import java.util.Arrays;
 
 @Configuration
 @ComponentScan(basePackages = {"ifua.pu.mathmaps"})
@@ -26,11 +17,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         TilesConfigurer tilesConfigurer = new TilesConfigurer();
         tilesConfigurer.setDefinitions("/WEB-INF/layouts/layouts.xml");
         return tilesConfigurer;
-    }
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
     }
 
     @Bean
