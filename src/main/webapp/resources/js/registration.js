@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#registrationForm').validate({
+    var myValidator = $('#registrationForm').validate({
         rules: {
             "username": {
                 required : true,
@@ -48,31 +48,30 @@ $(document).ready(function() {
         };
     })();
 
-        // Username check
-        $('#username').keyup(function() {
-            delay(
-                function() {
-                    if ($('#username').val().length >= 3) {
-                        $.ajax({
-                            url: 'check/' + $('#username').val(),
-                            success: function (result) {
-                                if (result == 1) {
-                                    $('#login-errors').html(
-                                        'Такий логін вже існує'
-                                    );
-                                    $("#submit").attr('disabled', 'disabled');
-                                } else {
-                                    $('#login-errors').html("");
-                                    $("#submit").removeAttr('disabled');
-                                }
+    jQuery.validator.addMethod("unique", function(value, element){
+            return false;
+        }, "Такий логін вже існує");
+
+    // Username check
+    $('#username').change(function() {
+        delay(
+            function() {
+                if ($('#username').val().length >= 3) {
+                    $.ajax({
+                        url: 'check/' + $('#username').val(),
+                        success: function (result) {
+                            if (result == 1) {
+                                myValidator.showErrors({ username : "Такий логін вже існує"});
+                                $("#submit").attr('disabled', 'disabled');
+                            } else {
+                                $("#submit").removeAttr('disabled');
                             }
-                        });
-                    }
-                }, 
-                500
-            );
-            if ($('#login').val().length < 3) {
-                $('#login-errors').html("");
-            }
-        });
+                        }
+                    });
+                }
+            },
+            500
+        );
     });
+
+});
