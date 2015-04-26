@@ -24,6 +24,7 @@ public class UserController {
 
     public static final String LISTS = "lists";
     public static final String TYPES = "types";
+
     @Autowired
     private UserService userService;
 

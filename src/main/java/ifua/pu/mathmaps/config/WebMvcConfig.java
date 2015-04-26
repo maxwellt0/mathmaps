@@ -12,7 +12,6 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 @Import({ SecurityConfig.class })
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
-
     @Bean
     public TilesConfigurer tilesConfigurer(){
         TilesConfigurer tilesConfigurer = new TilesConfigurer();
