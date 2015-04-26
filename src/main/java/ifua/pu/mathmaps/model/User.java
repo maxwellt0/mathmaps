@@ -39,7 +39,7 @@ public class User {
     }
 
     @Id
-    @Column(name = "USERNAME", unique = true, nullable = false, length = 12)
+    @Column(name = "USERNAME", unique = true, nullable = false, length = 16)
     public String getUsername() {
         return username;
     }
@@ -48,7 +48,7 @@ public class User {
         this.username = username;
     }
 
-    @Column(name = "EMAIL", unique = true, nullable = false, length = 20)
+    @Column(name = "EMAIL", unique = true, nullable = false, length = 45)
     public String getEmail() {
         return email;
     }

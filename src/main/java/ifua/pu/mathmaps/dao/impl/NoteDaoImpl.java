@@ -41,10 +41,10 @@ public class NoteDaoImpl implements NoteDao {
 
     public void deleteNote(int noteId) {
 
-        Note Note = getNote(noteId);
+        Note note = getNote(noteId);
 
-        if (null != Note) {
-            getSession().delete(Note);
+        if (note != null) {
+            getSession().delete(note);
         }
     }
 

@@ -4,9 +4,6 @@ import ifua.pu.mathmaps.model.User;
 
 import java.util.List;
 
-/**
- * Created by Maxwellt on 11.04.2015.
- */
 public interface UserDao {
     /*
         * CREATE and UPDATE
