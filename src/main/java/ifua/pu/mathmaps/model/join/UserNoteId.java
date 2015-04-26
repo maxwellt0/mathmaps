@@ -5,9 +5,10 @@ import ifua.pu.mathmaps.model.User;
 
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
+import java.io.Serializable;
 
 @Embeddable
-public class UserNoteId {
+public class UserNoteId implements Serializable {
 
     private User user;
     private Note note;

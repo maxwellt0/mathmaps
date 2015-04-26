@@ -1,4 +1,6 @@
 package ifua.pu.mathmaps.model.join;
 
-public class NoteNote {
+import java.io.Serializable;
+
+public class NoteNote implements Serializable{
 }

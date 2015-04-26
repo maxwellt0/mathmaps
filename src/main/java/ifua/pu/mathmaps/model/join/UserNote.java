@@ -4,6 +4,7 @@ import ifua.pu.mathmaps.model.Note;
 import ifua.pu.mathmaps.model.User;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "user_note", catalog = "mathmaps")
@@ -12,7 +13,7 @@ import javax.persistence.*;
                 joinColumns = @JoinColumn(name = "USER_ID")),
         @AssociationOverride(name = "pk.note",
                 joinColumns = @JoinColumn(name = "NOTE_ID")) })
-public class UserNote {
+public class UserNote implements Serializable{
     private UserNoteId pk = new UserNoteId();
     private Integer status=0; // 0 - not, 1 - scheduled, 2 - learning, 3- studied, 4 - postponed, 5 - left
 

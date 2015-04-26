@@ -1,5 +1,6 @@
 package ifua.pu.mathmaps.model;
 
+import ifua.pu.mathmaps.model.join.UserNote;
 import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -13,22 +14,80 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Table(name = "NOTE", catalog = "mathmaps")
 public class Note {
+
+    private Integer noteId;
+
+    private String name;
+
+    private String text;
+
+    private Integer rank;
+
+    private Set<UserNote> userNotes = new HashSet<UserNote>(0);
+
+    private Set<Note> higherNotes = new HashSet<Note>(0);
+
+    private Set<Note> lowerNotes = new HashSet<Note>(0);
+
+    public Note() {
+    }
+
+    public Note(Integer noteId, String name, String text, Integer rank, Set<UserNote> userNotes, Set<Note> higherNotes, Set<Note> lowerNotes) {
+        this.noteId = noteId;
+        this.name = name;
+        this.text = text;
+        this.rank = rank;
+        this.userNotes = userNotes;
+        this.higherNotes = higherNotes;
+        this.lowerNotes = lowerNotes;
+    }
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "NOTE_ID", nullable = false)
-    private int noteId;
+    public Integer getNoteId() {
+        return noteId;
+    }
+
+    public void setNoteId(Integer noteId) {
+        this.noteId = noteId;
+    }
 
     @Column(name = "NAME", nullable = false, length = 45)
-    private String name;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Column(name = "TEXT", nullable = false, length = 10000)
-    private String text;
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 
     @Column(name = "RANK", nullable = true)
-    private int rank;
+    public Integer getRank() {
+        return rank;
+    }
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "notes")
-    private Set<User> users = new HashSet<User>();
+    public void setRank(Integer rank) {
+        this.rank = rank;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.note")
+    public Set<UserNote> getUserNotes() {
+        return userNotes;
+    }
+
+    public void setUserNotes(Set<UserNote> userNotes) {
+        this.userNotes = userNotes;
+    }
 
     @ManyToMany(targetEntity=Note.class)
     @ForeignKey(name="FK_H_NOTE_TO_L_NOTE", inverseName = "FK_L_NOTE_TO_H_NOTE")
@@ -38,7 +97,13 @@ public class Note {
             inverseJoinColumns = @JoinColumn(name = "HIGHER_NOTE_ID")
     )
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Note> higherNotes = new HashSet<Note>();
+    public Set<Note> getHigherNotes() {
+        return higherNotes;
+    }
+
+    public void setHigherNotes(Set<Note> higherNotes) {
+        this.higherNotes = higherNotes;
+    }
 
     @ManyToMany(targetEntity=Note.class)
     @ForeignKey(name="FK_L_NOTE_TO_H_NOTE", inverseName = "FK_H_NOTE_TO_L_NOTE")
@@ -48,105 +113,12 @@ public class Note {
             inverseJoinColumns = @JoinColumn(name = "LOWER_NOTE_ID")
     )
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Note> lowerNotes = new HashSet<Note>();
-
-    public Note() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Note(int noteId, String name, String text, int rank, Set<User> users, Set<Note> higherNotes, Set<Note> lowerNotes) {
-        this.noteId = noteId;
-        this.name = name;
-        this.text = text;
-        this.rank = rank;
-        this.users = users;
-        this.higherNotes = higherNotes;
-        this.lowerNotes = lowerNotes;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getNoteId() {
-        return noteId;
-    }
-
-    public void setNoteId(int noteId) {
-        this.noteId = noteId;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public int getRank() {
-        return rank;
-    }
-
-    public void setRank(int rank) {
-        this.rank = rank;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
-    public Set<Note> getHigherNotes() {
-        return higherNotes;
-    }
-
-    public void setHigherNotes(Set<Note> higherNotes) {
-        this.higherNotes = higherNotes;
-    }
-
     public Set<Note> getLowerNotes() {
         return lowerNotes;
     }
 
     public void setLowerNotes(Set<Note> lowerNotes) {
         this.lowerNotes = lowerNotes;
-    }
-
-    public void addHigherNote(Note note) {
-        this.higherNotes.add(note);
-    }
-
-    public void addLowerNote(Note note) {
-        this.lowerNotes.add(note);
-    }
-
-    public void removeHigherNote(Note note) {
-        if (this.higherNotes.contains(note)) {
-            this.higherNotes.remove(note);
-        }
-    }
-
-    public void removeLowerNote(Note note) {
-        if (this.lowerNotes.contains(note)) {
-            this.lowerNotes.remove(note);
-        }
-    }
-
-    public void addUser(User user) {
-        this.users.add(user);
-    }
-
-    public void removeUser(User user) {
-        if (this.users.contains(user)) {
-            this.users.remove(user);
-        }
     }
 
     @Override

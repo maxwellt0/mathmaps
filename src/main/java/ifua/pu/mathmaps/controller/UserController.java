@@ -1,6 +1,8 @@
 package ifua.pu.mathmaps.controller;
 
+import ifua.pu.mathmaps.model.Note;
 import ifua.pu.mathmaps.model.User;
+import ifua.pu.mathmaps.model.join.UserNote;
 import ifua.pu.mathmaps.service.NoteService;
 import ifua.pu.mathmaps.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Created by Maxwellt on 11.04.2015.
  */
@@ -16,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
+    public static final String LISTS = "lists";
+    public static final String TYPES = "types";
     @Autowired
     private UserService userService;
 
@@ -27,7 +35,42 @@ public class UserController {
     public String getUserPage(@PathVariable String username,
                               ModelMap map) {
         User user = userService.getUser(username);
-        map.put("noteList", user.getNotes());
+        Set<UserNote> userNotes = user.getUserNotes();
+
+        List<Note> scheduled = new ArrayList<Note>();
+        List<Note> learning = new ArrayList<Note>();
+        List<Note> studied = new ArrayList<Note>();
+        List<Note> postponed = new ArrayList<Note>();
+        List<Note> left = new ArrayList<Note>();
+
+        for (UserNote un :userNotes) {
+            Note note = un.getNote();
+            switch (un.getStatus()) {
+                case 1: scheduled.add(note);
+                    break;
+                case 2: learning.add(note);
+                    break;
+                case 3: studied.add(note);
+                    break;
+                case 4: postponed.add(note);
+                    break;
+                case 5: left.add(note);
+                    break;
+                default:
+                    System.out.println("ERROR!");
+                    break;
+            }
+        }
+        List<List> lists = new ArrayList<List>();
+        lists.add(scheduled);
+        lists.add(learning);
+        lists.add(studied);
+        lists.add(postponed);
+        lists.add(left);
+        String[] types = {"Заплановано", "Вивчається", "Вивчено", "Відкладено", "Покинуто"};
+
+        map.addAttribute(LISTS, lists);
+        map.addAttribute(TYPES, types);
 
         return "user/userPage";
     }

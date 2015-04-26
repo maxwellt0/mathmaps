@@ -1,5 +1,7 @@
 package ifua.pu.mathmaps.model;
 
+import ifua.pu.mathmaps.model.join.UserNote;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,18 +24,18 @@ public class User {
 
     private Set<UserRole> userRole = new HashSet<UserRole>(0);
 
-    private Set<Note> notes = new HashSet<Note>();
+    private Set<UserNote> userNotes = new HashSet<UserNote>(0);
 
     public User() {
     }
 
-    public User(String username, String email, String password, Set<UserRole> userRole, boolean enabled, Set<Note> notes) {
+    public User(String username, String email, String password, boolean enabled, Set<UserRole> userRole, Set<UserNote> userNotes) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.userRole = userRole;
         this.enabled = enabled;
-        this.notes = notes;
+        this.userRole = userRole;
+        this.userNotes = userNotes;
     }
 
     @Id
@@ -42,9 +44,17 @@ public class User {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Column(name = "EMAIL", unique = true, nullable = false, length = 20)
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Column(name = "PASSWORD", nullable = false, length = 16)
@@ -52,13 +62,17 @@ public class User {
         return password;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "USER_NOTE", catalog = "mathmaps", joinColumns = {
-            @JoinColumn(name = "USERNAME", nullable = false, updatable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "NOTE_ID",
-                    nullable = false, updatable = false) })
-    public Set<Note> getNotes() {
-        return notes;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.user")
+    public Set<UserNote> getUserNotes() {
+        return userNotes;
+    }
+
+    public void setUserNotes(Set<UserNote> userNotes) {
+        this.userNotes = userNotes;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
@@ -66,30 +80,27 @@ public class User {
         return userRole;
     }
 
+    public void setUserRole(Set<UserRole> userRole) {
+        this.userRole = userRole;
+    }
+
     @Column(name = "enabled", nullable = false)
     public boolean isEnabled() {
         return enabled;
     }
 
-    public void addNote(Note note) {
-        this.notes.add(note);
-    }
-
-    public void removeNote(Note note) {
-        if (this.notes.contains(note)) {
-            this.notes.remove(note);
-        }
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                ", username='" + username + '\'' +
+                "username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", userRole=" + userRole +
                 ", enabled=" + enabled +
-                ", notes=" + notes.size() +
+                ", userRole=" + userRole +
                 '}';
     }
 }

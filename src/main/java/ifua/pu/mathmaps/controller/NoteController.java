@@ -56,7 +56,7 @@ public class NoteController {
             if (!name.equals("")) {
                 Note hNote = noteService.getNoteByName(name);
                 if (hNote.getName()!=null) {
-                    note.addHigherNote(hNote);
+                    note.getHigherNotes().add(hNote);
                 }
             }
         }
@@ -66,7 +66,7 @@ public class NoteController {
                 System.out.println("45345345345");
                 Note lNote = noteService.getNoteByName(name);
                 if (lNote.getName()!=null) {
-                    note.addLowerNote(lNote);
+                    note.getLowerNotes().add(lNote);
                 }
             }
         }
