@@ -17,10 +17,10 @@ public interface UserService {
      * READ
      */
     public List<User> listUsers();
-    public User getUser(int userId);
+    public User getUser(String username);
 
     /*
      * DELETE
      */
-    public void deleteUser(int userId);
+    public void deleteUser(String username);
 }

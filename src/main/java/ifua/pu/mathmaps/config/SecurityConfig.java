@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/note/**")
+                .antMatchers("/user/**")
                 .access("hasRole('USER')").and().formLogin()
                 .loginPage("/login").failureUrl("/login?error")
                 .usernameParameter("username")
@@ -38,12 +38,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout().logoutSuccessUrl("/login?logout")
                 .and().csrf()
                 .and().exceptionHandling().accessDeniedPage("/403");
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder;
     }
 
 }

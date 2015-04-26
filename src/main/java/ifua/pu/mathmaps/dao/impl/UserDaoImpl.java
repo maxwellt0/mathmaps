@@ -32,24 +32,19 @@ public class UserDaoImpl implements UserDao {
         return getSession().createCriteria(User.class).list();
     }
 
-    public User getUser(int userId) {
-        return (User) getSession().get(User.class, userId);
-    }
-
-    public void deleteUser(int userId) {
-
-        User User = getUser(userId);
-
-        if (null != User) {
-            getSession().delete(User);
-        }
-    }
-
     @SuppressWarnings("unchecked")
     public User findByUserName(String username) {
         Criteria criteria = getSession().createCriteria(User.class);
 
         return (User) criteria.add(Restrictions.eq("username", username)).uniqueResult();
+    }
+
+    public void deleteUser(String username) {
+        User User = findByUserName(username);
+
+        if (null != User) {
+            getSession().delete(User);
+        }
     }
 
     private Session getSession() {

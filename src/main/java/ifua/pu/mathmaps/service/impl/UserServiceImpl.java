@@ -29,13 +29,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Transactional(readOnly = true)
-    public User getUser(int userId) {
-        return userDao.getUser(userId);
+    public User getUser(String username) {
+        return userDao.findByUserName(username);
     }
 
     @Transactional
-    public void deleteUser(int userId) {
-        userDao.deleteUser(userId);
+    public void deleteUser(String username) {
+        userDao.deleteUser(username);
 
     }
 

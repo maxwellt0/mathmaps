@@ -17,12 +17,10 @@ public interface UserDao {
      * READ
      */
     public List<User> listUsers();
-    public User getUser(int userId);
+    public User findByUserName(String username);
 
     /*
      * DELETE
      */
-    public void deleteUser(int userId);
-
-    User findByUserName(String username);
+    public void deleteUser(String username);
 }

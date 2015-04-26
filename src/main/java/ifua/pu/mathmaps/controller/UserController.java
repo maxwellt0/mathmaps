@@ -1,22 +1,13 @@
 package ifua.pu.mathmaps.controller;
 
-import ifua.pu.mathmaps.model.Note;
 import ifua.pu.mathmaps.model.User;
 import ifua.pu.mathmaps.service.NoteService;
 import ifua.pu.mathmaps.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.LockedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.*;
 
 /**
  * Created by Maxwellt on 11.04.2015.
@@ -31,6 +22,15 @@ public class UserController {
     @Autowired
     private NoteService noteService;
 
+    @PostAuthorize("#username == principal.name")
+    @RequestMapping("/page/{username}")
+    public String getUserPage(@PathVariable String username,
+                              ModelMap map) {
+        User user = userService.getUser(username);
+        map.put("noteList", user.getNotes());
+
+        return "user/userPage";
+    }
 //    @RequestMapping(value = { "/", "/listUsers" })
 //    public String listUsers(Map<String, Object> map) {
 //
@@ -87,4 +87,5 @@ public class UserController {
 //               */
 //        return "redirect:/user/listUsers";
 //    }
+
 }
