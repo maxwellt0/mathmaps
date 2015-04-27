@@ -2,7 +2,7 @@ package ifua.pu.mathmaps.controller;
 
 import ifua.pu.mathmaps.model.Note;
 import ifua.pu.mathmaps.model.User;
-import ifua.pu.mathmaps.model.join.UserNote;
+import ifua.pu.mathmaps.model.UserNote;
 import ifua.pu.mathmaps.service.NoteService;
 import ifua.pu.mathmaps.service.UserNoteService;
 import ifua.pu.mathmaps.service.UserService;
@@ -176,7 +176,9 @@ public class UserController {
 
         log.debug("Deleting the note from the user " + user.getUsername() + " list.");
         UserNote userNote = userNoteService.getUserNote(noteId, username);
+        log.debug("Deleting the note from the user " + user.getUsername() + " list.");
         note.getUserNotes().remove(userNote);
+        log.debug("AFTER: The note has " + note.getUserNotes().size() + " users.");
         noteService.saveNote(note);
 
 

@@ -1,6 +1,6 @@
 package ifua.pu.mathmaps.service;
 
-import ifua.pu.mathmaps.model.join.UserNote;
+import ifua.pu.mathmaps.model.UserNote;
 
 import java.util.List;
 

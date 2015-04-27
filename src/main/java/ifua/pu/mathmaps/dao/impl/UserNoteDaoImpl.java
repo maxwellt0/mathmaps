@@ -1,8 +1,7 @@
 package ifua.pu.mathmaps.dao.impl;
 
 import ifua.pu.mathmaps.dao.UserNoteDao;
-import ifua.pu.mathmaps.model.Note;
-import ifua.pu.mathmaps.model.join.UserNote;
+import ifua.pu.mathmaps.model.UserNote;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,14 +30,14 @@ public class UserNoteDaoImpl implements UserNoteDao {
 
     public List<UserNote> listByNote(int noteId) {
         Criteria criteria = getSession().createCriteria(UserNote.class)
-                .add(Restrictions.eq("note_id", noteId));
+                .add(Restrictions.eq("noteId", noteId));
 
         return criteria.list();
     }
 
     public UserNote getUserNote(int noteId, String username) {
         Criteria criteria = getSession().createCriteria(UserNote.class)
-                .add(Restrictions.eq("note_id", noteId))
+                .add(Restrictions.eq("noteId", noteId))
                 .add(Restrictions.eq("username", username));
 
         return (UserNote) criteria.uniqueResult();

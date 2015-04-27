@@ -1,7 +1,7 @@
 package ifua.pu.mathmaps.service.impl;
 
 import ifua.pu.mathmaps.dao.UserNoteDao;
-import ifua.pu.mathmaps.model.join.UserNote;
+import ifua.pu.mathmaps.model.UserNote;
 import ifua.pu.mathmaps.service.UserNoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
