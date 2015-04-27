@@ -3,16 +3,16 @@ package ifua.pu.mathmaps.model;
 import ifua.pu.mathmaps.model.join.UserNote;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import static javax.persistence.GenerationType.IDENTITY;
-
 
 @Entity
 @Table(name = "USER", catalog = "mathmaps", uniqueConstraints = {
         @UniqueConstraint(columnNames = "USERNAME"),
         @UniqueConstraint(columnNames = "EMAIL") })
-public class User {
+public class User implements Serializable {
 
     private String username;
 
@@ -48,7 +48,7 @@ public class User {
         this.username = username;
     }
 
-    @Column(name = "EMAIL", unique = true, nullable = false, length = 45)
+    @Column(name = "EMAIL", nullable = false, length = 45)
     public String getEmail() {
         return email;
     }

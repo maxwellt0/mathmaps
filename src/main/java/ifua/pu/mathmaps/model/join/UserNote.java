@@ -9,13 +9,13 @@ import java.io.Serializable;
 @Entity
 @Table(name = "user_note", catalog = "mathmaps")
 @AssociationOverrides({
-        @AssociationOverride(name = "pk.user",
-                joinColumns = @JoinColumn(name = "USER_ID")),
-        @AssociationOverride(name = "pk.note",
-                joinColumns = @JoinColumn(name = "NOTE_ID")) })
+        @AssociationOverride(name = "pk.user", joinColumns = @JoinColumn(name = "USERNAME")),
+        @AssociationOverride(name = "pk.note", joinColumns = @JoinColumn(name = "NOTE_ID")) })
 public class UserNote implements Serializable{
+
     private UserNoteId pk = new UserNoteId();
-    private Integer status=0; // 0 - not, 1 - scheduled, 2 - learning, 3- studied, 4 - postponed, 5 - left
+    // 0 - not, 1 - scheduled, 2 - learning, 3- studied, 4 - postponed, 5 - left
+    private Integer status=0;
 
     public UserNote() {
     }
@@ -47,7 +47,7 @@ public class UserNote implements Serializable{
         getPk().setNote(note);
     }
 
-    @Column(name = "STATUS", nullable = false, length = 10)
+    @Column(name = "STATUS", nullable = false)
     public Integer getStatus() {
         return status;
     }

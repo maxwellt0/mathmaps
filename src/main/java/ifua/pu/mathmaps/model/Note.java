@@ -6,6 +6,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,7 +14,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "NOTE", catalog = "mathmaps")
-public class Note {
+public class Note implements Serializable{
 
     private Integer noteId;
 
@@ -44,7 +45,7 @@ public class Note {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "NOTE_ID", nullable = false)
+    @Column(name = "NOTE_ID", unique = true, nullable = false)
     public Integer getNoteId() {
         return noteId;
     }
@@ -80,7 +81,7 @@ public class Note {
         this.rank = rank;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.note")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.note", cascade=CascadeType.ALL)
     public Set<UserNote> getUserNotes() {
         return userNotes;
     }

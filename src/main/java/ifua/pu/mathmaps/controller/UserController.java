@@ -5,8 +5,10 @@ import ifua.pu.mathmaps.model.User;
 import ifua.pu.mathmaps.model.join.UserNote;
 import ifua.pu.mathmaps.service.NoteService;
 import ifua.pu.mathmaps.service.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -15,15 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by Maxwellt on 11.04.2015.
- */
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
     public static final String LISTS = "lists";
     public static final String TYPES = "types";
+
+    private static final Logger log = Logger.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
@@ -131,5 +132,27 @@ public class UserController {
 //               */
 //        return "redirect:/user/listUsers";
 //    }
+
+    @RequestMapping("/notes/add/{noteId}")
+    public String addNote(@PathVariable int noteId){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        log.debug("Security context returns name " + username);
+        User user = userService.getUser(username);
+        log.debug("Found user with username " + user.getUsername() + " and roles: " + user.getUserRole().toString());
+        log.debug("Searching for note with id " + noteId);
+        Note note = noteService.getNote(noteId);
+        log.debug("Found note with name " + note.getName());
+        UserNote userNote = new UserNote();
+        userNote.setUser(user);
+        userNote.setNote(note);
+        userNote.setStatus(1);
+        note.getUserNotes().add(userNote);
+
+        log.debug("Saving the note for the user " + user.getUsername());
+
+        noteService.saveNote(note);
+
+        return "redirect:/note/page/" + noteId;
+    }
 
 }

@@ -48,10 +48,6 @@ $(document).ready(function() {
         };
     })();
 
-    jQuery.validator.addMethod("unique", function(value, element){
-            return false;
-        }, "Такий логін вже існує");
-
     // Username check
     $('#username').change(function() {
         delay(

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import ifua.pu.mathmaps.dao.UserDao;
 import ifua.pu.mathmaps.model.UserRole;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    private static final Logger log = Logger.getLogger(UserDetailsServiceImpl.class);
     //get user from the database, via Hibernate
     @Autowired
     private UserDao userDao;
@@ -29,8 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throws UsernameNotFoundException {
 
         ifua.pu.mathmaps.model.User user = userDao.findByUserName(username);
-        System.out.println("got: " + user.getUsername() + " : " + user.getPassword());
-        System.out.println("got role: " + user.getUserRole());
+        log.debug("Found user with username " + user.getUsername() + " and roles: " + user.getUserRole().toString());
         List<GrantedAuthority> authorities =
                 buildUserAuthority(user.getUserRole());
 
@@ -42,9 +43,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     // org.springframework.security.core.userdetails.User
     private User buildUserForAuthentication(ifua.pu.mathmaps.model.User user,
                                             List<GrantedAuthority> authorities) {
-        System.out.println(user.getUsername() + " : " + user.getPassword());
-        System.out.println(user.getUserRole());
-        System.out.println(user.isEnabled());
+        log.debug("Found user with username " + user.getUsername() + " and roles: " + user.getUserRole().toString());
         return new User(user.getUsername(), user.getPassword(),
                 user.isEnabled(), true, true, true, authorities);
     }
@@ -56,7 +55,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // Build user's authorities
         for (UserRole userRole : userRoles) {
             setAuths.add(new SimpleGrantedAuthority(userRole.getRole()));
-            System.out.println(userRole.getRole());
+            log.debug("Found role" + userRole.getRole());
         }
 
         List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);

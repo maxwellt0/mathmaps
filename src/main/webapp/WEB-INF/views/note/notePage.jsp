@@ -6,7 +6,11 @@
 <div class="body">
     <div class="container">
         <div class="page-header">
-            <h1><c:out value="${note.name}"/></h1>
+            <h1><c:out value="${note.name}"/>
+                <a href="/user/notes/add/${note.noteId}" class="btn btn-primary pull-right">
+                    Додати в список
+                </a>
+            </h1>
         </div>
         <div class="row">
             <div class="col-md-12">

@@ -28,13 +28,13 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java-version>1.7</java-version>
-        <!--<hibernate.version>5.0.0.Beta1</hibernate.version>-->
         <spring.version>4.0.3.RELEASE</spring.version>
         <spring.security.version>4.0.1.RELEASE</spring.security.version>
         <hibernate.version>4.2.7.Final</hibernate.version>
         <mysql-version>5.1.27</mysql-version>
         <apache-connection-pooling-version>1.4</apache-connection-pooling-version>
         <tiles.version>3.0.5</tiles.version>
+        <log4j.version>1.2.17</log4j.version>
     </properties>
 
     <dependencies>
@@ -75,12 +75,6 @@
         </dependency>
 
         <!-- Servlet -->
-        <!--<dependency>-->
-            <!--<groupId>javax.servlet</groupId>-->
-            <!--<artifactId>servlet-api</artifactId>-->
-            <!--<version>2.5</version>-->
-            <!--<scope>provided</scope>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
@@ -156,6 +150,13 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.5.0</version>
+        </dependency>
+
+        <!-- Log4j -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
 
     </dependencies>
