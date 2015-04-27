@@ -31,9 +31,10 @@ public class UserDaoImpl implements UserDao {
 
     @SuppressWarnings("unchecked")
     public User findByUserName(String username) {
-        Criteria criteria = getSession().createCriteria(User.class);
+        Criteria criteria = getSession().createCriteria(User.class)
+                .add(Restrictions.eq("username", username));
 
-        return (User) criteria.add(Restrictions.eq("username", username)).uniqueResult();
+        return (User) criteria.uniqueResult();
     }
 
     public void deleteUser(String username) {

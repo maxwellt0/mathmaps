@@ -13,6 +13,14 @@ public class UserNoteId implements Serializable {
     private User user;
     private Note note;
 
+    public UserNoteId() {
+    }
+
+    public UserNoteId(User user, Note note) {
+        this.user = user;
+        this.note = note;
+    }
+
     @ManyToOne
     public User getUser() {
         return user;

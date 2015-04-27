@@ -34,9 +34,10 @@ public class NoteDaoImpl implements NoteDao {
     }
 
     public Note getNoteByName(String name) {
-        Criteria criteria = getSession().createCriteria(Note.class);
+        Criteria criteria = getSession().createCriteria(Note.class)
+                .add(Restrictions.eq("name", name));
 
-        return (Note) criteria.add(Restrictions.eq("name", name)).uniqueResult();
+        return (Note) criteria.uniqueResult();
     }
 
     public void deleteNote(int noteId) {
