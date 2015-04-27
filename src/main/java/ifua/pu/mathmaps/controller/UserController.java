@@ -4,7 +4,6 @@ import ifua.pu.mathmaps.model.Note;
 import ifua.pu.mathmaps.model.User;
 import ifua.pu.mathmaps.model.join.UserNote;
 import ifua.pu.mathmaps.service.NoteService;
-import ifua.pu.mathmaps.service.UserNoteService;
 import ifua.pu.mathmaps.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +31,6 @@ public class UserController {
 
     @Autowired
     private NoteService noteService;
-
-    @Autowired
-    private UserNoteService userNoteService;
 
     @PostAuthorize("#username == principal.name")
     @RequestMapping("/page/{username}")
@@ -172,13 +168,19 @@ public class UserController {
 
         log.debug("Searching for note with id " + noteId);
         Note note = noteService.getNote(noteId);
-        log.debug("Found note with name " + note.getName());;
+        log.debug("Found note with name " + note.getName());
+        log.debug("BEFORE: The note has " + note.getUserNotes().size() + " users.");
 
+        UserNote userNote = new UserNote();
+        userNote.setUser(user);
+        userNote.setNote(note);
+        userNote.setStatus(1);
         log.debug("Deleting the note from the user " + user.getUsername() + " list.");
-        userNoteService.deleteUserNote(noteId, username);
+        note.getUserNotes().remove(userNote);
+        log.debug("AFTER: The note has " + note.getUserNotes().size() + " users.");
+//        noteService.saveNote(note);
 
-
-        return "redirect:page/" + username;
+        return "redirect:/user/page/" + username;
     }
 
 }
