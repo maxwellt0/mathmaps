@@ -44,7 +44,7 @@
                                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                                     </button>
 
-                                                    <a href="delete/${note.noteId}" class="btn btn-primary"
+                                                    <a href="/user/notes/delete/${note.noteId}" class="btn btn-primary"
                                                        onclick="return confirm('Ви справді хочете видалити цей запис?');">
                                                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                                     </a>

@@ -4,6 +4,7 @@ import ifua.pu.mathmaps.model.Note;
 import ifua.pu.mathmaps.model.User;
 import ifua.pu.mathmaps.model.join.UserNote;
 import ifua.pu.mathmaps.service.NoteService;
+import ifua.pu.mathmaps.service.UserNoteService;
 import ifua.pu.mathmaps.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class UserController {
 
     @Autowired
     private NoteService noteService;
+
+    @Autowired
+    private UserNoteService userNoteService;
 
     @PostAuthorize("#username == principal.name")
     @RequestMapping("/page/{username}")
@@ -137,11 +141,14 @@ public class UserController {
     public String addNote(@PathVariable int noteId){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         log.debug("Security context returns name " + username);
+
         User user = userService.getUser(username);
         log.debug("Found user with username " + user.getUsername() + " and roles: " + user.getUserRole().toString());
+
         log.debug("Searching for note with id " + noteId);
         Note note = noteService.getNote(noteId);
         log.debug("Found note with name " + note.getName());
+
         UserNote userNote = new UserNote();
         userNote.setUser(user);
         userNote.setNote(note);
@@ -153,6 +160,25 @@ public class UserController {
         noteService.saveNote(note);
 
         return "redirect:/note/page/" + noteId;
+    }
+
+    @RequestMapping("/notes/delete/{noteId}")
+    public String deleteNote(@PathVariable int noteId){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        log.debug("Security context returns name " + username);
+
+        User user = userService.getUser(username);
+        log.debug("Found user with username " + user.getUsername() + " and roles: " + user.getUserRole().toString());
+
+        log.debug("Searching for note with id " + noteId);
+        Note note = noteService.getNote(noteId);
+        log.debug("Found note with name " + note.getName());;
+
+        log.debug("Deleting the note from the user " + user.getUsername() + " list.");
+        userNoteService.deleteUserNote(noteId, username);
+
+
+        return "redirect:page/" + username;
     }
 
 }
