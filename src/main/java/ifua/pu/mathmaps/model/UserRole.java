@@ -51,12 +51,4 @@ public class UserRole {
     public void setRole(String role) {
         this.role = role;
     }
-
-    @Override
-    public String toString() {
-        return "UserRole{" +
-                "userRoleId=" + userRoleId +
-                ", role='" + role + '\'' +
-                '}';
-    }
 }

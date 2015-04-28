@@ -171,14 +171,10 @@ public class UserController {
         log.debug("Found note with name " + note.getName());
         log.debug("BEFORE: The note has " + note.getUserNotes().size() + " users.");
 
-        UserNote userNote = new UserNote();
-        userNote.setUser(user);
-        userNote.setNote(note);
-        userNote.setStatus(1);
         log.debug("Deleting the note from the user " + user.getUsername() + " list.");
-        note.getUserNotes().remove(userNote);
+
         log.debug("AFTER: The note has " + note.getUserNotes().size() + " users.");
-//        noteService.saveNote(note);
+        noteService.saveNote(note);
 
         return "redirect:/user/page/" + username;
     }

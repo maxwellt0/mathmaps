@@ -122,15 +122,4 @@ public class Note implements Serializable{
         this.lowerNotes = lowerNotes;
     }
 
-    @Override
-    public String toString() {
-        return "Note{" +
-                "noteId=" + noteId +
-                ", name='" + name + '\'' +
-                ", text='" + text + '\'' +
-                ", rank=" + rank +
-                ", higherNotes=" + higherNotes.size() +
-                ", lowerNotes=" + lowerNotes.size() +
-                '}';
-    }
 }

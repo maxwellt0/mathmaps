@@ -5,19 +5,12 @@ import ifua.pu.mathmaps.model.User;
 import java.util.List;
 
 public interface UserDao {
-    /*
-        * CREATE and UPDATE
-        */
-    public void saveUser(User user); // create and update
 
-    /*
-     * READ
-     */
+    public void saveUser(User user);
+
     public List<User> listUsers();
+
     public User findByUserName(String username);
 
-    /*
-     * DELETE
-     */
     public void deleteUser(String username);
 }
