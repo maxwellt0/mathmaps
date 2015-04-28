@@ -10,7 +10,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class UserNote implements Serializable{
 
     private Integer userNoteId;
-    // 0 - not, 1 - scheduled, 2 - learning, 3- studied, 4 - postponed, 5 - left
+    // 0 - not, 1 - scheduled, 2 - learning, 3- studied, 4 - postponed, 5 - left, 6- repeating
     private Integer status=0;
 
     private User user;
