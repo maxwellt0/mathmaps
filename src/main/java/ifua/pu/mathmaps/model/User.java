@@ -1,12 +1,9 @@
 package ifua.pu.mathmaps.model;
 
-import ifua.pu.mathmaps.model.join.UserNote;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "USER", catalog = "mathmaps", uniqueConstraints = {
@@ -66,7 +63,7 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     public Set<UserNote> getUserNotes() {
         return userNotes;
     }

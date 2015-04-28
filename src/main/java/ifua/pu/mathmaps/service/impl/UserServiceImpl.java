@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public void deleteUser(String username) {
         userDao.deleteUser(username);
-
     }
 
 }

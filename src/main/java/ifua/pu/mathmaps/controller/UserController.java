@@ -2,8 +2,9 @@ package ifua.pu.mathmaps.controller;
 
 import ifua.pu.mathmaps.model.Note;
 import ifua.pu.mathmaps.model.User;
-import ifua.pu.mathmaps.model.join.UserNote;
+import ifua.pu.mathmaps.model.UserNote;
 import ifua.pu.mathmaps.service.NoteService;
+import ifua.pu.mathmaps.service.UserNoteService;
 import ifua.pu.mathmaps.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class UserController {
     @Autowired
     private NoteService noteService;
 
+    @Autowired
+    private UserNoteService userNoteService;
+
     @PostAuthorize("#username == principal.name")
     @RequestMapping("/page/{username}")
     public String getUserPage(@PathVariable String username,
@@ -59,7 +63,7 @@ public class UserController {
                 case 5: left.add(note);
                     break;
                 default:
-                    System.out.println("ERROR!");
+                    log.debug("Added note status is 0");
                     break;
             }
         }
@@ -138,22 +142,9 @@ public class UserController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         log.debug("Security context returns name " + username);
 
-        User user = userService.getUser(username);
-        log.debug("Found user with username " + user.getUsername() + " and roles: " + user.getUserRole().toString());
-
-        log.debug("Searching for note with id " + noteId);
-        Note note = noteService.getNote(noteId);
-        log.debug("Found note with name " + note.getName());
-
-        UserNote userNote = new UserNote();
-        userNote.setUser(user);
-        userNote.setNote(note);
-        userNote.setStatus(1);
-        note.getUserNotes().add(userNote);
-
-        log.debug("Saving the note for the user " + user.getUsername());
-
-        noteService.saveNote(note);
+        log.debug("Saving the note for the user " + username);
+        userNoteService.addWithParams(noteId, username, 1);
+        log.debug("Saved successful");
 
         return "redirect:/note/page/" + noteId;
     }
@@ -163,18 +154,9 @@ public class UserController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         log.debug("Security context returns name " + username);
 
-        User user = userService.getUser(username);
-        log.debug("Found user with username " + user.getUsername() + " and roles: " + user.getUserRole().toString());
-
-        log.debug("Searching for note with id " + noteId);
-        Note note = noteService.getNote(noteId);
-        log.debug("Found note with name " + note.getName());
-        log.debug("BEFORE: The note has " + note.getUserNotes().size() + " users.");
-
-        log.debug("Deleting the note from the user " + user.getUsername() + " list.");
-
-        log.debug("AFTER: The note has " + note.getUserNotes().size() + " users.");
-        noteService.saveNote(note);
+        log.debug("Deleting the note from the user " + username + " list.");
+        userNoteService.deleteUserNote(noteId, username);
+        log.debug("Deleted successful");
 
         return "redirect:/user/page/" + username;
     }

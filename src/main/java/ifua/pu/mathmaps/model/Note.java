@@ -1,6 +1,5 @@
 package ifua.pu.mathmaps.model;
 
-import ifua.pu.mathmaps.model.join.UserNote;
 import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -81,7 +80,7 @@ public class Note implements Serializable{
         this.rank = rank;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.note", cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "note", cascade=CascadeType.ALL)
     public Set<UserNote> getUserNotes() {
         return userNotes;
     }
