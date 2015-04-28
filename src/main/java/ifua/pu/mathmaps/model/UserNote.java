@@ -17,6 +17,20 @@ public class UserNote implements Serializable{
 
     private Note note;
 
+    public UserNote() {
+    }
+
+    public UserNote(User user, Note note) {
+        this.user = user;
+        this.note = note;
+    }
+
+    public UserNote(User user, Note note, Integer status) {
+        this.user = user;
+        this.note = note;
+        this.status = status;
+    }
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "user_note_id", unique = true, nullable = false)

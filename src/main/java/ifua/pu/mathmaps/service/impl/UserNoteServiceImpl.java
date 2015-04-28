@@ -20,6 +20,11 @@ public class UserNoteServiceImpl implements UserNoteService {
         userNoteDao.saveUserNote(userNote);
     }
 
+    @Transactional
+    public void addWithParams(int noteId, String username, int status) {
+        userNoteDao.addWithParams(noteId, username, status);
+    }
+
     @Transactional(readOnly = true)
     public List<UserNote> listByUser(String username) {
         return userNoteDao.listByUser(username);
@@ -38,4 +43,5 @@ public class UserNoteServiceImpl implements UserNoteService {
     public void deleteUserNote(int noteId, String username) {
         userNoteDao.deleteUserNote(noteId, username);
     }
+
 }

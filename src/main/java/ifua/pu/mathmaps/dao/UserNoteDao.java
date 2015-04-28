@@ -8,6 +8,8 @@ public interface UserNoteDao {
 
     public void saveUserNote(UserNote userNote);
 
+    public void addWithParams(int noteId, String username, int status);
+
     public List<UserNote> listByUser(String username);
 
     public List<UserNote> listByNote(int noteId);

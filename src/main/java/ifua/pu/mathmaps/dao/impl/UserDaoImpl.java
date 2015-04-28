@@ -1,7 +1,6 @@
 package ifua.pu.mathmaps.dao.impl;
 
 import ifua.pu.mathmaps.dao.UserDao;
-import ifua.pu.mathmaps.model.Note;
 import ifua.pu.mathmaps.model.User;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -29,11 +28,11 @@ public class UserDaoImpl implements UserDao {
         return getSession().createCriteria(User.class).list();
     }
 
-    @SuppressWarnings("unchecked")
     public User findByUserName(String username) {
-        Criteria criteria = getSession().createCriteria(User.class);
+        Criteria criteria = getSession().createCriteria(User.class)
+                .add(Restrictions.eq("username", username));
 
-        return (User) criteria.add(Restrictions.eq("username", username)).uniqueResult();
+        return (User) criteria.uniqueResult();
     }
 
     public void deleteUser(String username) {

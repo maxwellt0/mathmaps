@@ -12,9 +12,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.criteria.From;
 import java.util.List;
 
-/**
- * Created by Maxwellt on 11.04.2015.
- */
 @Repository
 public class NoteDaoImpl implements NoteDao {
     @Autowired
