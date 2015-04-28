@@ -1,6 +1,7 @@
 package ifua.pu.mathmaps.controller;
 
 import ifua.pu.mathmaps.model.Note;
+import ifua.pu.mathmaps.model.NoteType;
 import ifua.pu.mathmaps.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -70,6 +71,9 @@ public class NoteController {
                 }
             }
         }
+        note.setOffered(false);
+        note.setPublished(true);
+        note.setType(new NoteType(1, "Означення"));
         noteService.saveNote(note);
 
         return "redirect:listNotes";

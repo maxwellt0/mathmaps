@@ -4,7 +4,7 @@ import javax.persistence.*;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name = "user_roles", catalog = "mathmaps")
+@Table(name = "user_roles")
 public class UserRole {
 
     @Id
@@ -13,7 +13,7 @@ public class UserRole {
     private Integer userRoleId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USERNAME", nullable = false)
+    @JoinColumn(name = "username", nullable = false)
     private User user;
 
     @Column(name = "role", nullable = false, length = 45)

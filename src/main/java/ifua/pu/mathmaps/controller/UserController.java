@@ -142,9 +142,9 @@ public class UserController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         log.debug("Security context returns name " + username);
 
-        log.debug("Saving the note for the user " + username);
+        log.debug("Adding the note for the user " + username);
         userNoteService.addWithParams(noteId, username, 1);
-        log.debug("Saved successful");
+        log.debug("Added successful");
 
         return "redirect:/note/page/" + noteId;
     }

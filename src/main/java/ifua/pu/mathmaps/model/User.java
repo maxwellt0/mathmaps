@@ -6,9 +6,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "USER", catalog = "mathmaps", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "USERNAME"),
-        @UniqueConstraint(columnNames = "EMAIL") })
+@Table(name = "user", catalog = "mathmaps", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email") })
 public class User implements Serializable {
 
     private String username;
@@ -36,7 +36,7 @@ public class User implements Serializable {
     }
 
     @Id
-    @Column(name = "USERNAME", unique = true, nullable = false, length = 16)
+    @Column(name = "username", unique = true, nullable = false, length = 16)
     public String getUsername() {
         return username;
     }
@@ -45,7 +45,7 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    @Column(name = "EMAIL", nullable = false, length = 45)
+    @Column(name = "email", nullable = false, length = 45)
     public String getEmail() {
         return email;
     }
@@ -54,7 +54,7 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    @Column(name = "PASSWORD", nullable = false, length = 16)
+    @Column(name = "password", nullable = false, length = 16)
     public String getPassword() {
         return password;
     }

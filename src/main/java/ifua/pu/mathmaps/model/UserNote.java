@@ -6,7 +6,7 @@ import java.io.Serializable;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name = "user_note", catalog = "mathmaps")
+@Table(name = "user_note")
 public class UserNote implements Serializable{
 
     private Integer userNoteId;
@@ -43,7 +43,7 @@ public class UserNote implements Serializable{
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USERNAME", nullable = false)
+    @JoinColumn(name = "username", nullable = false)
     public User getUser() {
         return user;
     }
@@ -53,7 +53,7 @@ public class UserNote implements Serializable{
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "NOTE_ID", nullable = false)
+    @JoinColumn(name = "note_id", nullable = false)
     public Note getNote() {
         return note;
     }
@@ -62,7 +62,7 @@ public class UserNote implements Serializable{
         this.note = note;
     }
 
-    @Column(name = "STATUS", nullable = false)
+    @Column(name = "status", nullable = false)
     public Integer getStatus() {
         return status;
     }

@@ -12,7 +12,7 @@ import java.util.Set;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name = "NOTE", catalog = "mathmaps")
+@Table(name = "note")
 public class Note implements Serializable{
 
     private Integer noteId;
@@ -20,6 +20,12 @@ public class Note implements Serializable{
     private String name;
 
     private String text;
+
+    private NoteType type;
+
+    private boolean published=false;
+
+    private boolean offered=false;
 
     private Integer rank;
 
@@ -44,7 +50,7 @@ public class Note implements Serializable{
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "NOTE_ID", unique = true, nullable = false)
+    @Column(name = "note_id", unique = true, nullable = false)
     public Integer getNoteId() {
         return noteId;
     }
@@ -53,7 +59,7 @@ public class Note implements Serializable{
         this.noteId = noteId;
     }
 
-    @Column(name = "NAME", nullable = false, length = 45)
+    @Column(name = "name", nullable = false, length = 45)
     public String getName() {
         return name;
     }
@@ -62,7 +68,7 @@ public class Note implements Serializable{
         this.name = name;
     }
 
-    @Column(name = "TEXT", nullable = false, length = 10000)
+    @Column(name = "text", nullable = false, length = 10000)
     public String getText() {
         return text;
     }
@@ -71,13 +77,31 @@ public class Note implements Serializable{
         this.text = text;
     }
 
-    @Column(name = "RANK", nullable = true)
+    @Column(name = "rank", nullable = true)
     public Integer getRank() {
         return rank;
     }
 
     public void setRank(Integer rank) {
         this.rank = rank;
+    }
+
+    @Column(name = "published")
+    public boolean isPublished() {
+        return published;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
+    }
+
+    @Column(name = "offered")
+    public boolean isOffered() {
+        return offered;
+    }
+
+    public void setOffered(boolean offered) {
+        this.offered = offered;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "note", cascade=CascadeType.ALL)
@@ -92,9 +116,9 @@ public class Note implements Serializable{
     @ManyToMany(targetEntity=Note.class)
     @ForeignKey(name="FK_H_NOTE_TO_L_NOTE", inverseName = "FK_L_NOTE_TO_H_NOTE")
     @JoinTable(
-            name = "LINK",
-            joinColumns = @JoinColumn(name = "LOWER_NOTE_ID"),
-            inverseJoinColumns = @JoinColumn(name = "HIGHER_NOTE_ID")
+            name = "link",
+            joinColumns = @JoinColumn(name = "lower_note_id"),
+            inverseJoinColumns = @JoinColumn(name = "higher_note_id")
     )
     @LazyCollection(LazyCollectionOption.FALSE)
     public Set<Note> getHigherNotes() {
@@ -108,9 +132,9 @@ public class Note implements Serializable{
     @ManyToMany(targetEntity=Note.class)
     @ForeignKey(name="FK_L_NOTE_TO_H_NOTE", inverseName = "FK_H_NOTE_TO_L_NOTE")
     @JoinTable(
-            name = "LINK",
-            joinColumns = @JoinColumn(name = "HIGHER_NOTE_ID"),
-            inverseJoinColumns = @JoinColumn(name = "LOWER_NOTE_ID")
+            name = "link",
+            joinColumns = @JoinColumn(name = "higher_note_id"),
+            inverseJoinColumns = @JoinColumn(name = "lower_note_id")
     )
     @LazyCollection(LazyCollectionOption.FALSE)
     public Set<Note> getLowerNotes() {
@@ -121,4 +145,13 @@ public class Note implements Serializable{
         this.lowerNotes = lowerNotes;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "note_type_id")
+    public NoteType getType() {
+        return type;
+    }
+
+    public void setType(NoteType type) {
+        this.type = type;
+    }
 }
