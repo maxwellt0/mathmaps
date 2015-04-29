@@ -2,7 +2,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:url var="actionUrl" value="save" />
+<c:url var="actionUrl" value="/note/add" />
 
 <form:form id="noteForm" commandName="note" method="post"
            action="${actionUrl}" class="pure-form pure-form-aligned">

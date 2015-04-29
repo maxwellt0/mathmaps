@@ -25,6 +25,11 @@ public class NoteServiceImpl implements NoteService{
     }
 
     @Transactional(readOnly = true)
+    public List<Note> getNotesWithStatus(int publishingStatus) {
+        return noteDao.getNotesWithStatus(publishingStatus);
+    }
+
+    @Transactional(readOnly = true)
     public Note getNote(int noteId) {
         return noteDao.getNote(noteId);
     }

@@ -1,10 +1,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
         <div class="body">
             <div class="container">
+
+                <div id="noteDialog" style="display: none;">
+                    <%@ include file="../note/noteForm.jsp" %>
+                </div>
+
+                <button class="btn btn-primary" onclick="addNote()">
+                    Створити
+                </button>
 
                 <div role="tabpanel">
                     <ul class="nav nav-tabs" role="tablist">
@@ -28,23 +37,31 @@
                                         <th width="4%">Складність</th>
                                         <th width="12%">Карта</th>
                                         <th width="12%">Дії</th>
+                                        <th width="12%"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${list}" var="note" varStatus="loopCounter">
+                                    <c:forEach items="${list}" var="listNote" varStatus="loopCounter">
                                         <tr>
-                                            <td><c:out value="${note.noteId}"/></td>
-                                            <td><c:out value="${note.name}"/></td>
-                                            <td><a href="/note/page/${note.noteId}">Текст</a></td>
-                                            <td><c:out value="${note.rank}"/></td>
-                                            <td><a href="/maps/${note.noteId}">Карта</a></td>
+                                            <td><c:out value="${listNote.noteId}"/></td>
+                                            <td><c:out value="${listNote.name}"/></td>
+                                            <td><a href="/note/page/${listNote.noteId}">Текст</a></td>
+                                            <td><c:out value="${listNote.rank}"/></td>
+                                            <td><a href="/maps/${listNote.noteId}">Карта</a></td>
                                             <td>
                                                 <nobr>
-                                                    <button onclick="editNote(${note.noteId});" class="btn btn-default">
+                                                    <button onclick="editNote(${listNote.noteId});" class="btn btn-default">
                                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                                     </button>
-
-                                                    <a href="/user/notes/delete/${note.noteId}" class="btn btn-primary"
+                                                    <c:choose>
+                                                        <c:when test="${listNote.getPublishingStatus() ==2 }">
+                                                            <c:set value="/note/delete/${listNote.noteId}" var="delete"/>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <c:set value="/note/user/delete/${listNote.noteId}" var="deleteUrl"/>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    <a  href="${deleteUrl}" class="btn btn-primary"
                                                        onclick="return confirm('Ви справді хочете видалити цей запис?');">
                                                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                                     </a>
@@ -61,5 +78,6 @@
 
             </div>
         </div>
+        <script type="text/javascript" src='<c:url value="/resources/js/js-for-listNotes.js"/>'></script>
     </tiles:putAttribute>
 </tiles:insertDefinition>

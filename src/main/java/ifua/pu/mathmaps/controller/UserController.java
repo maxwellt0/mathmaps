@@ -26,6 +26,7 @@ public class UserController {
     public static final String TYPES = "types";
 
     private static final Logger log = Logger.getLogger(UserController.class);
+    public static final String NOTE = "note";
 
     @Autowired
     private UserService userService;
@@ -63,7 +64,7 @@ public class UserController {
                 case 5: left.add(note);
                     break;
                 default:
-                    log.debug("Added note status is 0");
+                    log.debug("Added note with status 0");
                     break;
             }
         }
@@ -77,6 +78,7 @@ public class UserController {
 
         map.addAttribute(LISTS, lists);
         map.addAttribute(TYPES, types);
+        map.addAttribute(NOTE, new Note());
 
         return "user/userPage";
     }
@@ -137,28 +139,6 @@ public class UserController {
 //        return "redirect:/user/listUsers";
 //    }
 
-    @RequestMapping("/notes/add/{noteId}")
-    public String addNote(@PathVariable int noteId){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        log.debug("Security context returns name " + username);
 
-        log.debug("Adding the note for the user " + username);
-        userNoteService.addWithParams(noteId, username, 1);
-        log.debug("Added successful");
-
-        return "redirect:/note/page/" + noteId;
-    }
-
-    @RequestMapping("/notes/delete/{noteId}")
-    public String deleteNote(@PathVariable int noteId){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        log.debug("Security context returns name " + username);
-
-        log.debug("Deleting the note from the user " + username + " list.");
-        userNoteService.deleteUserNote(noteId, username);
-        log.debug("Deleted successful");
-
-        return "redirect:/user/page/" + username;
-    }
 
 }

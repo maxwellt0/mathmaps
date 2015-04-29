@@ -26,6 +26,13 @@ public class NoteDaoImpl implements NoteDao {
         return getSession().createCriteria(Note.class).list();
     }
 
+    public List<Note> getNotesWithStatus(int publishingStatus) {
+        Criteria criteria = getSession().createCriteria(Note.class)
+                .add(Restrictions.eq("publishingStatus", publishingStatus));
+
+        return criteria.list();
+    }
+
     public Note getNote(int noteId) {
         return (Note) getSession().get(Note.class, noteId);
     }
