@@ -22,10 +22,8 @@ public class Note implements Serializable{
     private String text;
 
     private NoteType type;
-
-    private boolean published=false;
-
-    private boolean offered=false;
+    // 0 - not published, 1 - offered, 2 - published, 3 - denied
+    private Integer publishingStatus;
 
     private Integer rank;
 
@@ -86,22 +84,13 @@ public class Note implements Serializable{
         this.rank = rank;
     }
 
-    @Column(name = "published")
-    public boolean isPublished() {
-        return published;
+    @Column(name = "publishing_status")
+    public Integer getPublishingStatus() {
+        return publishingStatus;
     }
 
-    public void setPublished(boolean published) {
-        this.published = published;
-    }
-
-    @Column(name = "offered")
-    public boolean isOffered() {
-        return offered;
-    }
-
-    public void setOffered(boolean offered) {
-        this.offered = offered;
+    public void setPublishingStatus(Integer publishingStatus) {
+        this.publishingStatus = publishingStatus;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "note", cascade=CascadeType.ALL)

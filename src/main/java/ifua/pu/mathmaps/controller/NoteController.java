@@ -71,8 +71,7 @@ public class NoteController {
                 }
             }
         }
-        note.setOffered(false);
-        note.setPublished(true);
+        note.setPublishingStatus(0);
         note.setType(new NoteType(1, "Означення"));
         noteService.saveNote(note);
 
