@@ -105,7 +105,12 @@ public class NoteController {
         log.debug("Security context returns name " + username);
 
         log.debug("Deleting the note from the user " + username + " list.");
-        userNoteService.deleteUserNote(noteId, username);
+        Note note = noteService.getNote(noteId);
+        if (note.getPublishingStatus() == 2 ){
+            userNoteService.deleteUserNote(noteId, username);
+        } else {
+            noteService.deleteNote(noteId);
+        }
         log.debug("Deleted successful");
 
         return "redirect:/user/page/" + username;

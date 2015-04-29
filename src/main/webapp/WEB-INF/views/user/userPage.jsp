@@ -53,15 +53,7 @@
                                                     <button onclick="editNote(${listNote.noteId});" class="btn btn-default">
                                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                                     </button>
-                                                    <c:choose>
-                                                        <c:when test="${listNote.getPublishingStatus() ==2 }">
-                                                            <c:set value="/note/delete/${listNote.noteId}" var="delete"/>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <c:set value="/note/user/delete/${listNote.noteId}" var="deleteUrl"/>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                    <a  href="${deleteUrl}" class="btn btn-primary"
+                                                    <a  href="/note/user/delete/${listNote.noteId}" class="btn btn-primary"
                                                        onclick="return confirm('Ви справді хочете видалити цей запис?');">
                                                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                                     </a>
