@@ -55,7 +55,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // Build user's authorities
         for (UserRole userRole : userRoles) {
             setAuths.add(new SimpleGrantedAuthority(userRole.getRole()));
-            log.debug("Found role" + userRole.getRole());
+            log.debug("Found role " + userRole.getRole());
         }
 
         List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);

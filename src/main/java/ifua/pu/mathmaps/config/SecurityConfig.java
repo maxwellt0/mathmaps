@@ -22,6 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
+        auth.inMemoryAuthentication()
+                .withUser("itsme").password("letmein").roles("ADMIN");
     }
 
     @Override
@@ -33,8 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/user/**")
-                .access("hasRole('USER')")
+                .antMatchers("/admin/**").access("hasRole('ADMIN')")
+                .antMatchers("/user/**").access("hasAnyRole('USER','ADMIN')")
                 .and().formLogin()
                 .loginPage("/login").failureUrl("/login?error")
                 .usernameParameter("username")

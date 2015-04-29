@@ -9,9 +9,11 @@ import ifua.pu.mathmaps.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public class UserController {
 
     private static final Logger log = Logger.getLogger(UserController.class);
     public static final String NOTE = "note";
+    public static final String USERS = "users";
+    public static final String USER = "user";
 
     @Autowired
     private UserService userService;
@@ -82,45 +86,55 @@ public class UserController {
 
         return "user/userPage";
     }
-//    @RequestMapping(value = { "/", "/listUsers" })
-//    public String listUsers(Map<String, Object> map) {
-//
-//        map.put("user", new User());
-//
-//        map.put("userList", userService.listUsers());
-//
-//        return "/user/listUsers";
-//    }
 
-//    @RequestMapping("/get/{userId}")
-//    public String getUser(@PathVariable int userId, Map<String, Object> map) {
-//
-//        User user = userService.getUser(userId);
-//
-//        map.put("user", user);
-//
-//        return "/user/userForm";
-//    }
+    @PostAuthorize("hasRole('ADMIN')")
+    @RequestMapping("/admin")
+    public String getAdminPage(ModelMap map) {
+        List<Note> offered = noteService.getNotesWithStatus(1);
+        List<Note> published = noteService.getNotesWithStatus(2);
+        List<Note> denied  = noteService.getNotesWithStatus(3);
 
-//    @RequestMapping(value = "/save", method = RequestMethod.POST)
-//    public String saveUser(@ModelAttribute("user") User user,
-//                           BindingResult result) {
-//
-//        List<Note> list = noteService.listNotes();
-//        Set<Note> set = user.getNotes();
-//        for (Note n : list) {
-//            set.add(n);
-//        }
-//        user.setNotes(set);
-//
-//        userService.saveUser(user);
-//
-//              /*
-//               * Note that there is no slash "/" right after "redirect:"
-//               * So, it redirects to the path relative to the current path
-//               */
-//        return "redirect:listUsers";
-//    }
+        List<List> listsOfNotes = new ArrayList<List>();
+        listsOfNotes.add(offered);
+        listsOfNotes.add(published);
+        listsOfNotes.add(denied);
+
+        String[] types = {"Пропонується", "Опубліковано", "Відхилено"};
+
+        map.addAttribute(LISTS, listsOfNotes);
+        map.addAttribute(TYPES, types);
+
+        return "user/admin";
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping("/admin/users")
+    public String getUserList(ModelMap map) {
+        List<User> users = userService.listUsers();
+
+        map.addAttribute(USERS, users);
+
+        return "user/userList";
+    }
+
+    @RequestMapping("/admin/users/{username}")
+    public String getUserForAdmin(@PathVariable String username, ModelMap map) {
+
+        User user = userService.getUser(username);
+
+        map.addAttribute(USER, user);
+
+        return "/user/userForm";
+    }
+
+    @RequestMapping(value = "/admin/users/update", method = RequestMethod.POST)
+    public String saveUser(@ModelAttribute("user") User user,
+                           BindingResult result) {
+
+        userService.saveUser(user);
+
+        return "redirect:../admin/users";
+    }
 
 //    @RequestMapping("/delete/{userId}")
 //    public String deleteUser(@PathVariable("userId") int id) {
@@ -138,7 +152,5 @@ public class UserController {
 //               */
 //        return "redirect:/user/listUsers";
 //    }
-
-
 
 }
