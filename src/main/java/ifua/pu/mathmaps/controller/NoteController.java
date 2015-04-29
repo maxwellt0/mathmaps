@@ -6,6 +6,7 @@ import ifua.pu.mathmaps.service.NoteService;
 import ifua.pu.mathmaps.service.UserNoteService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -78,7 +79,7 @@ public class NoteController {
         return "redirect:/user/page/" + username;
     }
 
-
+//    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping("/delete/{noteId}")
     public String deleteNote(@PathVariable("noteId") int noteId) {
         noteService.deleteNote(noteId);

@@ -8,6 +8,7 @@ import ifua.pu.mathmaps.service.UserNoteService;
 import ifua.pu.mathmaps.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -41,7 +42,7 @@ public class UserController {
     @Autowired
     private UserNoteService userNoteService;
 
-    @PostAuthorize("#username == principal.name")
+    @PreAuthorize("#username == principal.username")
     @RequestMapping("/page/{username}")
     public String getUserPage(@PathVariable String username,
                               ModelMap map) {
@@ -87,7 +88,6 @@ public class UserController {
         return "user/userPage";
     }
 
-    @PostAuthorize("hasRole('ADMIN')")
     @RequestMapping("/admin")
     public String getAdminPage(ModelMap map) {
         List<Note> offered = noteService.getNotesWithStatus(1);
@@ -107,7 +107,6 @@ public class UserController {
         return "user/admin";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/admin/users")
     public String getUserList(ModelMap map) {
         List<User> users = userService.listUsers();

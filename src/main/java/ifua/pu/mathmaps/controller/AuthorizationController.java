@@ -28,13 +28,6 @@ public class AuthorizationController {
     @Autowired
     private UserRoleService userRoleService;
 
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String adminPage(Map<String, Object> map) {
-        map.put("message", "This page is for ROLE_ADMIN only!");
-
-        return "admin";
-    }
-
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(
             @RequestParam(value = "error", required = false) String error,
