@@ -20,7 +20,7 @@
                             </li>
                         </c:forEach>
                         <li class="pull-right">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                            <button class="btn btn-info" data-toggle="modal" data-target="#myModal">
                                 Створити
                             </button>
                         </li>
@@ -50,10 +50,13 @@
                                             <td><a href="/maps/${listNote.noteId}">Карта</a></td>
                                             <td>
                                                 <nobr>
-                                                    <button onclick="editNote(${listNote.noteId});" class="btn btn-default">
+                                                    <a  href="/note/offer/${listNote.noteId}" class="btn btn-info">
+                                                        <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                                                    </a>
+                                                    <button onclick="editNote(${listNote.noteId});" class="btn btn-warning">
                                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                                     </button>
-                                                    <a  href="/note/user/delete/${listNote.noteId}" class="btn btn-primary"
+                                                    <a  href="/note/user/delete/${listNote.noteId}" class="btn btn-default"
                                                        onclick="return confirm('Ви справді хочете видалити цей запис?');">
                                                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                                     </a>

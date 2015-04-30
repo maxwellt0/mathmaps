@@ -1,5 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
 
@@ -40,11 +41,11 @@
             <%--<button type="submit" class="btn btn-default">Submit</button>--%>
             <%--</form>--%>
             <ul class="nav navbar-nav navbar-right">
-                <c:if test="${pageContext.request.userPrincipal.name == null}">
+                <sec:authorize access="isAnonymous()">
                     <li><a href="/signup">Реєстрація</a></li>
                     <li><a href="/login">Вхід</a></li>
-                </c:if>
-                <c:if test="${pageContext.request.userPrincipal.name != null}">
+                </sec:authorize>
+                <sec:authorize access="isAuthenticated()">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         <span class="glyphicon glyphicon-user"></span>
@@ -53,6 +54,9 @@
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="/user/page/${pageContext.request.userPrincipal.name}">Профайл</a></li>
+                        <sec:authorize access="hasRole('ADMIN')">
+                            <li><a href="/user/admin" >Адміністрування</a></li>
+                        </sec:authorize>
                         <li class="divider"></li>
                         <li>
                             <c:url value="/logout" var="logoutUrl"/>
@@ -69,7 +73,7 @@
                         </li>
                     </ul>
                 </li>
-                </c:if>
+                </sec:authorize>
             </ul>
         </div>
         <!-- /.navbar-collapse -->

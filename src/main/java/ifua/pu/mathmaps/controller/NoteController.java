@@ -2,6 +2,7 @@ package ifua.pu.mathmaps.controller;
 
 import ifua.pu.mathmaps.model.Note;
 import ifua.pu.mathmaps.model.NoteType;
+import ifua.pu.mathmaps.model.UserNote;
 import ifua.pu.mathmaps.service.NoteService;
 import ifua.pu.mathmaps.service.UserNoteService;
 import org.apache.log4j.Logger;
@@ -98,7 +99,39 @@ public class NoteController {
         userNoteService.addWithParams(noteId, username, 1);
         log.debug("Added successful");
 
-        return "redirect:/note/page/" + noteId;
+        return "redirect:/user/page/" + username;
+    }
+
+    @RequestMapping("/offer/{noteId}")
+    public String offerNoteForPublishing(@PathVariable int noteId){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        log.debug("Security context returns name " + username);
+
+//        log.debug("Adding the note for the user " + username);
+        Note note = noteService.getNote(noteId);
+        note.setPublishingStatus(1);
+        noteService.saveNote(note);
+//        log.debug("Added successful");
+
+        return "redirect:/user/page/" + username;
+    }
+
+    @RequestMapping("/publish/{noteId}")
+    public String publishNote(@PathVariable int noteId){
+        Note note = noteService.getNote(noteId);
+        note.setPublishingStatus(2);
+        noteService.saveNote(note);
+
+        return "redirect:/user/admin";
+    }
+
+    @RequestMapping("/deny/{noteId}")
+    public String denyNotePublishing(@PathVariable int noteId){
+        Note note = noteService.getNote(noteId);
+        note.setPublishingStatus(3);
+        noteService.saveNote(note);
+
+        return "redirect:/user/admin";
     }
 
     @RequestMapping("/user/delete/{noteId}")

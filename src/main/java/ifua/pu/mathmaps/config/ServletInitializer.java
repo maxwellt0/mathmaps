@@ -1,5 +1,6 @@
 package ifua.pu.mathmaps.config;
 
+import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -9,12 +10,14 @@ import org.springframework.web.servlet.support.AbstractDispatcherServletInitiali
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+
 public class ServletInitializer extends AbstractDispatcherServletInitializer {
 
     @Override
     protected WebApplicationContext createServletApplicationContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
         context.register(WebMvcConfig.class);
+
         return context;
     }
 
@@ -33,6 +36,10 @@ public class ServletInitializer extends AbstractDispatcherServletInitializer {
         super.onStartup(servletContext);
         registerCharacterEncodingFilter(servletContext, "encodingFilter");
         registerProxyFilter(servletContext, "springSecurityFilterChain");
+
+        WebApplicationContext context = createServletApplicationContext();
+        // Manage the lifecycle of the root application context
+        servletContext.addListener(new ContextLoaderListener(context));
     }
 
     private void registerProxyFilter(ServletContext servletContext, String name) {

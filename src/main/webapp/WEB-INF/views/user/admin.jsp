@@ -26,36 +26,34 @@
                           <table class="table table-responsive">
                               <thead>
                               <tr>
-                                  <th width="12%">Назва</th>
-                                  <th width="12%">Текст</th>
-                                  <th width="4%">Складність</th>
-                                  <th width="12%">Карта</th>
-                                  <th width="12%">Дії</th>
-                                  <th width="12%"></th>
+                                  <th width="22%">Назва</th>
+                                  <th width="8%">Текст</th>
+                                  <th width="8%">Тип</th>
+                                  <th width="8%">Складність</th>
+                                  <th width="8%">Карта</th>
+                                  <th width="8%">Дії</th>
                               </tr>
                               </thead>
                               <tbody>
                               <c:forEach items="${list}" var="listNote" varStatus="loopCounter">
                                   <tr>
-                                      <td><c:out value="${listNote.noteId}"/></td>
                                       <td><c:out value="${listNote.name}"/></td>
                                       <td><a href="/note/page/${listNote.noteId}">Текст</a></td>
+                                      <td><c:out value="${listNote.type.type}"/></td>
                                       <td><c:out value="${listNote.rank}"/></td>
                                       <td><a href="/maps/${listNote.noteId}">Карта</a></td>
                                       <td>
                                           <nobr>
-                                              <button onclick="editNote(${listNote.noteId});" class="btn btn-default">
+                                              <a  href="/note/publish/${listNote.noteId}" class="btn btn-info">
+                                                  <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+                                              </a>
+                                              <a  href="/note/deny/${listNote.noteId}" class="btn btn-info">
+                                                  <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                              </a>
+                                              <button class="btn btn-warning">
                                                   <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                               </button>
-                                              <c:choose>
-                                                  <c:when test="${listNote.getPublishingStatus() ==2 }">
-                                                      <c:set value="/note/delete/${listNote.noteId}" var="delete"/>
-                                                  </c:when>
-                                                  <c:otherwise>
-                                                      <c:set value="/note/user/delete/${listNote.noteId}" var="deleteUrl"/>
-                                                  </c:otherwise>
-                                              </c:choose>
-                                              <a  href="${deleteUrl}" class="btn btn-primary"
+                                              <a  href="/note/delete/${listNote.noteId}" class="btn btn-default"
                                                   onclick="return confirm('Ви справді хочете видалити цей запис?');">
                                                   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                               </a>
