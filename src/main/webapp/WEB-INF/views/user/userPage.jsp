@@ -34,6 +34,7 @@
                                     <tr>
                                         <th width="22%">Назва</th>
                                         <th width="8%">Текст</th>
+                                        <th width="8%">Тип</th>
                                         <th width="8%">Складність</th>
                                         <th width="8%">Карта</th>
                                         <th width="8%">Дії</th>
@@ -44,6 +45,7 @@
                                         <tr>
                                             <td><c:out value="${listNote.name}"/></td>
                                             <td><a href="/note/page/${listNote.noteId}">Текст</a></td>
+                                            <td><c:out value="${listNote.type.type}"/></td>
                                             <td><c:out value="${listNote.rank}"/></td>
                                             <td><a href="/maps/${listNote.noteId}">Карта</a></td>
                                             <td>

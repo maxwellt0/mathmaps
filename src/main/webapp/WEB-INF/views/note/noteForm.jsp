@@ -45,8 +45,8 @@
                                 <label for="status">Статус</label>
                                 <select class="form-control" name="status" id="status">
                                     <option value="1" selected>Заплановано</option>
-                                    <option value="2">Вивчено</option>
-                                    <option value="3">Вивчається</option>
+                                    <option value="2">Вивчається</option>
+                                    <option value="3">Вивчено</option>
                                     <option value="4">Відкладено</option>
                                     <option value="5">Покинуто</option>
                                 </select>
