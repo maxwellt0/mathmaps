@@ -32,6 +32,7 @@ public class UserController {
     public static final String NOTE = "note";
     public static final String USERS = "users";
     public static final String USER = "user";
+    public static final String NOTE_TYPES = "noteTypes";
 
     @Autowired
     private UserService userService;
@@ -84,6 +85,8 @@ public class UserController {
         map.addAttribute(LISTS, lists);
         map.addAttribute(TYPES, types);
         map.addAttribute(NOTE, new Note());
+        map.addAttribute(NOTE_TYPES, noteService.getNoteTypes());
+        log.debug("Note service returned note types: " + noteService.getNoteTypes());
 
         return "user/userPage";
     }

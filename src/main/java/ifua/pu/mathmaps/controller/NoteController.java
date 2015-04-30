@@ -56,13 +56,15 @@ public class NoteController {
     public String addNote(
             @ModelAttribute("note") Note note,
             BindingResult result,
+            @RequestParam int typeId,
+            @RequestParam int status,
             @RequestParam String higherNotesStr,
             @RequestParam String lowerNotesStr ){
 
         linkNotes(note, higherNotesStr, note.getHigherNotes());
         linkNotes(note, lowerNotesStr, note.getLowerNotes());
+        note.setType(noteService.getNoteType(typeId));
         note.setPublishingStatus(0);
-        note.setType(new NoteType(1, "Означення"));
 
         noteService.saveNote(note);
 
@@ -73,7 +75,7 @@ public class NoteController {
         log.debug("Security context returns name " + username);
 
         log.debug("Adding the note for the user " + username);
-        userNoteService.addWithParams(noteId, username, 1);
+        userNoteService.addWithParams(noteId, username, status);
         log.debug("Added successful");
 
         return "redirect:/user/page/" + username;

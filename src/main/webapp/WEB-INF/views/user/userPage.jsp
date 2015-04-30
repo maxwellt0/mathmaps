@@ -7,13 +7,7 @@
         <div class="body">
             <div class="container">
 
-                <div id="noteDialog" style="display: none;">
-                    <%@ include file="../note/noteForm.jsp" %>
-                </div>
-
-                <button class="btn btn-primary" onclick="addNote()">
-                    Створити
-                </button>
+                <%@ include file="../note/noteForm.jsp" %>
 
                 <div role="tabpanel">
                     <ul class="nav nav-tabs" role="tablist">
@@ -22,8 +16,14 @@
                                 <c:set value="${typeIndex.index}" var="index"/>
                                 <a href="#navtab${index}" aria-controls="navtab${index}" role="tab" data-toggle="tab">
                                     <c:out value="${type}"/>
-                                </a></li>
+                                </a>
+                            </li>
                         </c:forEach>
+                        <li class="pull-right">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                Створити
+                            </button>
+                        </li>
                     </ul>
                     <div class="tab-content">
                         <c:forEach items="${lists}" var="list" varStatus="listType">
@@ -32,18 +32,16 @@
                                 <table class="table table-responsive">
                                     <thead>
                                     <tr>
-                                        <th width="12%">Назва</th>
-                                        <th width="12%">Текст</th>
-                                        <th width="4%">Складність</th>
-                                        <th width="12%">Карта</th>
-                                        <th width="12%">Дії</th>
-                                        <th width="12%"></th>
+                                        <th width="22%">Назва</th>
+                                        <th width="8%">Текст</th>
+                                        <th width="8%">Складність</th>
+                                        <th width="8%">Карта</th>
+                                        <th width="8%">Дії</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <c:forEach items="${list}" var="listNote" varStatus="loopCounter">
                                         <tr>
-                                            <td><c:out value="${listNote.noteId}"/></td>
                                             <td><c:out value="${listNote.name}"/></td>
                                             <td><a href="/note/page/${listNote.noteId}">Текст</a></td>
                                             <td><c:out value="${listNote.rank}"/></td>

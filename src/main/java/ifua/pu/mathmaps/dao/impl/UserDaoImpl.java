@@ -23,6 +23,7 @@ public class UserDaoImpl implements UserDao {
         getSession().merge(user);
     }
 
+    @SuppressWarnings("unchecked")
     public List<User> listUsers() {
 
         return getSession().createCriteria(User.class).list();

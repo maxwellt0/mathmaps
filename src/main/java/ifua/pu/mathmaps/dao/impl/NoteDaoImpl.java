@@ -2,6 +2,7 @@ package ifua.pu.mathmaps.dao.impl;
 
 import ifua.pu.mathmaps.dao.NoteDao;
 import ifua.pu.mathmaps.model.Note;
+import ifua.pu.mathmaps.model.NoteType;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,16 +22,26 @@ public class NoteDaoImpl implements NoteDao {
         getSession().merge(note);
     }
 
+    @SuppressWarnings("unchecked")
     public List<Note> listNotes() {
-
         return getSession().createCriteria(Note.class).list();
     }
 
+    @SuppressWarnings("unchecked")
     public List<Note> getNotesWithStatus(int publishingStatus) {
         Criteria criteria = getSession().createCriteria(Note.class)
                 .add(Restrictions.eq("publishingStatus", publishingStatus));
 
         return criteria.list();
+    }
+
+    public NoteType getNoteType(int typeId) {
+        return (NoteType) getSession().get(NoteType.class, typeId);
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<NoteType> getNoteTypes() {
+        return getSession().createCriteria(NoteType.class).list();
     }
 
     public Note getNote(int noteId) {

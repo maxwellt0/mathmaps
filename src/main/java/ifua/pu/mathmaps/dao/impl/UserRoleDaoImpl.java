@@ -22,6 +22,7 @@ public class UserRoleDaoImpl implements UserRoleDao {
         getSession().merge(userRole);
     }
 
+    @SuppressWarnings("unchecked")
     public List<UserRole> listUserRoles() {
         return getSession().createCriteria(UserRole.class).list();
     }

@@ -39,6 +39,7 @@ public class UserNoteDaoImpl implements UserNoteDao {
         saveUserNote(userNote);
     }
 
+    @SuppressWarnings("unchecked")
     public List<UserNote> listByUser(String username) {
         Criteria userCriteria = getSession().createCriteria(User.class)
                 .add(Restrictions.eq("username", username));
@@ -50,6 +51,7 @@ public class UserNoteDaoImpl implements UserNoteDao {
         return criteria.list();
     }
 
+    @SuppressWarnings("unchecked")
     public List<UserNote> listByNote(int noteId) {
         Note note = (Note) getSession().get(Note.class, noteId);
 

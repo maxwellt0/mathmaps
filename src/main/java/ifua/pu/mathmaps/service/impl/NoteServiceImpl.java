@@ -2,6 +2,7 @@ package ifua.pu.mathmaps.service.impl;
 
 import ifua.pu.mathmaps.dao.NoteDao;
 import ifua.pu.mathmaps.model.Note;
+import ifua.pu.mathmaps.model.NoteType;
 import ifua.pu.mathmaps.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,16 @@ public class NoteServiceImpl implements NoteService{
     @Transactional(readOnly = true)
     public List<Note> getNotesWithStatus(int publishingStatus) {
         return noteDao.getNotesWithStatus(publishingStatus);
+    }
+
+    @Transactional(readOnly = true)
+    public List<NoteType> getNoteTypes() {
+        return noteDao.getNoteTypes();
+    }
+
+    @Transactional(readOnly = true)
+    public NoteType getNoteType(int typeId) {
+        return noteDao.getNoteType(typeId);
     }
 
     @Transactional(readOnly = true)

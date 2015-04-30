@@ -24,3 +24,6 @@
 .panel-heading {
     text-align: center;
 }
+.input-group > textarea {
+    height: 20em;
+}
