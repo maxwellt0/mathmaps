@@ -104,6 +104,8 @@ public class NoteController {
             @RequestParam String higherNotesStr,
             @RequestParam String lowerNotesStr ){
 
+        linkNotes(note, higherNotesStr, note.getHigherNotes());
+        linkNotes(note, lowerNotesStr, note.getLowerNotes());
         note.setType(noteService.getNoteType(typeId));
         note.setPublishingStatus(0);
 
@@ -184,16 +186,15 @@ public class NoteController {
     }
 
     private void linkNotes(Note note, String associatedNotesStr, Set<Note> associatedNotes) {
-//        String[] assocNotesNames = associatedNotesStr.split(",");
-//        for (String name : assocNotesNames) {
-//            log.debug("Creating an association between note " + note.getName() + " and note " + name);
-//            if (!name.equals("")) {
-//                Note assocNote;
-//                if ()
-//                if (assocNote.getName()!=null) {
-//                    associatedNotes.add(assocNote);
-//                }
-//            }
-//        }
+        String[] assocNotesNames = associatedNotesStr.split(",");
+        for (String name : assocNotesNames) {
+            log.debug("Creating an association between note " + note.getName() + " and note " + name);
+            if (!name.equals("")) {
+                Note assocNote = noteService.getNotesByName(name).get(0);
+                if (assocNote.getName()!=null) {
+                    associatedNotes.add(assocNote);
+                }
+            }
+        }
     }
 }

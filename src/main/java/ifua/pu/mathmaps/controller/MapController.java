@@ -22,6 +22,8 @@ public class MapController {
     public static final String H_NAMES = "hNames";
     public static final String NOTE_NAME = "noteName";
     public static final String L_NAMES = "lNames";
+    public static final String L_TYPES = "lTypes";
+    public static final String H_TYPES = "hTypes";
 
     @Autowired
     private NoteService noteService;
@@ -42,10 +44,14 @@ public class MapController {
 
         String hNames = toJavascriptArray(hNotes);
         String lNames = toJavascriptArray(lNotes);
+//        int[] hTypes = toTypesArray(hNotes);
+//        int[] lTypes = toTypesArray(lNotes);
 
         map.addAttribute(NOTE_NAME, note.getName());
         map.addAttribute(H_NAMES, hNames);
         map.addAttribute(L_NAMES, lNames);
+//        map.addAttribute(H_TYPES, hTypes);
+//        map.addAttribute(L_TYPES, lTypes);
 
         return "note/noteMap";
     }
@@ -61,5 +67,14 @@ public class MapController {
         }
         sb.append("]");
         return sb.toString();
+    }
+
+    public int[] toTypesArray(ArrayList<Note> arr){
+        int[] types = new int[arr.size()];
+        for (int i=0; i<arr.size(); i++) {
+            types[i] = arr.get(i).getType().getNoteTypeId();
+        }
+
+        return types;
     }
 }

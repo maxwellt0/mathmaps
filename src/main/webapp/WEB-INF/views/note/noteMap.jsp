@@ -6,11 +6,11 @@
     <div class="body">
       <script src='<c:url value="/resources/js/go-debug.js"/>'></script>
           <div id="myDiagramDiv"
-               style="width:1200px; height:1000px; background-color: #e0e0e0;"></div>
+               style="width:1200px; height:1000px; background-color: #ffffff;"></div>
           <script>
           function fillMapData(data, names){
               for (var i=0; i<names.length; i++){
-                  data[data.length] = { key: names[i] };
+                  data[data.length] = { key: names[i], color : "#abcdff" };
               }
               return data;
           }
@@ -28,17 +28,37 @@
           var noteName = '${noteName}';
           var hNames = JSON.parse('${hNames}');
           var lNames = JSON.parse('${lNames}');
+          var hTypes = '${hTypes}';
+          var lTypes = '${lTypes}';
 
           var mapData = [];
           mapData = fillMapData(mapData, hNames);
           mapData = fillMapData(mapData, lNames);
-          mapData[mapData.length] = { key: noteName };
+          mapData[mapData.length] = { key: noteName, color : "#ffcdcd" };
 
           var linkData = [];
-          linkData = fillLinkData(linkData, hNames, noteName, 0);
-          linkData = fillLinkData(linkData, lNames, noteName, 1);
+          linkData = fillLinkData(linkData, hNames, noteName, 1);
+          linkData = fillLinkData(linkData, lNames, noteName, 0);
 
-            var $ = go.GraphObject.make;
+          function mouseEnter(e, obj) {
+              var shape = obj.findObject("SHAPE");
+              shape.fill = "#6DAB80";
+              shape.stroke = "#A6E6A1";
+              var text = obj.findObject("TEXT");
+              text.stroke = "white";
+          }
+
+          function mouseLeave(e, obj) {
+              var shape = obj.findObject("SHAPE");
+              // Return the Shape's fill and stroke to the defaults
+              shape.fill = obj.data.color;
+              shape.stroke = null;
+              // Return the TextBlock's stroke to its default
+              var text = obj.findObject("TEXT");
+              text.stroke = "black";
+          }
+
+          var $ = go.GraphObject.make;
             var myDiagram =
                     $(go.Diagram, "myDiagramDiv",
                             {
@@ -47,19 +67,40 @@
                             });
 
             // the template we defined earlier
-            myDiagram.nodeTemplate =
-                    $(go.Node, "Horizontal",
-                            { background: "#44CCFF" },
-                            $(go.TextBlock, "Default Text",
-                                    { margin: 12, stroke: "white", font: "bold 16px sans-serif" },
-                                    new go.Binding("text", "key"))
-                    );
-            //    myDiagram.linkTemplate =
-            //            $(go.Link,
-            //                    { routing: go.Link.Orthogonal, corner: 3 },
-            //                    $(go.Shape),
-            //                    $(go.Shape, { toArrow: "Standard" })
-            //            );
+//            myDiagram.nodeTemplate =
+//                    $(go.Node, "Horizontal",
+//                        //    { background: "#eeeeee" },
+//                            $(go.TextBlock, "Default Text",
+//                                    { margin: 12, stroke: "black", font: "bold 16px sans-serif" },
+//                                    new go.Binding("text", "key")
+//                            ),
+//                            $(go.Shape, "Rectangle",
+//                                    { strokeWidth: 2, stroke: null, name: "SHAPE" },
+//                                    new go.Binding("fill", "color")
+//                            )
+//                    );
+          myDiagram.nodeTemplate =
+                  $(go.Node, "Auto",
+                          {
+                              mouseEnter: mouseEnter,
+                              mouseLeave: mouseLeave
+                          },
+                          $(go.Shape, "Rectangle",
+                                  { strokeWidth: 2, stroke: null, name: "SHAPE" },
+                                  new go.Binding("fill", "color")
+                          ),
+                          $(go.TextBlock,
+                                  { margin: 10, font: "bold 18px Verdana", name: "TEXT" },
+                                  new go.Binding("text", "key")
+                          ),
+                          { click: function(e, obj) { window.location.href = "/note/"; } }
+                  );
+//                myDiagram.linkTemplate =
+//                        $(go.Link,
+//                                { routing: go.Link.Orthogonal, corner: 3 },
+//                                $(go.Shape),
+//                                $(go.Shape, { toArrow: "Standard" })
+//                        );
 
             myDiagram.layout = $(go.LayeredDigraphLayout, { columnSpacing: 30, layerSpacing: 50 });
 
