@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,10 @@ public class NoteController {
 
     private static final Logger log = Logger.getLogger(NoteController.class);
 
+    public static final String NOTE_TYPES = "noteTypes";
+    public static final String NOTE_LIST = "noteList";
+    public static final String NOTE = "note";
+
     @Autowired
     private NoteService noteService;
 
@@ -32,7 +37,7 @@ public class NoteController {
 
     @RequestMapping(value = { "/", "/listNotes" })
     public String listNotes(Map<String, Object> map) {
-        map.put("noteList", noteService.getNotesWithStatus(2));
+        map.put(NOTE_LIST, noteService.getNotesWithStatus(2));
 
         return "note/noteList";
     }
@@ -40,17 +45,9 @@ public class NoteController {
     @RequestMapping("/page/{noteId}")
     public String getNotePage(@PathVariable int noteId, Map<String, Object> map) {
         Note note = noteService.getNote(noteId);
-        map.put("note", note);
+        map.put(NOTE, note);
 
         return "note/notePage";
-    }
-
-    @RequestMapping("/get/{noteId}")
-    public String getNote(@PathVariable int noteId, Map<String, Object> map) {
-        Note note = noteService.getNote(noteId);
-        map.put("note", note);
-
-        return "/note/noteForm";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -67,9 +64,7 @@ public class NoteController {
         note.setType(noteService.getNoteType(typeId));
         note.setPublishingStatus(0);
 
-        noteService.saveNote(note);
-
-        int noteId = noteService.getNoteByName(note.getName()).getNoteId();
+        int noteId = noteService.saveNote(note).getNoteId();
         log.debug("Got the note with id " + noteId);
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -89,6 +84,43 @@ public class NoteController {
 
         return "redirect:/note/listNotes";
     }
+
+    @RequestMapping("/edit/{noteId}")
+    public String getEditNotePage(@PathVariable("noteId") int noteId, ModelMap map) {
+        Note note = noteService.getNote(noteId);
+
+        map.addAttribute(NOTE, note);
+        map.addAttribute(NOTE_TYPES, noteService.getNoteTypes());
+
+        return "note/noteEdit";
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String updateNote(
+            @ModelAttribute("note") Note note,
+            BindingResult result,
+            @RequestParam int typeId,
+            @RequestParam int status,
+            @RequestParam String higherNotesStr,
+            @RequestParam String lowerNotesStr ){
+
+        note.setType(noteService.getNoteType(typeId));
+        note.setPublishingStatus(0);
+
+        int noteId = noteService.saveNote(note).getNoteId();
+        log.debug("Got the note with id " + noteId);
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        log.debug("Security context returns name " + username);
+
+        UserNote userNote = userNoteService.getUserNote(noteId, username);
+        userNote.setStatus(status);
+        userNoteService.saveUserNote(userNote);
+
+        return "redirect:/note/page/" + noteId;
+    }
+
+
 
     @RequestMapping("/user/add/{noteId}")
     public String addNoteToUserSet(@PathVariable int noteId){
@@ -152,15 +184,16 @@ public class NoteController {
     }
 
     private void linkNotes(Note note, String associatedNotesStr, Set<Note> associatedNotes) {
-        String[] assocNotesNames = associatedNotesStr.split(",");
-        for (String name : assocNotesNames) {
-            log.debug("Creating an association between note " + note.getName() + " and note " + name);
-            if (!name.equals("")) {
-                Note assocNote = noteService.getNoteByName(name);
-                if (assocNote.getName()!=null) {
-                    associatedNotes.add(assocNote);
-                }
-            }
-        }
+//        String[] assocNotesNames = associatedNotesStr.split(",");
+//        for (String name : assocNotesNames) {
+//            log.debug("Creating an association between note " + note.getName() + " and note " + name);
+//            if (!name.equals("")) {
+//                Note assocNote;
+//                if ()
+//                if (assocNote.getName()!=null) {
+//                    associatedNotes.add(assocNote);
+//                }
+//            }
+//        }
     }
 }

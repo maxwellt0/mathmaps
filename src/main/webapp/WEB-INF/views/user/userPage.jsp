@@ -33,7 +33,6 @@
                                     <thead>
                                     <tr>
                                         <th width="22%">Назва</th>
-                                        <th width="8%">Текст</th>
                                         <th width="8%">Тип</th>
                                         <th width="8%">Складність</th>
                                         <th width="8%">Карта</th>
@@ -43,8 +42,7 @@
                                     <tbody>
                                     <c:forEach items="${list}" var="listNote" varStatus="loopCounter">
                                         <tr>
-                                            <td><c:out value="${listNote.name}"/></td>
-                                            <td><a href="/note/page/${listNote.noteId}">Текст</a></td>
+                                            <td><a href="/note/page/${listNote.noteId}"><c:out value="${listNote.name}"/></a></td>
                                             <td><c:out value="${listNote.type.type}"/></td>
                                             <td><c:out value="${listNote.rank}"/></td>
                                             <td><a href="/maps/${listNote.noteId}">Карта</a></td>
@@ -53,9 +51,9 @@
                                                     <a  href="/note/offer/${listNote.noteId}" class="btn btn-info">
                                                         <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
                                                     </a>
-                                                    <button onclick="editNote(${listNote.noteId});" class="btn btn-warning">
+                                                    <a  href="/note/edit/${listNote.noteId}" class="btn btn-warning">
                                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                                    </button>
+                                                    </a>
                                                     <a  href="/note/user/delete/${listNote.noteId}" class="btn btn-default"
                                                        onclick="return confirm('Ви справді хочете видалити цей запис?');">
                                                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>

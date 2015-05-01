@@ -18,8 +18,8 @@ public class NoteDaoImpl implements NoteDao {
     @Autowired
     SessionFactory sessionFactory;
 
-    public void saveNote(Note note) {
-        getSession().merge(note);
+    public Note saveNote(Note note) {
+        return (Note) getSession().merge(note);
     }
 
     @SuppressWarnings("unchecked")
@@ -48,10 +48,12 @@ public class NoteDaoImpl implements NoteDao {
         return (Note) getSession().get(Note.class, noteId);
     }
 
-    public Note getNoteByName(String name) {
-        Criteria criteria = getSession().createCriteria(Note.class);
+    @SuppressWarnings("unchecked")
+    public List<Note> getNotesByName(String name) {
+        Criteria criteria = getSession().createCriteria(Note.class)
+                .add(Restrictions.eq("name", name));
 
-        return (Note) criteria.add(Restrictions.eq("name", name)).uniqueResult();
+        return criteria.list();
     }
 
     public void deleteNote(int noteId) {

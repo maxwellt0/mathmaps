@@ -14,7 +14,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                    ${note.text}
+                   ${note.text}
             </div>
         </div>
     </div>

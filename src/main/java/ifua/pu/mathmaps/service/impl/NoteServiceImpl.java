@@ -16,8 +16,8 @@ public class NoteServiceImpl implements NoteService{
     private NoteDao noteDao;
 
     @Transactional
-    public void saveNote(Note note) {
-        noteDao.saveNote(note);
+    public Note saveNote(Note note) {
+        return (Note) noteDao.saveNote(note);
     }
 
     @Transactional(readOnly = true)
@@ -46,8 +46,8 @@ public class NoteServiceImpl implements NoteService{
     }
 
     @Transactional(readOnly = true)
-    public Note getNoteByName(String name) {
-        return noteDao.getNoteByName(name);
+    public List<Note> getNotesByName(String name) {
+        return noteDao.getNotesByName(name);
     }
 
     @Transactional

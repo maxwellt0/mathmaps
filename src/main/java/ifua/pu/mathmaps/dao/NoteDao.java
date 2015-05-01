@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface NoteDao {
 
-    public void saveNote(Note note);
+    public Note saveNote(Note note);
 
     public List<Note> listNotes();
 
@@ -19,7 +19,7 @@ public interface NoteDao {
 
     public Note getNote(int noteId);
 
-    public Note getNoteByName(String name);
+    public List<Note> getNotesByName(String name);
 
     public void deleteNote(int noteId);
 }
