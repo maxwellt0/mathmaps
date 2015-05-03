@@ -19,22 +19,28 @@ import java.util.Map;
 public class MapController {
 
     private static final Logger log = Logger.getLogger(MapController.class);
+
     public static final String H_NAMES = "hNames";
     public static final String NOTE_NAME = "noteName";
     public static final String L_NAMES = "lNames";
     public static final String L_TYPES = "lTypes";
     public static final String H_TYPES = "hTypes";
     public static final String NAMES = "names";
+    public static final String LINKS = "links";
 
     @Autowired
     private NoteService noteService;
 
     @RequestMapping("/")
     public String getMapsPage(ModelMap map) {
-        List<Note> notes = noteService.getNotesWithStatus(2);
-        String names = toJavascriptArray(notes);
+        List<Note> notes = noteService.getNotesWithStatus(0);
+        String names = toNamesArray(notes);
+        log.debug("links = " + names);
+        String links = toLinksArray(notes);
+        log.debug("links = " + links);
 
         map.addAttribute(NAMES, names);
+        map.addAttribute(LINKS, links);
 
         return "map/globalMap";
     }
@@ -46,8 +52,8 @@ public class MapController {
         List<Note> hNotes = new ArrayList<Note>(note.getHigherNotes());
         List<Note> lNotes = new ArrayList<Note>(note.getLowerNotes());
 
-        String hNames = toJavascriptArray(hNotes);
-        String lNames = toJavascriptArray(lNotes);
+        String hNames = toNamesArray(hNotes);
+        String lNames = toNamesArray(lNotes);
         int[] hTypes = toTypesArray(hNotes);
         int[] lTypes = toTypesArray(lNotes);
 
@@ -60,7 +66,7 @@ public class MapController {
         return "note/noteMap";
     }
 
-    public static String toJavascriptArray(List<Note> arr){
+    public static String toNamesArray(List<Note> arr){
         StringBuffer sb = new StringBuffer();
         sb.append("[");
         for(int i=0; i<arr.size(); i++){
@@ -70,6 +76,24 @@ public class MapController {
             }
         }
         sb.append("]");
+        return sb.toString();
+    }
+
+    public static String toLinksArray(List<Note> arr){
+        StringBuffer sb = new StringBuffer();
+        sb.append("[");
+        String prefix="";
+        for(int i=0; i<arr.size(); i++){
+            for (Note n : arr.get(i).getHigherNotes()) {
+                sb.append(prefix);
+                prefix = ",";
+                sb.append("{\"from\":\"").append(n.getName())
+                        .append("\",\"to\":\"").append(arr.get(i).getName())
+                        .append("\"}");
+            }
+        }
+        sb.append("]");
+
         return sb.toString();
     }
 

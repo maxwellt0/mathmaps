@@ -27,13 +27,13 @@ public class UserController {
 
     public static final String LISTS = "lists";
     public static final String TYPES = "types";
-
-    private static final Logger log = Logger.getLogger(UserController.class);
     public static final String NOTE = "note";
     public static final String USERS = "users";
     public static final String USER = "user";
     public static final String NOTE_TYPES = "noteTypes";
     public static final String ALL_NOTES = "allNotes";
+
+    private static final Logger log = Logger.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
