@@ -6,7 +6,7 @@
         <div class="body">
             <script src='<c:url value="/resources/js/go-debug.js"/>'></script>
             <div id="myDiagramDiv"
-                 style="width:100%; height:88vh; float: left;  background-color: #ffffff;"></div>
+                 style="width:1200px; height:1000px; background-color: #ffffff;"></div>
             <script>
                 var mapData = JSON.parse('${names}');
                 var linkData = JSON.parse('${links}');
