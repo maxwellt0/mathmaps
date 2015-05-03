@@ -56,11 +56,11 @@ public class NoteController {
             BindingResult result,
             @RequestParam int typeId,
             @RequestParam int status,
-            @RequestParam String higherNotesStr,
-            @RequestParam String lowerNotesStr ){
+            @RequestParam int[] higher,
+            @RequestParam int[] lower ){
 
-        linkNotes(note, higherNotesStr, note.getHigherNotes());
-        linkNotes(note, lowerNotesStr, note.getLowerNotes());
+        linkNotes(note, higher, note.getHigherNotes());
+        linkNotes(note, lower, note.getLowerNotes());
         note.setType(noteService.getNoteType(typeId));
         note.setPublishingStatus(0);
 
@@ -101,11 +101,11 @@ public class NoteController {
             BindingResult result,
             @RequestParam int typeId,
             @RequestParam int status,
-            @RequestParam String higherNotesStr,
-            @RequestParam String lowerNotesStr ){
+            @RequestParam int[] higher,
+            @RequestParam int[] lower ){
 
-        linkNotes(note, higherNotesStr, note.getHigherNotes());
-        linkNotes(note, lowerNotesStr, note.getLowerNotes());
+        linkNotes(note, higher, note.getHigherNotes());
+        linkNotes(note, lower, note.getLowerNotes());
         note.setType(noteService.getNoteType(typeId));
         note.setPublishingStatus(0);
 
@@ -185,16 +185,11 @@ public class NoteController {
         return "redirect:/user/page/" + username;
     }
 
-    private void linkNotes(Note note, String associatedNotesStr, Set<Note> associatedNotes) {
-        String[] assocNotesNames = associatedNotesStr.split(",");
-        for (String name : assocNotesNames) {
-            log.debug("Creating an association between note " + note.getName() + " and note " + name);
-            if (!name.equals("")) {
-                Note assocNote = noteService.getNotesByName(name).get(0);
-                if (assocNote.getName()!=null) {
-                    associatedNotes.add(assocNote);
-                }
-            }
+    private void linkNotes(Note note, int[] assocNotesIds, Set<Note> associatedNotes) {;
+        for (int id : assocNotesIds) {
+            Note assocNote = noteService.getNote(id);
+            log.debug("Creating an association between note " + note.getName() + " and note " + assocNote.getName());
+                associatedNotes.add(assocNote);
         }
     }
 }

@@ -45,3 +45,10 @@
     /*width: 40px;*/
     /*text-align: center;*/
 /*}*/
+
+.input-group {
+    margin-bottom: 15px;
+}
+.btn-add {
+    margin-bottom: 10px;
+}

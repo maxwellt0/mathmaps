@@ -24,13 +24,17 @@ public class MapController {
     public static final String L_NAMES = "lNames";
     public static final String L_TYPES = "lTypes";
     public static final String H_TYPES = "hTypes";
+    public static final String NAMES = "names";
 
     @Autowired
     private NoteService noteService;
 
     @RequestMapping("/")
-    public String getMapsPage(Map<String, Object> map) {
+    public String getMapsPage(ModelMap map) {
+        List<Note> notes = noteService.getNotesWithStatus(2);
+        String names = toJavascriptArray(notes);
 
+        map.addAttribute(NAMES, names);
 
         return "map/globalMap";
     }
@@ -39,24 +43,24 @@ public class MapController {
     public String getNoteMap(@PathVariable int noteId, ModelMap map) {
         Note note = noteService.getNote(noteId);
 
-        ArrayList<Note> hNotes = new ArrayList<Note>(note.getHigherNotes());
-        ArrayList<Note> lNotes = new ArrayList<Note>(note.getLowerNotes());
+        List<Note> hNotes = new ArrayList<Note>(note.getHigherNotes());
+        List<Note> lNotes = new ArrayList<Note>(note.getLowerNotes());
 
         String hNames = toJavascriptArray(hNotes);
         String lNames = toJavascriptArray(lNotes);
-//        int[] hTypes = toTypesArray(hNotes);
-//        int[] lTypes = toTypesArray(lNotes);
+        int[] hTypes = toTypesArray(hNotes);
+        int[] lTypes = toTypesArray(lNotes);
 
         map.addAttribute(NOTE_NAME, note.getName());
         map.addAttribute(H_NAMES, hNames);
         map.addAttribute(L_NAMES, lNames);
-//        map.addAttribute(H_TYPES, hTypes);
-//        map.addAttribute(L_TYPES, lTypes);
+        map.addAttribute(H_TYPES, hTypes);
+        map.addAttribute(L_TYPES, lTypes);
 
         return "note/noteMap";
     }
 
-    public static String toJavascriptArray(ArrayList<Note> arr){
+    public static String toJavascriptArray(List<Note> arr){
         StringBuffer sb = new StringBuffer();
         sb.append("[");
         for(int i=0; i<arr.size(); i++){
@@ -69,7 +73,7 @@ public class MapController {
         return sb.toString();
     }
 
-    public int[] toTypesArray(ArrayList<Note> arr){
+    public int[] toTypesArray(List<Note> arr){
         int[] types = new int[arr.size()];
         for (int i=0; i<arr.size(); i++) {
             types[i] = arr.get(i).getType().getNoteTypeId();

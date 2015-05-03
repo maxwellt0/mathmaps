@@ -33,6 +33,7 @@ public class UserController {
     public static final String USERS = "users";
     public static final String USER = "user";
     public static final String NOTE_TYPES = "noteTypes";
+    public static final String ALL_NOTES = "allNotes";
 
     @Autowired
     private UserService userService;
@@ -56,6 +57,8 @@ public class UserController {
         List<Note> postponed = new ArrayList<Note>();
         List<Note> left = new ArrayList<Note>();
 
+        List<Note> allNotes = new ArrayList<Note>();
+
         for (UserNote un :userNotes) {
             Note note = un.getNote();
             switch (un.getStatus()) {
@@ -73,6 +76,7 @@ public class UserController {
                     log.debug("Added note with status 0");
                     break;
             }
+            allNotes.add(note);
         }
         List<List> lists = new ArrayList<List>();
         lists.add(scheduled);
@@ -86,6 +90,7 @@ public class UserController {
         map.addAttribute(TYPES, types);
         map.addAttribute(NOTE, new Note());
         map.addAttribute(NOTE_TYPES, noteService.getNoteTypes());
+        map.addAttribute(ALL_NOTES, allNotes);
         log.debug("Note service returned note types: " + noteService.getNoteTypes());
 
         return "user/userPage";

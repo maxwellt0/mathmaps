@@ -1,14 +1,18 @@
-$("#btnLeft").click(function () {
-    var selectedItem = $("#rightValues option:selected");
-    $("#leftValues").append(selectedItem);
+$("#fromLower").click(function () {
+    var selectedItem = $("#lower option:selected");
+    $("#assocNotes").append(selectedItem);
 });
 
-$("#btnRight").click(function () {
-    var selectedItem = $("#leftValues option:selected");
-    $("#rightValues").append(selectedItem);
+$("#toLower").click(function () {
+    var selectedItem = $("#assocNotes option:selected");
+    $("#lower").append(selectedItem);
 });
-//
-//$("#rightValues").change(function () {
-//    var selectedItem = $("#rightValues option:selected");
-//    $("#txtRight").val(selectedItem.text());
-//});
+$("#fromHigher").click(function () {
+    var selectedItem = $("#higher option:selected");
+    $("#assocNotes").append(selectedItem);
+});
+
+$("#toHigher").click(function () {
+    var selectedItem = $("#assocNotes option:selected");
+    $("#higher").append(selectedItem);
+});

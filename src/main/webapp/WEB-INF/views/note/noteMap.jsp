@@ -37,8 +37,8 @@
           mapData[mapData.length] = { key: noteName, color : "#ffcdcd" };
 
           var linkData = [];
-          linkData = fillLinkData(linkData, hNames, noteName, 1);
-          linkData = fillLinkData(linkData, lNames, noteName, 0);
+          linkData = fillLinkData(linkData, hNames, noteName, 0);
+          linkData = fillLinkData(linkData, lNames, noteName, 1);
 
           function mouseEnter(e, obj) {
               var shape = obj.findObject("SHAPE");

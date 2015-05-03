@@ -4,7 +4,8 @@
 
 <c:url var="actionUrl" value="/note/add"/>
 <!-- Modal -->
-<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"aria-hidden="true">
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -53,27 +54,49 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label for="higher">Використовує:</label>
+                        </div>
+                        <div class="col-lg-6"></div>
+                        <div class="col-lg-3">
+                            <label for="lower">Використовується у:</label>
+                        </div>
+                    </div>
+                    <legend></legend>
                     <section>
                         <div class="row">
-                            <div class="col-lg-5">
+                            <div class="col-lg-3">
                                 <div class="input-group">
-                                    <select class="form-control" id="leftValues" size="5" multiple>
-                                        <c:forEach var="lNote" items="${assocNotes}">
-                                            <option value="${lNote.noteId}"><c:out value="${lNote.name}"/></option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                <div class="input-group">
-                                    <input type="text" id="txtLeft"/>
+                                    <select name="higher" class="form-control" id="higher" size="8" multiple></select>
                                 </div>
                             </div>
-                            <div class="col-lg-2">
-                                <input type="button" id="btnLeft" value="&lt;&lt;"/>
-                                <input type="button" id="btnRight" value="&gt;&gt;"/>
+                            <div class="col-lg-1">
+                                <a id="toHigher" class="btn btn-info btn-add">
+                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                </a>
+                                <a id="fromHigher" class="btn btn-default btn-add">
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                </a>
                             </div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-4">
+                                <select class="form-control" id="assocNotes" size="8" multiple>
+                                    <c:forEach var="assocNote" items="${allNotes}">
+                                        <option value="${assocNote.noteId}"><c:out value="${assocNote.name}"/></option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="col-lg-1">
+                                <a id="toLower" class="btn btn-info btn-add">
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                </a>
+                                <a id="fromLower" class="btn btn-default btn-add">
+                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                            <div class="col-lg-3">
                                 <div class="input-group">
-                                    <select name="lower[]" class="form-control" id="rightValues" size="4" multiple></select>
+                                    <select name="lower" class="form-control" id="lower" size="8" multiple></select>
                                 </div>
                             </div>
                         </div>
