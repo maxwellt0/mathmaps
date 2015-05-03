@@ -2,6 +2,7 @@ package ifua.pu.mathmaps.dao.impl;
 
 import ifua.pu.mathmaps.dao.NoteDao;
 import ifua.pu.mathmaps.model.Note;
+import ifua.pu.mathmaps.model.NoteNote;
 import ifua.pu.mathmaps.model.NoteType;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -33,6 +34,23 @@ public class NoteDaoImpl implements NoteDao {
                 .add(Restrictions.eq("publishingStatus", publishingStatus));
 
         return criteria.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<NoteNote> getLinksWithStatus(int higherId, int lowerId, int publishingStatus) {
+        Note higherNote = (Note) getSession().get(Note.class, higherId);
+        Note lowerNote = (Note) getSession().get(Note.class, lowerId);
+
+        if (higherNote.getPublishingStatus() == publishingStatus
+                && lowerNote.getPublishingStatus() == publishingStatus) {
+            Criteria criteria = getSession().createCriteria(NoteNote.class)
+                    .add(Restrictions.eq("higherNoteId", higherId))
+                    .add(Restrictions.eq("lowerNoteId", lowerId));
+
+            return criteria.list();
+        }
+
+        return null;
     }
 
     public NoteType getNoteType(int typeId) {
