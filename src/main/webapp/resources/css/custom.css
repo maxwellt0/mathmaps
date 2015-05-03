@@ -27,3 +27,21 @@
 .input-group > textarea {
     height: 20em;
 }
+
+/*SELECT, INPUT[type="text"] {*/
+    /*width: 160px;*/
+    /*box-sizing: border-box;*/
+/*}*/
+/*SECTION {*/
+    /*padding: 8px;*/
+    /*background-color: #f0f0f0;*/
+    /*overflow: auto;*/
+/*}*/
+/*SECTION > DIV {*/
+    /*float: left;*/
+    /*padding: 4px;*/
+/*}*/
+/*SECTION > DIV + DIV {*/
+    /*width: 40px;*/
+    /*text-align: center;*/
+/*}*/

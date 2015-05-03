@@ -4,13 +4,13 @@
 
 <c:url var="actionUrl" value="/note/add"/>
 <!-- Modal -->
-<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title" id="myModalLabel">Створення нотатки</h4>
             </div>
             <div class="modal-body">
@@ -53,15 +53,31 @@
                             </div>
                         </div>
                     </div>
-                    <div class="input-group">
-                        <label for="lower">Використані факти</label>
-                        <input class="form-control" name="lowerNotesStr" placeholder="через кому" id="lower"/>
-                    </div>
-                    <div class="input-group">
-                        <label for="higher">Використовується у</label>
-                        <input class="form-control" name="higherNotesStr" placeholder="через кому" id="higher"/>
-                    </div>
-                    <form:input path="noteId" type="hidden"/>
+                    <section>
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="input-group">
+                                    <select class="form-control" id="leftValues" size="5" multiple>
+                                        <c:forEach var="lNote" items="${assocNotes}">
+                                            <option value="${lNote.noteId}"><c:out value="${lNote.name}"/></option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" id="txtLeft"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <input type="button" id="btnLeft" value="&lt;&lt;"/>
+                                <input type="button" id="btnRight" value="&gt;&gt;"/>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="input-group">
+                                    <select name="lower[]" class="form-control" id="rightValues" size="4" multiple></select>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </form:form>
             </div>
             <div class="modal-footer">
@@ -71,3 +87,5 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src='<c:url value="/resources/js/note/noteForm.js"/>'></script>
