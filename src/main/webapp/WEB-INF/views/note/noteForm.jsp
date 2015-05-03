@@ -14,15 +14,15 @@
                 </button>
                 <h4 class="modal-title" id="myModalLabel">Створення нотатки</h4>
             </div>
-            <div class="modal-body">
-                <form:form commandName="note" method="post" action="${actionUrl}" id="noteForm">
+            <form:form commandName="note" method="post" action="${actionUrl}" id="noteForm">
+                <div class="modal-body">
                     <div class="input-group">
                         <label for="name">Назва</label>
-                        <input class="form-control" name="name" placeholder="Назва" id="name"/>
+                        <input class="form-control" name="name" placeholder="Назва" id="name" required/>
                     </div>
                     <div class="input-group">
                         <label for="text">Текст</label>
-                        <textarea class="form-control" name="text" placeholder="Текст" id="text"></textarea>
+                        <textarea class="form-control" name="text" placeholder="Текст" id="text" required></textarea>
                     </div>
                     <div class="row">
                         <div class="col-lg-4">
@@ -101,12 +101,12 @@
                             </div>
                         </div>
                     </section>
-                </form:form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Відміна</button>
-                <button type="button" class="btn btn-primary" id="form-submit">Зберегти</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Відміна</button>
+                    <button type="submit" class="btn btn-primary" id="form-submit">Зберегти</button>
+                </div>
+            </form:form>
         </div>
     </div>
 </div>

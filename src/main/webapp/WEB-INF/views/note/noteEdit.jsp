@@ -13,7 +13,7 @@
                 <div class="page-header">
                     <h1>
                         <label for="name">Назва</label>
-                        <input class="form-control" name="name" placeholder="Назва" id="name" value="${note.name}"/>
+                        <input class="form-control" name="name" placeholder="Назва" id="name" value="${note.name}" required/>
                     </h1>
                 </div>
                 <div class="row">
@@ -22,8 +22,8 @@
 
                         <div class="input-group">
                             <label for="text">Текст</label>
-                            <textarea class="form-control" name="text" placeholder="Текст" id="text"><c:out
-                                    value="${note.text}"/></textarea>
+                            <textarea class="form-control" name="text" placeholder="Текст" id="text" required><c:out
+                                    value="${note.text}" /></textarea>
                         </div>
                         <div class="row">
                             <div class="col-lg-4">

@@ -48,12 +48,14 @@
                                             <td><a href="/maps/${listNote.noteId}">Карта</a></td>
                                             <td>
                                                 <nobr>
-                                                    <a  href="/note/offer/${listNote.noteId}" class="btn btn-info">
-                                                        <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-                                                    </a>
-                                                    <a  href="/note/edit/${listNote.noteId}" class="btn btn-warning">
-                                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                                    </a>
+                                                    <c:if test="${note.publishingStatus != 2}">
+                                                        <a  href="/note/offer/${listNote.noteId}" class="btn btn-info">
+                                                            <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                                                        </a>
+                                                        <a  href="/note/edit/${listNote.noteId}" class="btn btn-warning">
+                                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                                        </a>
+                                                    </c:if>
                                                     <a  href="/note/user/delete/${listNote.noteId}" class="btn btn-default"
                                                        onclick="return confirm('Ви справді хочете видалити цей запис?');">
                                                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
