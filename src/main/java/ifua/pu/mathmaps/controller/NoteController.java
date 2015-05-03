@@ -14,10 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/note")
@@ -28,6 +25,12 @@ public class NoteController {
     public static final String NOTE_TYPES = "noteTypes";
     public static final String NOTE_LIST = "noteList";
     public static final String NOTE = "note";
+    public static final String IS_ADDED = "isAdded";
+    public static final String ALL_NOTES = "allNotes";
+    public static final String LOWER_IDS = "lowerIds";
+    public static final String HIGHER_IDS = "higherIds";
+    public static final String CURRENT_TYPE = "currentType";
+    public static final String CURRENT_STATUS = "currentStatus";
 
     @Autowired
     private NoteService noteService;
@@ -44,8 +47,17 @@ public class NoteController {
 
     @RequestMapping("/page/{noteId}")
     public String getNotePage(@PathVariable int noteId, Map<String, Object> map) {
+        boolean isAdded = false;
+        if (SecurityContextHolder.getContext().getAuthentication() != null){
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            if (userNoteService.getUserNote(noteId, username) != null) {
+                isAdded = true;
+            }
+        }
+
         Note note = noteService.getNote(noteId);
         map.put(NOTE, note);
+        map.put(IS_ADDED, isAdded);
 
         return "note/notePage";
     }
@@ -56,8 +68,8 @@ public class NoteController {
             BindingResult result,
             @RequestParam int typeId,
             @RequestParam int status,
-            @RequestParam int[] higher,
-            @RequestParam int[] lower ){
+            @RequestParam(value = "higher", required = false) Integer[] higher,
+            @RequestParam(value = "lower", required = false) Integer[] lower ){
 
         linkNotes(note, higher, note.getHigherNotes());
         linkNotes(note, lower, note.getLowerNotes());
@@ -87,10 +99,26 @@ public class NoteController {
 
     @RequestMapping("/edit/{noteId}")
     public String getEditNotePage(@PathVariable("noteId") int noteId, ModelMap map) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Note note = noteService.getNote(noteId);
+        String lowerIdsStr = toIdArray(note.getLowerNotes());
+        String higherIdsStr = toIdArray(note.getHigherNotes());
+
+        List<UserNote> userNotes = userNoteService.listByUser(username);
+        List<Note> allUserNotes = new ArrayList<Note>();
+        int currentStatus = userNoteService.getUserNote(noteId, username).getStatus();
+
+        for (UserNote un : userNotes) {
+            allUserNotes.add(un.getNote());
+        }
 
         map.addAttribute(NOTE, note);
+        map.addAttribute(CURRENT_TYPE, note.getType().getNoteTypeId());
+        map.addAttribute(CURRENT_STATUS, currentStatus);
         map.addAttribute(NOTE_TYPES, noteService.getNoteTypes());
+        map.addAttribute(ALL_NOTES, allUserNotes);
+        map.addAttribute(LOWER_IDS, lowerIdsStr);
+        map.addAttribute(HIGHER_IDS, higherIdsStr);
 
         return "note/noteEdit";
     }
@@ -101,8 +129,8 @@ public class NoteController {
             BindingResult result,
             @RequestParam int typeId,
             @RequestParam int status,
-            @RequestParam int[] higher,
-            @RequestParam int[] lower ){
+            @RequestParam(value = "higher", required = false) Integer[] higher,
+            @RequestParam(value = "lower", required = false) Integer[] lower ){
 
         linkNotes(note, higher, note.getHigherNotes());
         linkNotes(note, lower, note.getLowerNotes());
@@ -120,20 +148,6 @@ public class NoteController {
         userNoteService.saveUserNote(userNote);
 
         return "redirect:/note/page/" + noteId;
-    }
-
-
-
-    @RequestMapping("/user/add/{noteId}")
-    public String addNoteToUserSet(@PathVariable int noteId){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        log.debug("Security context returns name " + username);
-
-        log.debug("Adding the note for the user " + username);
-        userNoteService.addWithParams(noteId, username, 1);
-        log.debug("Added successful");
-
-        return "redirect:/user/page/" + username;
     }
 
     @RequestMapping("/offer/{noteId}")
@@ -168,6 +182,18 @@ public class NoteController {
         return "redirect:/user/admin";
     }
 
+    @RequestMapping("/user/add/{noteId}")
+    public String addNoteToUserSet(@PathVariable int noteId){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        log.debug("Security context returns name " + username);
+
+        log.debug("Adding the note for the user " + username);
+        userNoteService.addWithParams(noteId, username, 1);
+        log.debug("Added successful");
+
+        return "redirect:/note/page/" + noteId;
+    }
+
     @RequestMapping("/user/delete/{noteId}")
     public String deleteNoteFromUserSet(@PathVariable int noteId){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -185,11 +211,26 @@ public class NoteController {
         return "redirect:/user/page/" + username;
     }
 
-    private void linkNotes(Note note, int[] assocNotesIds, Set<Note> associatedNotes) {;
-        for (int id : assocNotesIds) {
-            Note assocNote = noteService.getNote(id);
-            log.debug("Creating an association between note " + note.getName() + " and note " + assocNote.getName());
+    private void linkNotes(Note note, Integer[] assocNotesIds, Set<Note> associatedNotes) {
+        if (assocNotesIds != null){
+            for (int id : assocNotesIds) {
+                Note assocNote = noteService.getNote(id);
+                log.debug("Creating an association between note " + note.getName() + " and note " + assocNote.getName());
                 associatedNotes.add(assocNote);
+            }
         }
+    }
+
+    public static String toIdArray(Set<Note> noteSet) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("[");
+        String prefix = "";
+        for (Note n : noteSet) {
+            sb.append(prefix);
+            prefix = ",";
+            sb.append(n.getNoteId());
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }

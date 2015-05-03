@@ -7,6 +7,7 @@ $("#toLower").click(function () {
     var selectedItem = $("#assocNotes option:selected");
     $("#lower").append(selectedItem);
 });
+
 $("#fromHigher").click(function () {
     var selectedItem = $("#higher option:selected");
     $("#assocNotes").append(selectedItem);

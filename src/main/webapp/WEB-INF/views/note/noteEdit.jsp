@@ -29,8 +29,7 @@
                             <div class="col-lg-4">
                                 <div class="input-group">
                                     <label for="type">Тип</label>
-                                    <select class="form-control" name="typeId" id="type"
-                                            value="${note.type.noteTypeId}">
+                                    <select class="form-control" name="typeId" id="type">
                                         <c:forEach var="noteType" items="${noteTypes}">
                                             <option value="${noteType.noteTypeId}">${noteType.type}</option>
                                         </c:forEach>
@@ -71,8 +70,7 @@
                             <div class="row">
                                 <div class="col-lg-3">
                                     <div class="input-group">
-                                        <select name="higher" class="form-control" id="higher" size="8"
-                                                multiple></select>
+                                        <select name="higher" class="form-control" id="higher" size="8" multiple></select>
                                     </div>
                                 </div>
                                 <div class="col-lg-1">
@@ -101,8 +99,7 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="input-group">
-                                        <select name="lower" class="form-control" id="lower" size="8"
-                                                multiple></select>
+                                        <select name="lower" class="form-control" id="lower" size="8" multiple></select>
                                     </div>
                                 </div>
                             </div>
@@ -116,5 +113,13 @@
                 </div>
             </div>
         </div>
+        <script>
+            var lowerIds = JSON.parse("${lowerIds}");
+            var higherIds = JSON.parse("${higherIds}");
+            var status = "${currentStatus}";
+            var typeId = "${currentType}";
+        </script>
+        <script type="text/javascript" src='<c:url value="/resources/js/note/noteForm.js"/>'></script>
+        <script type="text/javascript" src='<c:url value="/resources/js/note/noteEdit.js"/>'></script>
     </tiles:putAttribute>
 </tiles:insertDefinition>
