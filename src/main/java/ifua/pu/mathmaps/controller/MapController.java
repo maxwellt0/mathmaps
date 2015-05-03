@@ -35,7 +35,7 @@ public class MapController {
     public String getMapsPage(ModelMap map) {
         List<Note> notes = noteService.getNotesWithStatus(0);
         String names = toNamesArray(notes);
-        log.debug("links = " + names);
+        log.debug("names = " + names);
         String links = toLinksArray(notes);
         log.debug("links = " + links);
 
@@ -70,7 +70,27 @@ public class MapController {
         StringBuffer sb = new StringBuffer();
         sb.append("[");
         for(int i=0; i<arr.size(); i++){
-            sb.append("\"").append(arr.get(i).getName()).append("\"");
+            sb.append("{\"key\":\"").append(arr.get(i).getName());
+            switch (arr.get(i).getType().getNoteTypeId()) {
+                case 1 : sb.append("\",\"color\":\"#337ab7");
+                    break;
+                case 2 : sb.append("\",\"color\":\"#5cb85c");
+                    break;
+                case 3 : sb.append("\",\"color\":\"#5bc0de");
+                    break;
+                case 4 : sb.append("\",\"color\":\"#f0ad4e");
+                    break;
+                case 5 : sb.append("\",\"color\":\"#d9534f");
+                    break;
+                case 6 : sb.append("\",\"color\":\"#9900CC");
+                    break;
+                case 7: sb.append("\",\"color\":\"#99FF66");
+                    break;
+                case 8: sb.append("\",\"color\":\"#FFFF00");
+                    break;
+                default: sb.append("\",\"color\":\"#abcdff");
+            }
+            sb.append("\"}");
             if(i+1 < arr.size()){
                 sb.append(",");
             }

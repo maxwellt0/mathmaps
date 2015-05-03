@@ -8,12 +8,6 @@
           <div id="myDiagramDiv"
                style="width:1200px; height:1000px; background-color: #ffffff;"></div>
           <script>
-          function fillMapData(data, names){
-              for (var i=0; i<names.length; i++){
-                  data[data.length] = { key: names[i], color : "#abcdff" };
-              }
-              return data;
-          }
           // direction: 0 = from names to note, 1 = from note to names
           function fillLinkData(data, names, note, direction){
               for (var i=0; i<names.length; i++){

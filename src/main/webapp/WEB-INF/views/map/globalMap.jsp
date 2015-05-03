@@ -6,23 +6,10 @@
         <div class="body">
             <script src='<c:url value="/resources/js/go-debug.js"/>'></script>
             <div id="myDiagramDiv"
-                 style="width:1200px; height:1000px; background-color: #ffffff;"></div>
+                 style="width:100%; height:88vh; float: left;  background-color: #ffffff;"></div>
             <script>
-                function fillMapData(data, names) {
-                    for (var i = 0; i < names.length; i++) {
-                        data[data.length] = {key: names[i], color: "#abcdff"};
-                    }
-                    return data;
-                }
-
-                var names = JSON.parse('${names}');
-
-
-                var mapData = [];
-                mapData = fillMapData(mapData, names);
-
+                var mapData = JSON.parse('${names}');
                 var linkData = JSON.parse('${links}');
-                alert(linkData);
 
                 function mouseEnter(e, obj) {
                     var shape = obj.findObject("SHAPE");
@@ -57,11 +44,11 @@
                                     mouseLeave: mouseLeave
                                 },
                                 $(go.Shape, "Rectangle",
-                                        {strokeWidth: 2, stroke: null, name: "SHAPE"},
+                                        {strokeWidth: 1, stroke: null, name: "SHAPE"},
                                         new go.Binding("fill", "color")
                                 ),
                                 $(go.TextBlock,
-                                        {margin: 10, font: "bold 18px Verdana", name: "TEXT"},
+                                        {margin: 10, font: "bold 16px Verdana", name: "TEXT"},
                                         new go.Binding("text", "key")
                                 ),
                                 {
@@ -77,7 +64,8 @@
                 //                                $(go.Shape, { toArrow: "Standard" })
                 //                        );
 
-                myDiagram.layout = $(go.LayeredDigraphLayout, {columnSpacing: 30, layerSpacing: 50});
+                myDiagram.layout = $(go.LayeredDigraphLayout, {direction: 90, columnSpacing: 30, layerSpacing: 50});
+                myDiagram.layout.packOption = 10;
 
                 var model = $(go.GraphLinksModel);
                 model.nodeDataArray = mapData;
