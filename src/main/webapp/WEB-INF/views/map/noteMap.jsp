@@ -57,12 +57,12 @@
                                     }
                                 }
                         );
-                myDiagram.linkTemplate =
-                        $(go.Link,
-                                {routing: go.Link.Orthogonal, corner: 3},
-                                $(go.Shape),
-                                $(go.Shape, {toArrow: "Standard"})
-                        );
+//                myDiagram.linkTemplate =
+//                        $(go.Link,
+//                                {routing: go.Link.Orthogonal, corner: 3},
+//                                $(go.Shape),
+//                                $(go.Shape, {toArrow: "Standard"})
+//                        );
 
                 myDiagram.layout = $(go.LayeredDigraphLayout, {direction: 270, columnSpacing: 30, layerSpacing: 50});
                 myDiagram.layout.packOption = 10;

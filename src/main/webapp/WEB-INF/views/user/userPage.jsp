@@ -29,7 +29,7 @@
                         <c:forEach items="${lists}" var="list" varStatus="listType">
                             <c:set value="${listType.index}" var="index"/>
                             <div role="tabpanel" class="tab-pane" id="navtab${index}">
-                                <table class="table table-responsive">
+                                <table class="table table-responsive paginated">
                                     <thead>
                                     <tr>
                                         <th width="22%">Назва</th>
@@ -74,5 +74,8 @@
             </div>
         </div>
         <script type="text/javascript" src='<c:url value="/resources/js/js-for-listNotes.js"/>'></script>
+        <script type="text/javascript" src="<c:url value='/resources/js/jquery/jquery-ui-i18n.min.js'/>"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/jquery/jquery.dataTables.min.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/jquery/dataTables.bootstrap.js"/>"></script>
     </tiles:putAttribute>
 </tiles:insertDefinition>

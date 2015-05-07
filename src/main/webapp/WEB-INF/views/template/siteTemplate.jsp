@@ -7,8 +7,8 @@
     <title>MathMaps</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/custom.css"/>"/>
-    <link rel="stylesheet" href='<c:url value="/resources/css/jquery-ui.min.css"/>'>
+    <link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/dataTables.bootstrap.css"/>"/>
+    <link type="text/css" rel="stylesheet" href='<c:url value="/resources/css/jquery-ui.min.css"/>'>
     <link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/>"/>
     <link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/custom.css"/>"/>
 

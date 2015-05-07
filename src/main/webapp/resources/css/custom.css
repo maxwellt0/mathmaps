@@ -28,27 +28,16 @@
     height: 20em;
 }
 
-/*SELECT, INPUT[type="text"] {*/
-    /*width: 160px;*/
-    /*box-sizing: border-box;*/
-/*}*/
-/*SECTION {*/
-    /*padding: 8px;*/
-    /*background-color: #f0f0f0;*/
-    /*overflow: auto;*/
-/*}*/
-/*SECTION > DIV {*/
-    /*float: left;*/
-    /*padding: 4px;*/
-/*}*/
-/*SECTION > DIV + DIV {*/
-    /*width: 40px;*/
-    /*text-align: center;*/
-/*}*/
-
 .input-group {
     margin-bottom: 15px;
 }
 .btn-add {
     margin-bottom: 10px;
+}
+
+.note-text {
+    font-size: 20pt;
+}
+.btn-map {
+    margin-right: 15px;
 }

@@ -7,6 +7,7 @@
 <div class="body">
     <div class="container">
         <div class="page-header">
+            <h4><c:out value="${note.type.type}"/></h4>
             <h1><c:out value="${note.name}"/>
                 <sec:authorize access="isAuthenticated()">
                     <c:if test="${isAdded}">
@@ -22,10 +23,13 @@
                         </a>
                     </c:if>
                 </sec:authorize>
+                <a href="/maps/${note.noteId}" class="btn btn-default pull-right btn-map">
+                    Карта
+                </a>
             </h1>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 note-text">
                    ${note.text}
             </div>
         </div>

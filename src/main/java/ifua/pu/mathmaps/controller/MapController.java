@@ -27,8 +27,8 @@ public class MapController {
     private NoteService noteService;
 
     @RequestMapping("/")
-    public String getMapsPage(ModelMap map) {
-        List<Note> notes = noteService.getNotesWithStatus(0);
+    public String getGlobalMap(ModelMap map) {
+        List<Note> notes = noteService.getNotesWithStatus(2);
         String names = toNodesArray(notes);
         log.debug("names = " + names);
         String links = toLinksArray(notes);
@@ -128,6 +128,7 @@ public class MapController {
                     .append("\",\"to\":\"").append(note.getNoteId())
                     .append("\"}");
         }
+        prefix = ",";
         for (Note n : note.getLowerNotes()) {
             sb.append(prefix);
             sb.append("{\"from\":\"").append(note.getNoteId())
