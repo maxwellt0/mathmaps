@@ -31,6 +31,8 @@ public class NoteController {
     public static final String HIGHER_IDS = "higherIds";
     public static final String CURRENT_TYPE = "currentType";
     public static final String CURRENT_STATUS = "currentStatus";
+    public static final String NOTE_NAME = "noteName";
+    public static final String NOTE_TEXT = "noteText";
 
     @Autowired
     private NoteService noteService;
@@ -60,6 +62,16 @@ public class NoteController {
         map.put(IS_ADDED, isAdded);
 
         return "note/notePage";
+    }
+
+    @RequestMapping("/{noteId}")
+    public String getNote(@PathVariable int noteId, ModelMap map) {
+
+        Note note = noteService.getNote(noteId);
+        map.put(NOTE_NAME, note.getName());
+        map.put(NOTE_TEXT, note.getText());
+
+        return "/map/noteModal";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)

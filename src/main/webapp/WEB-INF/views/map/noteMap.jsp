@@ -4,10 +4,24 @@
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
         <div class="body">
+            <%@ include file="noteModal.jsp" %>
+
+            <button class="btn btn-info" data-toggle="modal" data-target="#myModal">
+                Створити
+            </button>
             <script src='<c:url value="/resources/js/go-debug.js"/>'></script>
             <div id="myDiagramDiv"
                  style="width:100%; height:88vh; background-color: #ffffff;"></div>
             <script>
+                var showNoteMiniPage = function (noteId){
+                    $('#noteModal').modal('show');
+                    $.ajax({
+                        url: '/note/' + noteId,
+                        success: function (result) {
+
+                        }
+                    })
+                };
                 var mapData = JSON.parse('${names}');
                 var linkData = JSON.parse('${links}');
 
@@ -64,8 +78,8 @@
 //                                $(go.Shape, {toArrow: "Standard"})
 //                        );
 
-                myDiagram.layout = $(go.LayeredDigraphLayout, {direction: 270, columnSpacing: 30, layerSpacing: 50});
-                myDiagram.layout.packOption = 10;
+                myDiagram.layout = $(go.LayeredDigraphLayout, {direction: 90, columnSpacing: 30, layerSpacing: 50});
+//                myDiagram.layout.packOption = 10;
 
                 var model = $(go.GraphLinksModel);
                 model.nodeDataArray = mapData;

@@ -7,7 +7,7 @@
 <div class="body">
     <div class="container">
         <div class="page-header">
-            <h4><c:out value="${note.type.type}"/></h4>
+            <%--<h4><c:out value="${note.type.type}"/></h4>--%>
             <h1><c:out value="${note.name}"/>
                 <sec:authorize access="isAuthenticated()">
                     <c:if test="${isAdded}">

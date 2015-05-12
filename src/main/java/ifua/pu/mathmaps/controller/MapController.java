@@ -44,11 +44,13 @@ public class MapController {
     public String getNoteMap(@PathVariable int noteId, ModelMap map) {
         Note note = noteService.getNote(noteId);
         List<Note> notes = new ArrayList<Note>();
-        notes.addAll(note.getLowerNotes());
         notes.addAll(note.getHigherNotes());
+//        notes.addAll(note.getLowerNotes());
         notes.add(note);
         String nodes = toNodesArray(notes);
         String links = noteLinksToArray(note);
+        log.debug("nodes = " + nodes);
+        log.debug("links = " + links);
 
         map.addAttribute(NAMES, nodes);
         map.addAttribute(LINKS, links);
@@ -107,9 +109,9 @@ public class MapController {
             for (Note n : arr.get(i).getHigherNotes()) {
                 sb.append(prefix);
                 prefix = ",";
-                sb.append("{\"from\":\"").append(n.getNoteId())
-                        .append("\",\"to\":\"").append(arr.get(i).getNoteId())
-                        .append("\"}");
+                sb.append("{\"from\":").append(n.getNoteId())
+                        .append(",\"to\":").append(arr.get(i).getNoteId())
+                        .append("}");
             }
         }
         sb.append("]");
@@ -128,13 +130,13 @@ public class MapController {
                     .append("\",\"to\":\"").append(note.getNoteId())
                     .append("\"}");
         }
-        prefix = ",";
-        for (Note n : note.getLowerNotes()) {
-            sb.append(prefix);
-            sb.append("{\"from\":\"").append(note.getNoteId())
-                    .append("\",\"to\":\"").append(n.getNoteId())
-                    .append("\"}");
-        }
+//        prefix = ",";
+//        for (Note n : note.getLowerNotes()) {
+//            sb.append(prefix);
+//            sb.append("{\"from\":\"").append(note.getNoteId())
+//                    .append("\",\"to\":\"").append(n.getNoteId())
+//                    .append("\"}");
+//        }
         sb.append("]");
 
         return sb.toString();

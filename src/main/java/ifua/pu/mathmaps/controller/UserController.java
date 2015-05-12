@@ -143,23 +143,4 @@ public class UserController {
         return "redirect:../admin/users";
     }
 
-
-
-//    @RequestMapping("/delete/{userId}")
-//    public String deleteUser(@PathVariable("userId") int id) {
-//
-//        userService.deleteUser(id);
-//
-//              /*
-//               * redirects to the path relative to the current path
-//               */
-//        // return "redirect:../listUsers";
-//
-//              /*
-//               * Note that there is the slash "/" right after "redirect:"
-//               * So, it redirects to the path relative to the project root path
-//               */
-//        return "redirect:/user/listUsers";
-//    }
-
 }

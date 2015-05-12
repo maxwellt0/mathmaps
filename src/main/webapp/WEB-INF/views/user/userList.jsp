@@ -61,7 +61,5 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript"
-            src='<c:url value="/resources/js/js-for-listUsers.js"/>'></script>
 </tiles:putAttribute>
 </tiles:insertDefinition>
