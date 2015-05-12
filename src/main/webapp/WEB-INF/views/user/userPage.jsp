@@ -16,6 +16,9 @@
                                 <c:set value="${typeIndex.index}" var="index"/>
                                 <a href="#navtab${index}" aria-controls="navtab${index}" role="tab" data-toggle="tab">
                                     <c:out value="${type}"/>
+                                    <span class="badge">
+                                        <c:out value="${lists.get(typeIndex.index).size()}"/>
+                                    </span>
                                 </a>
                             </li>
                         </c:forEach>
@@ -46,7 +49,7 @@
                                             <td><c:out value="${listNote.type.type}"/></td>
                                             <td><c:out value="${listNote.rank}"/></td>
                                             <td><a href="/maps/${listNote.noteId}">Карта</a></td>
-                                            <td>
+                                            <td class="table-actions">
                                                 <nobr>
                                                     <c:if test="${note.publishingStatus != 2}">
                                                         <a  href="/note/offer/${listNote.noteId}" class="btn btn-info">
@@ -75,7 +78,8 @@
         </div>
         <script type="text/javascript" src='<c:url value="/resources/js/js-for-listNotes.js"/>'></script>
         <script type="text/javascript" src="<c:url value='/resources/js/jquery/jquery-ui-i18n.min.js'/>"></script>
-        <script type="text/javascript" src="<c:url value="/resources/js/jquery/jquery.dataTables.min.js"/>"></script>
-        <script type="text/javascript" src="<c:url value="/resources/js/jquery/dataTables.bootstrap.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/datatables/jquery.dataTables.min.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/datatables/dataTables.bootstrap.js"/>"></script>
+        <script type="text/javascript" src='<c:url value="/resources/js/datatables/datatables.js"/>'></script>
     </tiles:putAttribute>
 </tiles:insertDefinition>

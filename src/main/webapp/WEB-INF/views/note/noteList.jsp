@@ -10,13 +10,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-
-                        <br>
-                        <table class="table table-responsive">
+                        <table class="table table-responsive paginated">
                             <thead>
                             <tr>
                                 <th width="22%">Назва</th>
-                                <th width="8%">Текст</th>
                                 <th width="8%">Тип</th>
                                 <th width="8%">Складність</th>
                                 <th width="8%">Карта</th>
@@ -25,8 +22,7 @@
                             <tbody>
                             <c:forEach items="${noteList}" var="note" varStatus="loopCounter">
                                 <tr>
-                                    <td><c:out value="${note.name}"/></td>
-                                    <td><a href="/note/page/${note.noteId}">Текст</a></td>
+                                    <td><a href="/note/page/${note.noteId}"><c:out value="${note.name}"/></a></td>
                                     <td><c:out value="${note.type.type}"/></td>
                                     <td><c:out value="${note.rank}"/></td>
                                     <td><a href="/maps/${note.noteId}">Карта</a></td>
@@ -37,7 +33,10 @@
                     </div>
                 </div>
             </div>
-
         </div>
+        <script type="text/javascript" src="<c:url value='/resources/js/jquery/jquery-ui-i18n.min.js'/>"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/datatables/jquery.dataTables.min.js"/>"></script>
+        <script type="text/javascript" src="<c:url value="/resources/js/datatables/dataTables.bootstrap.js"/>"></script>
+        <script type="text/javascript" src='<c:url value="/resources/js/datatables/global.datatables.js"/>'></script>
     </tiles:putAttribute>
 </tiles:insertDefinition>

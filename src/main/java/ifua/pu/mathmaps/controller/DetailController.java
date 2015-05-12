@@ -12,7 +12,7 @@ public class DetailController {
 
     @RequestMapping(value = "/")
     public String getIndexPage() {
-        return "index";
+        return "redirect:/note/";
     }
 
 }

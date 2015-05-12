@@ -16,18 +16,21 @@
                           <c:set value="${typeIndex.index}" var="index"/>
                           <a href="#navtab${index}" aria-controls="navtab${index}" role="tab" data-toggle="tab">
                               <c:out value="${type}"/>
-                          </a></li>
+                              <span class="badge">
+                                  <c:out value="${lists.get(typeIndex.index).size()}"/>
+                              </span>
+                          </a>
+                      </li>
                   </c:forEach>
               </ul>
               <div class="tab-content">
                   <c:forEach items="${lists}" var="list" varStatus="listType">
                       <c:set value="${listType.index}" var="index"/>
                       <div role="tabpanel" class="tab-pane" id="navtab${index}">
-                          <table class="table table-responsive">
+                          <table class="table table-responsive paginated">
                               <thead>
                               <tr>
                                   <th width="22%">Назва</th>
-                                  <th width="8%">Текст</th>
                                   <th width="8%">Тип</th>
                                   <th width="8%">Складність</th>
                                   <th width="8%">Карта</th>
@@ -37,12 +40,11 @@
                               <tbody>
                               <c:forEach items="${list}" var="listNote" varStatus="loopCounter">
                                   <tr>
-                                      <td><c:out value="${listNote.name}"/></td>
-                                      <td><a href="/note/page/${listNote.noteId}">Текст</a></td>
+                                      <td><a href="/note/page/${listNote.noteId}"><c:out value="${listNote.name}"/></a></td>
                                       <td><c:out value="${listNote.type.type}"/></td>
                                       <td><c:out value="${listNote.rank}"/></td>
                                       <td><a href="/maps/${listNote.noteId}">Карта</a></td>
-                                      <td>
+                                      <td class="table-actions">
                                           <nobr>
                                               <a  href="/note/publish/${listNote.noteId}" class="btn btn-info">
                                                   <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
@@ -69,5 +71,10 @@
           </div>
       </div>
     </div>
+      <script type="text/javascript" src="<c:url value='/resources/js/jquery/jquery-ui-i18n.min.js'/>"></script>
+      <script type="text/javascript" src="<c:url value="/resources/js/datatables/jquery.dataTables.min.js"/>"></script>
+      <script type="text/javascript" src="<c:url value="/resources/js/datatables/dataTables.bootstrap.js"/>"></script>
+      <script type="text/javascript" src='<c:url value="/resources/js/datatables/datatables.js"/>'></script>
+      <script type="text/javascript" src='<c:url value="/resources/js/admin.js"/>'></script>
   </tiles:putAttribute>
 </tiles:insertDefinition>

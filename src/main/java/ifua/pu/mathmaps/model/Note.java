@@ -22,6 +22,7 @@ public class Note implements Serializable{
     private String text;
 
     private NoteType type;
+
     // 0 - not published, 1 - offered, 2 - published, 3 - denied
     private Integer publishingStatus;
 
