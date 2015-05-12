@@ -68,8 +68,7 @@ public class NoteController {
     public String getNote(@PathVariable int noteId, ModelMap map) {
 
         Note note = noteService.getNote(noteId);
-        map.put(NOTE_NAME, note.getName());
-        map.put(NOTE_TEXT, note.getText());
+        map.put(NOTE, note);
 
         return "/map/noteModal";
     }

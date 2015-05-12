@@ -5,12 +5,19 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="noteModalLabel"></h4>
+        <h4 class="modal-title" id="noteModalLabel"><c:out value="${note.name}"/></h4>
       </div>
       <div class="modal-body">
+        ${note.text}
+            <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+            <script type="text/javascript"
+                    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+            </script>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-dismiss="modal">Закрити</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Закрити</button>
       </div>
     </div>
   </div>

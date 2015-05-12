@@ -4,23 +4,24 @@
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
         <div class="body">
-            <%@ include file="noteModal.jsp" %>
+            <div class="modal-div">
 
-            <button class="btn btn-info" data-toggle="modal" data-target="#myModal">
-                Створити
-            </button>
+            </div>
             <script src='<c:url value="/resources/js/go-debug.js"/>'></script>
-            <div id="myDiagramDiv"
-                 style="width:100%; height:88vh; background-color: #ffffff;"></div>
+            <div id="myDiagramDiv" style="width:100%; height:88vh; background-color: #ffffff;"></div>
             <script>
                 var showNoteMiniPage = function (noteId){
-                    $('#noteModal').modal('show');
-                    $.ajax({
-                        url: '/note/' + noteId,
-                        success: function (result) {
+                    jQuery(function($){
+                        $.ajax({
+                            url: '/note/' + noteId,
+                            success: function (result) {
+                                $('.modal-div').empty();
+                                $('.modal-div').append(result);
+                                $('#noteModal').modal('show');
+                            }
+                        });
+                    });
 
-                        }
-                    })
                 };
                 var mapData = JSON.parse('${names}');
                 var linkData = JSON.parse('${links}');
@@ -67,7 +68,8 @@
                                 ),
                                 {
                                     click: function (e, obj) {
-                                        window.location.href = "/note/page/" + obj.part.data.key;
+                                        showNoteMiniPage(obj.part.data.key);
+//                                        window.location.href = "/note/page/" + obj.part.data.key;
                                     }
                                 }
                         );
@@ -87,5 +89,11 @@
                 myDiagram.model = model;
             </script>
         </div>
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+        <script type="text/javascript"
+                src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>
     </tiles:putAttribute>
 </tiles:insertDefinition>
