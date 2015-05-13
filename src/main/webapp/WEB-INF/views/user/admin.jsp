@@ -16,9 +16,11 @@
                           <c:set value="${typeIndex.index}" var="index"/>
                           <a href="#navtab${index}" aria-controls="navtab${index}" role="tab" data-toggle="tab">
                               <c:out value="${type}"/>
-                              <span class="badge">
-                                  <c:out value="${lists.get(typeIndex.index).size()}"/>
-                              </span>
+                              <c:if test="${lists.get(typeIndex.index).size() ne 0}">
+                                    <span class="badge">
+                                        <c:out value="${lists.get(typeIndex.index).size()}"/>
+                                    </span>
+                              </c:if>
                           </a>
                       </li>
                   </c:forEach>

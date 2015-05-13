@@ -18,6 +18,7 @@
                                 $('.modal-div').empty();
                                 $('.modal-div').append(result);
                                 $('#noteModal').modal('show');
+                                MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
                             }
                         });
                     });
