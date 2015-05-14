@@ -46,8 +46,8 @@ public class NoteServiceImpl implements NoteService{
     }
 
     @Transactional(readOnly = true)
-    public List<Note> getNotesByName(String name) {
-        return noteDao.getNotesByName(name);
+    public Note getNoteByName(String name) {
+        return noteDao.getNoteByName(name);
     }
 
     @Transactional

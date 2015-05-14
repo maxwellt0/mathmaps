@@ -48,12 +48,12 @@ public class NoteDaoImpl implements NoteDao {
         return (Note) getSession().get(Note.class, noteId);
     }
 
-    @SuppressWarnings("unchecked")
-    public List<Note> getNotesByName(String name) {
+    public Note getNoteByName(String name) {
         Criteria criteria = getSession().createCriteria(Note.class)
-                .add(Restrictions.eq("name", name));
+                .add(Restrictions.eq("name", name))
+                .add(Restrictions.eq("publishingStatus", 2));
 
-        return criteria.list();
+        return (Note) criteria.uniqueResult();
     }
 
     public void deleteNote(int noteId) {

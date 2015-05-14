@@ -54,9 +54,9 @@
                                               <a  href="/note/deny/${listNote.noteId}" class="btn btn-info">
                                                   <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                                               </a>
-                                              <button class="btn btn-warning">
+                                              <a href="/note/edit/${listNote.noteId}" class="btn btn-default">
                                                   <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                              </button>
+                                              </a>
                                               <a  href="/note/delete/${listNote.noteId}" class="btn btn-default"
                                                   onclick="return confirm('Ви справді хочете видалити цей запис?');">
                                                   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>

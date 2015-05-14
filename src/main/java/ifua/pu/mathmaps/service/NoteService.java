@@ -19,7 +19,7 @@ public interface NoteService {
 
     public Note getNote(int noteId);
 
-    public List<Note> getNotesByName(String name);
+    public Note getNoteByName(String name);
 
     public void deleteNote(int noteId);
 }

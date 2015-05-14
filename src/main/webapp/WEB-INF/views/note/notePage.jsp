@@ -5,6 +5,7 @@
 <tiles:insertDefinition name="defaultTemplate">
 <tiles:putAttribute name="body">
 <div class="body">
+    <div class="container map-top"></div>
     <div class="container">
         <div class="page-header">
             <%--<h4><c:out value="${note.type.type}"/></h4>--%>
@@ -23,8 +24,8 @@
                         </a>
                     </c:if>
                 </sec:authorize>
-                <a href="/maps/${note.noteId}" class="btn btn-default pull-right btn-map">
-                    Карта
+                <a href="/maps/${note.noteId}?full=1" class="btn btn-default pull-right btn-map">
+                    Розширена карта
                 </a>
             </h1>
         </div>
@@ -41,5 +42,15 @@
 <script type="text/javascript"
         src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
+    <script type="text/javascript">
+        $(document).ready( function(){
+            $.ajax({
+                url: "/maps/ajax/" + "${note.noteId}",
+                success: function (result) {
+                    $('.map-top').append(result);
+                }
+            })
+        });
+    </script>
 </tiles:putAttribute>
 </tiles:insertDefinition>

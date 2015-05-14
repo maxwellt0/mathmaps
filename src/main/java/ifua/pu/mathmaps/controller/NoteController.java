@@ -65,8 +65,7 @@ public class NoteController {
     }
 
     @RequestMapping("/{noteId}")
-    public String getNote(@PathVariable int noteId, ModelMap map) {
-
+    public String getNoteModal(@PathVariable int noteId, ModelMap map) {
         Note note = noteService.getNote(noteId);
         map.put(NOTE, note);
 
@@ -146,7 +145,6 @@ public class NoteController {
         linkNotes(note, higher, note.getHigherNotes());
         linkNotes(note, lower, note.getLowerNotes());
         note.setType(noteService.getNoteType(typeId));
-        note.setPublishingStatus(0);
 
         int noteId = noteService.saveNote(note).getNoteId();
         log.debug("Got the note with id " + noteId);

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -22,33 +23,77 @@ public class MapController {
 
     public static final String NAMES = "names";
     public static final String LINKS = "links";
+    public static final String MAP_URL = "mapUrl";
+    public static final String GLOBAL = "global";
+    public static final String FULL = "full";
 
     @Autowired
     private NoteService noteService;
 
     @RequestMapping("/")
-    public String getGlobalMap(ModelMap map) {
-        List<Note> notes = noteService.getNotesWithStatus(2);
+    public String getGlobalMapPage(ModelMap map) {
+        map.addAttribute(MAP_URL, GLOBAL);
+        map.addAttribute(FULL, 0);
+
+        return "map/mapPage";
+    }
+
+    @RequestMapping("/{noteId}")
+    public String getMapPage(@PathVariable int noteId,
+                             ModelMap map,
+                             @RequestParam(value = "full", defaultValue = "0") int full) {
+        map.addAttribute(MAP_URL, noteId);
+        map.addAttribute(FULL, full);
+
+        return "map/mapPage";
+    }
+
+    @RequestMapping("/ajax/global")
+    public String getGlobalMap(ModelMap map,
+                               @RequestParam(value = "full", defaultValue = "0") int full) {
+        List<Note> notes = new ArrayList<Note>();
+        Note note;
+        try {
+            note = noteService.getNoteByName("Метричний простір");
+            if (note!=null) notes.add(note);
+        } catch(Exception e) {
+            log.debug(e.getMessage());
+        }
+        try {
+            note = noteService.getNoteByName("Лінійний простір");
+            if (note!=null) notes.add(note);
+        } catch(Exception e) {
+            log.debug(e.getMessage());
+        }
+        try {
+            note = noteService.getNoteByName("Топологічний простір");
+            if (note!=null) notes.add(note);
+        } catch(Exception e) {
+            log.debug(e.getMessage());
+        }
+
         String names = toNodesArray(notes);
-        log.debug("names = " + names);
         String links = toLinksArray(notes);
+        log.debug("names = " + names);
         log.debug("links = " + links);
 
         map.addAttribute(NAMES, names);
         map.addAttribute(LINKS, links);
 
-        return "map/globalMap";
+        return "map/noteMap";
     }
 
-    @RequestMapping("/{noteId}")
-    public String getNoteMap(@PathVariable int noteId, ModelMap map) {
+    @RequestMapping("/ajax/{noteId}")
+    public String getNoteMap(@PathVariable int noteId,
+                                 ModelMap map,
+                                 @RequestParam(value = "full", defaultValue = "0") int full) {
         Note note = noteService.getNote(noteId);
         List<Note> notes = new ArrayList<Note>();
         notes.addAll(note.getHigherNotes());
-//        notes.addAll(note.getLowerNotes());
+        if (full==1) notes.addAll(note.getLowerNotes());
         notes.add(note);
         String nodes = toNodesArray(notes);
-        String links = noteLinksToArray(note);
+        String links = noteLinksToArray(note, full==1);
         log.debug("nodes = " + nodes);
         log.debug("links = " + links);
 
@@ -119,7 +164,7 @@ public class MapController {
         return sb.toString();
     }
 
-    public static String noteLinksToArray(Note note) {
+    public static String noteLinksToArray(Note note, boolean withLowerNotes) {
         StringBuffer sb = new StringBuffer();
         sb.append("[");
         String prefix = "";
@@ -130,13 +175,16 @@ public class MapController {
                     .append("\",\"to\":\"").append(note.getNoteId())
                     .append("\"}");
         }
-//        prefix = ",";
-//        for (Note n : note.getLowerNotes()) {
-//            sb.append(prefix);
-//            sb.append("{\"from\":\"").append(note.getNoteId())
-//                    .append("\",\"to\":\"").append(n.getNoteId())
-//                    .append("\"}");
-//        }
+        if (withLowerNotes){
+            for (Note n : note.getLowerNotes()) {
+                sb.append(prefix);
+                prefix = ",";
+                sb.append("{\"from\":\"").append(note.getNoteId())
+                        .append("\",\"to\":\"").append(n.getNoteId())
+                        .append("\"}");
+            }
+        }
+
         sb.append("]");
 
         return sb.toString();
