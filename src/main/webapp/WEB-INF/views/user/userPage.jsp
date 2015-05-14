@@ -53,7 +53,7 @@
                                             <td><a href="/maps/${listNote.noteId}">Карта</a></td>
                                             <td class="table-actions">
                                                 <nobr>
-                                                    <c:if test="${note.publishingStatus != 2}">
+                                                    <c:if test="${listNote.publishingStatus ne 2}">
                                                         <a  href="/note/offer/${listNote.noteId}" class="btn btn-info">
                                                             <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
                                                         </a>
