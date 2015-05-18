@@ -10,13 +10,12 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-responsive paginated">
+                        <table class="table table-responsive display paginated">
                             <thead>
                             <tr>
-                                <th width="22%">Назва</th>
-                                <th width="8%">Тип</th>
-                                <th width="8%">Складність</th>
-                                <th width="8%">Карта</th>
+                                <th width="80%">Назва</th>
+                                <th width="15%">Тип</th>
+                                <th width="5%">Складність</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -25,7 +24,6 @@
                                     <td><a href="/note/page/${note.noteId}"><c:out value="${note.name}"/></a></td>
                                     <td><c:out value="${note.type.type}"/></td>
                                     <td><c:out value="${note.rank}"/></td>
-                                    <td><a href="/maps/${note.noteId}">Карта</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>

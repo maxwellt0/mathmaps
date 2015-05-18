@@ -8,7 +8,6 @@ $(document).ready(function() {
             null,
             null,
             null,
-            { "orderable": false },
             { "orderable": false }
         ],
         "order": [ 0, 'asc' ],

@@ -1,10 +1,4 @@
-/*
- * GoJS v1.4.26 JavaScript Library for HTML Canvas Diagrams
- * Northwoods Software, http://www.nwoods.com/
- * GoJS and Northwoods Software are registered trademarks of Northwoods Software Corporation.
- * Copyright (C) 1998-2015 by Northwoods Software Corporation.  All Rights Reserved.
- * THIS SOFTWARE IS LICENSED.  THE LICENSE AGREEMENT IS AT: http://www.gojs.net/1.4.26/doc/license.html.
- */
+
 (function(window) { var aa,ba={};if(void 0===document.createElement("canvas").getContext)throw window.console&&window.console.log("The HTML Canvas element is not supported in this browser,or this browser is in Compatibility mode."),Error("The HTML Canvas element is not supported in this browser,or this browser is in Compatibility mode.");if(!Object.prototype.__defineGetter__&&!Object.defineProperty)throw Error("GoJS requires a newer version of JavaScript");
 Object.prototype.__defineGetter__&&!Object.defineProperty&&(Object.defineProperty=function(a,b,c){c.get&&a.__defineGetter__(b,c.get);c.set&&a.__defineSetter__(b,c.set)});Object.prototype.__lookupGetter__&&!Object.getOwnPropertyDescriptor&&(Object.getOwnPropertyDescriptor=function(a,b){return{get:a.__lookupGetter__(b),set:a.__lookupSetter__(b)}});Object.getPrototypeOf||(Object.getPrototypeOf=function(a){return a.__proto__});Object.isFrozen||(Object.isFrozen=function(a){return!0===a.pH});
 Object.freeze||(Object.freeze=function(a){a.pH=!0});Array.isArray||(Array.isArray=function(a){return"[object Array]"===Object.prototype.toString.call(a)});Function.prototype.bind||(Function.prototype.bind=function(a){function b(){return g.apply(a,f.concat(d.call(arguments)))}function c(){}var d=Array.prototype.slice,f=d.call(arguments,1),g=this;c.prototype=this.prototype;b.prototype=new c;return b});

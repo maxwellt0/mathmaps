@@ -5,9 +5,6 @@
   <tiles:putAttribute name="body">
     <div class="body">
       <div class="container">
-        <div class="page-header">
-
-        </div>
 
           <div role="tabpanel">
               <ul class="nav nav-tabs" role="tablist">
@@ -32,11 +29,10 @@
                           <table class="table table-responsive paginated">
                               <thead>
                               <tr>
-                                  <th width="22%">Назва</th>
-                                  <th width="8%">Тип</th>
-                                  <th width="8%">Складність</th>
-                                  <th width="8%">Карта</th>
-                                  <th width="8%">Дії</th>
+                                  <th>Назва</th>
+                                  <th>Тип</th>
+                                  <th>Складність</th>
+                                  <th class="table-actions">Дії</th>
                               </tr>
                               </thead>
                               <tbody>
@@ -45,7 +41,6 @@
                                       <td><a href="/note/page/${listNote.noteId}"><c:out value="${listNote.name}"/></a></td>
                                       <td><c:out value="${listNote.type.type}"/></td>
                                       <td><c:out value="${listNote.rank}"/></td>
-                                      <td><a href="/maps/${listNote.noteId}">Карта</a></td>
                                       <td class="table-actions">
                                           <nobr>
                                               <a  href="/note/publish/${listNote.noteId}" class="btn btn-info">

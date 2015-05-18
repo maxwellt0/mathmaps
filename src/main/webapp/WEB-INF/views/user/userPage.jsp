@@ -32,16 +32,15 @@
                     </ul>
                     <div class="tab-content">
                         <c:forEach items="${lists}" var="list" varStatus="listType">
-                            <c:set value="${listType.index}" var="index"/>
-                            <div role="tabpanel" class="tab-pane" id="navtab${index}">
+                            <c:set value="${listType.index}" var="index1"/>
+                            <div role="tabpanel" class="tab-pane" id="navtab${index1}">
                                 <table class="table table-responsive paginated">
                                     <thead>
                                     <tr>
-                                        <th width="22%">Назва</th>
-                                        <th width="8%">Тип</th>
-                                        <th width="8%">Складність</th>
-                                        <th width="8%">Карта</th>
-                                        <th width="8%">Дії</th>
+                                        <th>Назва</th>
+                                        <th>Тип</th>
+                                        <th>Складність</th>
+                                        <th>Дії</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -50,7 +49,6 @@
                                             <td><a href="/note/page/${listNote.noteId}"><c:out value="${listNote.name}"/></a></td>
                                             <td><c:out value="${listNote.type.type}"/></td>
                                             <td><c:out value="${listNote.rank}"/></td>
-                                            <td><a href="/maps/${listNote.noteId}">Карта</a></td>
                                             <td class="table-actions">
                                                 <nobr>
                                                     <c:if test="${listNote.publishingStatus ne 2}">

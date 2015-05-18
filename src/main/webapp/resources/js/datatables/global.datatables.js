@@ -7,8 +7,7 @@ $(document).ready(function() {
         "columns": [
             null,
             null,
-            null,
-            { "orderable": false }
+            null
         ],
         "order": [ 0, 'asc' ],
         "language": {

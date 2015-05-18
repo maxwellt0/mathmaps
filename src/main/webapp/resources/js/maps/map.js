@@ -1,20 +1,5 @@
 var myDiagramDiv = "myDiagramDiv";
 
-function showNoteMiniPage(noteId){
-    jQuery(function($){
-        $.ajax({
-            url: '/note/' + noteId,
-            success: function (result) {
-                var modalDiv = $('.modal-div');
-                modalDiv.empty();
-                modalDiv.append(result);
-                $('#noteModal').modal('show');
-                MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
-            }
-        });
-    });
-}
-
 function mouseEnter(e, obj) {
     var shape = obj.findObject("SHAPE");
     shape.fill = "#6DAB80";
@@ -57,7 +42,7 @@ myDiagram.nodeTemplate =
         ),
         {
             click: function (e, obj) {
-                showNoteMiniPage(obj.part.data.key);
+                window.location.href = "/note/page/" + obj.part.data.key;
             }
         }
     );
