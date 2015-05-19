@@ -43,10 +43,20 @@
                                       <td><c:out value="${listNote.rank}"/></td>
                                       <td class="table-actions">
                                           <nobr>
-                                              <a  href="/note/publish/${listNote.noteId}" class="btn btn-info">
+                                              <c:set var="publDisabled" value="${''}"/>
+                                              <c:set var="denyDisabled" value="${''}"/>
+                                              <c:if test="${listNote.publishingStatus==2}">
+                                                  <c:set var="publDisabled" value="${'disabled'}"/>
+                                              </c:if>
+                                              <c:if test="${listNote.publishingStatus==3}">
+                                                  <c:set var="denyDisabled" value="${'disabled'}"/>
+                                              </c:if>
+                                              <a  href="/note/publish/${listNote.noteId}"
+                                                  class="btn btn-info" ${publDisabled}>
                                                   <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
                                               </a>
-                                              <a  href="/note/deny/${listNote.noteId}" class="btn btn-info">
+                                              <a  href="/note/deny/${listNote.noteId}"
+                                                  class="btn btn-info" ${denyDisabled}>
                                                   <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
                                               </a>
                                               <a href="/note/edit/${listNote.noteId}" class="btn btn-default">

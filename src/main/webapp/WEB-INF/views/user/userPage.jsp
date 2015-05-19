@@ -40,7 +40,7 @@
                                         <th>Назва</th>
                                         <th>Тип</th>
                                         <th>Складність</th>
-                                        <th>Дії</th>
+                                        <th class="table-actions">Дії</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -51,16 +51,21 @@
                                             <td><c:out value="${listNote.rank}"/></td>
                                             <td class="table-actions">
                                                 <nobr>
-                                                    <c:if test="${listNote.publishingStatus ne 2}">
-                                                        <a  href="/note/offer/${listNote.noteId}" class="btn btn-info">
-                                                            <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-                                                        </a>
-                                                        <a  href="/note/edit/${listNote.noteId}" class="btn btn-warning">
-                                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                                        </a>
+                                                    <c:set var="disabled" value="${''}"/>
+                                                    <c:if test="${listNote.publishingStatus ne 0}">
+                                                        <c:set var="disabled" value="${'disabled'}"/>
                                                     </c:if>
-                                                    <a  href="/note/user/delete/${listNote.noteId}" class="btn btn-default"
-                                                       onclick="return confirm('Ви справді хочете видалити цей запис?');">
+                                                    <a type="button" href="/note/offer/${listNote.noteId}"
+                                                       class="btn btn-info" ${disabled} title="Запропонувати">
+                                                        <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                                                    </a>
+                                                    <a  href="/note/edit/${listNote.noteId}"
+                                                        class="btn btn-warning" ${disabled} title="Редагувати">
+                                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                                    </a>
+                                                    <a  href="/note/user/delete/${listNote.noteId}"
+                                                        class="btn btn-default" title="Видалити"
+                                                        onclick="return confirm('Ви справді хочете видалити цей запис?');">
                                                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                                     </a>
                                                 </nobr>
