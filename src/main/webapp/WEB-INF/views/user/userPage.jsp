@@ -60,7 +60,7 @@
                                                         <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
                                                     </a>
                                                     <a  href="/note/edit/${listNote.noteId}"
-                                                        class="btn btn-warning" ${disabled} title="Редагувати">
+                                                        class="btn btn-warning" title="Редагувати">
                                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                                     </a>
                                                     <a  href="/note/user/delete/${listNote.noteId}"
