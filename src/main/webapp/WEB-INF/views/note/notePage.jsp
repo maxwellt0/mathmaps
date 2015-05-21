@@ -12,10 +12,10 @@
             <h1><c:out value="${note.name}"/>
                 <sec:authorize access="isAuthenticated()">
                     <c:if test="${isAdded}">
-                        <button class="btn btn-success pull-right">
-                            Додано
-                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                        </button>
+                        <a href="/note/edit/${note.noteId}" class="btn btn-warning pull-right">
+                            Редагувати
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </a>
                     </c:if>
                     <c:if test="${not isAdded}">
                         <a href="/note/add/${note.noteId}/${pageContext.request.userPrincipal.name}" class="btn btn-primary pull-right">
