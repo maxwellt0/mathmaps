@@ -18,7 +18,7 @@
                         </button>
                     </c:if>
                     <c:if test="${not isAdded}">
-                        <a href="/note/user/add/${note.noteId}" class="btn btn-primary pull-right">
+                        <a href="/note/add/${note.noteId}/${pageContext.request.userPrincipal.name}" class="btn btn-primary pull-right">
                             Додати в список
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                         </a>

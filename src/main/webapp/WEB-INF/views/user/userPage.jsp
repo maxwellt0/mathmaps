@@ -52,10 +52,10 @@
                                             <td class="table-actions">
                                                 <nobr>
                                                     <c:set var="disabled" value="${''}"/>
-                                                    <c:if test="${listNote.publishingStatus ne 0}">
+                                                    <c:if test="${(listNote.publishingStatus ne 0) and (listNote.publishingStatus ne null)}">
                                                         <c:set var="disabled" value="${'disabled'}"/>
                                                     </c:if>
-                                                    <a type="button" href="/note/offer/${listNote.noteId}"
+                                                    <a type="button" href="/note/offer/${listNote.noteId}/${pageContext.request.userPrincipal.name}"
                                                        class="btn btn-info" ${disabled} title="Запропонувати">
                                                         <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
                                                     </a>
@@ -63,7 +63,7 @@
                                                         class="btn btn-warning" title="Редагувати">
                                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                                     </a>
-                                                    <a  href="/note/user/delete/${listNote.noteId}"
+                                                    <a  href="/note/delete/${listNote.noteId}/${pageContext.request.userPrincipal.name}"
                                                         class="btn btn-default" title="Видалити"
                                                         onclick="return confirm('Ви справді хочете видалити цей запис?');">
                                                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>

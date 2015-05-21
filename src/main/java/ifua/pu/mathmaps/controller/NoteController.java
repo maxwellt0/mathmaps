@@ -99,7 +99,7 @@ public class NoteController {
         return "redirect:/user/page/" + username;
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping("/delete/{noteId}")
     public String deleteNote(@PathVariable("noteId") int noteId) {
         noteService.deleteNote(noteId);
@@ -159,20 +159,21 @@ public class NoteController {
         return "redirect:/note/page/" + noteId;
     }
 
-    @RequestMapping("/offer/{noteId}")
-    public String offerNoteForPublishing(@PathVariable int noteId){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        log.debug("Security context returns name " + username);
+    @PreAuthorize("#username == principal.username")
+    @RequestMapping("/offer/{noteId}/{username}")
+    public String offerNoteForPublishing(@PathVariable int noteId,
+                                         @PathVariable String username){
 
-//        log.debug("Adding the note for the user " + username);
+        log.debug("Offering a note with id" + noteId + " from the user " + username);
         Note note = noteService.getNote(noteId);
         note.setPublishingStatus(1);
         noteService.saveNote(note);
-//        log.debug("Added successful");
+        log.debug("Offered successful");
 
         return "redirect:/user/page/" + username;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping("/publish/{noteId}")
     public String publishNote(@PathVariable int noteId){
         Note note = noteService.getNote(noteId);
@@ -182,6 +183,7 @@ public class NoteController {
         return "redirect:/user/admin";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping("/deny/{noteId}")
     public String denyNotePublishing(@PathVariable int noteId){
         Note note = noteService.getNote(noteId);
@@ -191,11 +193,10 @@ public class NoteController {
         return "redirect:/user/admin";
     }
 
-    @RequestMapping("/user/add/{noteId}")
-    public String addNoteToUserSet(@PathVariable int noteId){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        log.debug("Security context returns name " + username);
-
+    @PreAuthorize("#username == principal.username")
+    @RequestMapping("/add/{noteId}/{username}")
+    public String addNoteToUserSet(@PathVariable int noteId,
+                                   @PathVariable String username){
         log.debug("Adding the note for the user " + username);
         userNoteService.addWithParams(noteId, username, 1);
         log.debug("Added successful");
@@ -203,11 +204,10 @@ public class NoteController {
         return "redirect:/note/page/" + noteId;
     }
 
-    @RequestMapping("/user/delete/{noteId}")
-    public String deleteNoteFromUserSet(@PathVariable int noteId){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        log.debug("Security context returns name " + username);
-
+    @PreAuthorize("#username == principal.username")
+    @RequestMapping("/delete/{noteId}/{username}")
+    public String deleteNoteFromUserSet(@PathVariable int noteId,
+                                        @PathVariable String username){
         log.debug("Deleting the note from the user " + username + " list.");
         Note note = noteService.getNote(noteId);
         if (note.getPublishingStatus() == 2 ){

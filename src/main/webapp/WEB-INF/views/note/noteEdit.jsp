@@ -19,7 +19,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <input name="noteId" type="hidden" value="${note.noteId}"/>
-
+                        <input name="publishingStatus" type="hidden" value="${note.publishingStatus}"/>
                         <div class="input-group">
                             <label for="text">Текст</label>
                             <textarea class="form-control" name="text" placeholder="Текст" id="text" required><c:out
