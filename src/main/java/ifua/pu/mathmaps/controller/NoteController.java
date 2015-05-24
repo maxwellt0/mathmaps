@@ -33,6 +33,7 @@ public class NoteController {
     public static final String CURRENT_STATUS = "currentStatus";
     public static final String NOTE_NAME = "noteName";
     public static final String NOTE_TEXT = "noteText";
+    public static final String STATUS = "status";
 
     @Autowired
     private NoteService noteService;
@@ -202,6 +203,21 @@ public class NoteController {
         log.debug("Added successful");
 
         return "redirect:/note/page/" + noteId;
+    }
+
+    @PreAuthorize("#username == principal.username")
+    @RequestMapping("/edit/{noteId}/{username}/status")
+    public String editUserNoteStatus(@PathVariable int noteId,
+                                     @PathVariable String username,
+                                     @RequestParam int status,
+                                     ModelMap map){
+        UserNote userNote = userNoteService.getUserNote(noteId, username);
+        userNote.setStatus(status);
+        userNoteService.saveUserNote(userNote);
+
+        map.addAttribute(STATUS, 200);
+
+        return "ajax/status";
     }
 
     @PreAuthorize("#username == principal.username")

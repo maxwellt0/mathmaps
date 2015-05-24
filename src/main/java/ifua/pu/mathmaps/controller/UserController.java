@@ -34,6 +34,7 @@ public class UserController {
     public static final String ALL_NOTES = "allNotes";
 
     private static final Logger log = Logger.getLogger(UserController.class);
+    public static final String JS_TYPES = "jsTypes";
 
     @Autowired
     private UserService userService;
@@ -85,12 +86,14 @@ public class UserController {
         lists.add(postponed);
         lists.add(left);
         String[] types = {"Заплановано", "Вивчається", "Вивчено", "Відкладено", "Покинуто"};
+        String jsTypes = "Заплановано~Вивчається~Вивчено~Відкладено~Покинуто";
 
         map.addAttribute(LISTS, lists);
         map.addAttribute(TYPES, types);
         map.addAttribute(NOTE, new Note());
         map.addAttribute(NOTE_TYPES, noteService.getNoteTypes());
         map.addAttribute(ALL_NOTES, allNotes);
+        map.addAttribute(JS_TYPES, jsTypes);
         log.debug("Note service returned note types: " + noteService.getNoteTypes());
 
         return "user/userPage";

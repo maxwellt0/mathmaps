@@ -51,18 +51,32 @@
                                             <td><c:out value="${listNote.rank}"/></td>
                                             <td class="table-actions">
                                                 <nobr>
-                                                    <c:set var="disabled" value="${''}"/>
-                                                    <c:if test="${(listNote.publishingStatus ne 0) and (listNote.publishingStatus ne null)}">
-                                                        <c:set var="disabled" value="${'disabled'}"/>
-                                                    </c:if>
+                                                    <c:choose>
+                                                        <c:when test="${listNote.publishingStatus == 2}">
+                                                            <c:set var="disabled" value="${'disabled'}"/>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <c:set var="disabled" value="${''}"/>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                     <a type="button" href="/note/offer/${listNote.noteId}/${pageContext.request.userPrincipal.name}"
                                                        class="btn btn-info" ${disabled} title="Запропонувати">
                                                         <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
                                                     </a>
-                                                    <a  href="/note/edit/${listNote.noteId}"
-                                                        class="btn btn-warning" title="Редагувати">
-                                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                                    </a>
+                                                    <c:choose>
+                                                        <c:when test="${listNote.publishingStatus == 2}">
+                                                            <button class="btn btn-warning edit-button" title="Редагувати"
+                                                                    onclick="passId('${listNote.noteId}')">
+                                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                                            </button>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <a  href="/note/edit/${listNote.noteId}"
+                                                                class="btn btn-warning" title="Редагувати">
+                                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                                            </a>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                     <a  href="/note/delete/${listNote.noteId}/${pageContext.request.userPrincipal.name}"
                                                         class="btn btn-default" title="Видалити"
                                                         onclick="return confirm('Ви справді хочете видалити цей запис?');">
@@ -81,7 +95,15 @@
 
             </div>
         </div>
-        <script type="text/javascript" src='<c:url value="/resources/js/js-for-listNotes.js"/>'></script>
+        <script>
+            var noteStates = '${jsTypes}'.split("~");
+            var username = '${pageContext.request.userPrincipal.name}';
+            var noteId;
+            function passId(newNoteId){
+                noteId = newNoteId;
+            }
+        </script>
+        <script type="text/javascript" src='<c:url value="/resources/js/userPage.js"/>'></script>
         <script type="text/javascript" src="<c:url value='/resources/js/jquery/jquery-ui-i18n.min.js'/>"></script>
         <script type="text/javascript" src="<c:url value="/resources/js/datatables/jquery.dataTables.min.js"/>"></script>
         <script type="text/javascript" src="<c:url value="/resources/js/datatables/dataTables.bootstrap.js"/>"></script>
