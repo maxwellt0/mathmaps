@@ -12,14 +12,12 @@ $(document).ready(function() {
             + options
             + "</select>");
         $('#unStatus').change(function(){
-            alert("u call me");
             $.ajax({
                 url: '/note/edit/' + noteId + "/" + username + "/status?status=" + $('#unStatus').val(),
                 success: function(result){
-                    alert("OK");
+                    location.reload();
                 },
                 error: function(){
-                    alert("Bad")
                 }
             });
             this.remove();
