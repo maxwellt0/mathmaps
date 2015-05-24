@@ -1,3 +1,2 @@
 # mathmaps
-demo on:
-http://mathmaps.unicloud.pl
+demo on the link above
