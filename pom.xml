@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ifua.pu.math</groupId>
-    <artifactId>application</artifactId>
+    <artifactId>mathmaps</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>mathmaps</name>
     <packaging>war</packaging>
