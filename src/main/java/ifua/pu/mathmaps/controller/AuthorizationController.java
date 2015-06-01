@@ -60,8 +60,6 @@ public class AuthorizationController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            System.out.println(userDetail);
-
             map.put("username", userDetail.getUsername());
         }
 
@@ -95,10 +93,8 @@ public class AuthorizationController {
     @RequestMapping(value = "/check/{username}", method = RequestMethod.GET)
     public String checkUsername(@PathVariable String username, ModelMap map){
         if (userService.getUser(username) != null ) {
-            System.out.println("exiiiiiiiiiiiiiiiist");
             map.addAttribute("existing", 1);
         } else {
-            System.out.println("not exiiiiiiiiiiiiiist");
             map.addAttribute("existing", 0);
         }
 

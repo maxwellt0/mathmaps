@@ -12,10 +12,12 @@
             <h1><c:out value="${note.name}"/>
                 <sec:authorize access="isAuthenticated()">
                     <c:if test="${isAdded}">
-                        <a href="/note/edit/${note.noteId}" class="btn btn-warning pull-right">
+                        <sec:authorize access="hasRole('ADMIN')">
+                        <a href="/note/edit/${note.noteId}/${pageContext.request.userPrincipal.name}" class="btn btn-warning pull-right">
                             Редагувати
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                         </a>
+                        </sec:authorize>
                     </c:if>
                     <c:if test="${not isAdded}">
                         <a href="/note/add/${note.noteId}/${pageContext.request.userPrincipal.name}" class="btn btn-primary pull-right">

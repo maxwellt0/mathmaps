@@ -71,7 +71,7 @@
                                                             </button>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <a  href="/note/edit/${listNote.noteId}"
+                                                            <a  href="/note/edit/${listNote.noteId}/${pageContext.request.userPrincipal.name}"
                                                                 class="btn btn-warning" title="Редагувати">
                                                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                                             </a>

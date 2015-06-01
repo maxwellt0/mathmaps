@@ -31,8 +31,6 @@ public class NoteController {
     public static final String HIGHER_IDS = "higherIds";
     public static final String CURRENT_TYPE = "currentType";
     public static final String CURRENT_STATUS = "currentStatus";
-    public static final String NOTE_NAME = "noteName";
-    public static final String NOTE_TEXT = "noteText";
     public static final String STATUS = "status";
 
     @Autowired
@@ -65,6 +63,7 @@ public class NoteController {
         return "note/notePage";
     }
 
+
     @RequestMapping("/{noteId}")
     public String getNoteModal(@PathVariable int noteId, ModelMap map) {
         Note note = noteService.getNote(noteId);
@@ -73,6 +72,7 @@ public class NoteController {
         return "/map/noteModal";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addNote(
             @ModelAttribute("note") Note note,
@@ -108,9 +108,11 @@ public class NoteController {
         return "redirect:/note/listNotes";
     }
 
-    @RequestMapping("/edit/{noteId}")
-    public String getEditNotePage(@PathVariable("noteId") int noteId, ModelMap map) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    @PreAuthorize("#username == principal.username")
+    @RequestMapping("/edit/{noteId}/{username}")
+    public String getEditNotePage(@PathVariable("noteId") int noteId,
+                                  ModelMap map,
+                                  @PathVariable String username){
         Note note = noteService.getNote(noteId);
         String lowerIdsStr = toIdArray(note.getLowerNotes());
         String higherIdsStr = toIdArray(note.getHigherNotes());

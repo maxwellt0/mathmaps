@@ -107,39 +107,41 @@ public class MapController {
         StringBuffer sb = new StringBuffer();
         sb.append("[");
         for (int i = 0; i < arr.size(); i++) {
-            sb.append("{\"key\":\"").append(arr.get(i).getNoteId())
-                    .append("\",\"name\":\"").append(arr.get(i).getName());
-            switch (arr.get(i).getType().getNoteTypeId()) {
-                case 1:
-                    sb.append("\",\"color\":\"#337ab7");
-                    break;
-                case 2:
-                    sb.append("\",\"color\":\"#5cb85c");
-                    break;
-                case 3:
-                    sb.append("\",\"color\":\"#5bc0de");
-                    break;
-                case 4:
-                    sb.append("\",\"color\":\"#f0ad4e");
-                    break;
-                case 5:
-                    sb.append("\",\"color\":\"#d9534f");
-                    break;
-                case 6:
-                    sb.append("\",\"color\":\"#9900CC");
-                    break;
-                case 7:
-                    sb.append("\",\"color\":\"#99FF66");
-                    break;
-                case 8:
-                    sb.append("\",\"color\":\"#FFFF00");
-                    break;
-                default:
-                    sb.append("\",\"color\":\"#abcdff");
-            }
-            sb.append("\"}");
-            if (i + 1 < arr.size()) {
-                sb.append(",");
+            if (arr.get(i).getPublishingStatus()==2){
+                sb.append("{\"key\":\"").append(arr.get(i).getNoteId())
+                        .append("\",\"name\":\"").append(arr.get(i).getName());
+                switch (arr.get(i).getType().getNoteTypeId()) {
+                    case 1:
+                        sb.append("\",\"color\":\"#337ab7");
+                        break;
+                    case 2:
+                        sb.append("\",\"color\":\"#5cb85c");
+                        break;
+                    case 3:
+                        sb.append("\",\"color\":\"#5bc0de");
+                        break;
+                    case 4:
+                        sb.append("\",\"color\":\"#f0ad4e");
+                        break;
+                    case 5:
+                        sb.append("\",\"color\":\"#d9534f");
+                        break;
+                    case 6:
+                        sb.append("\",\"color\":\"#9900CC");
+                        break;
+                    case 7:
+                        sb.append("\",\"color\":\"#99FF66");
+                        break;
+                    case 8:
+                        sb.append("\",\"color\":\"#FFFF00");
+                        break;
+                    default:
+                        sb.append("\",\"color\":\"#abcdff");
+                }
+                sb.append("\"}");
+                if (i + 1 < arr.size()) {
+                    sb.append(",");
+                }
             }
         }
         sb.append("]");
@@ -169,19 +171,23 @@ public class MapController {
         sb.append("[");
         String prefix = "";
         for (Note n : note.getHigherNotes()) {
-            sb.append(prefix);
-            prefix = ",";
-            sb.append("{\"from\":\"").append(n.getNoteId())
-                    .append("\",\"to\":\"").append(note.getNoteId())
-                    .append("\"}");
+            if (n.getPublishingStatus()==2) {
+                sb.append(prefix);
+                prefix = ",";
+                sb.append("{\"from\":\"").append(n.getNoteId())
+                        .append("\",\"to\":\"").append(note.getNoteId())
+                        .append("\"}");
+            }
         }
         if (withLowerNotes){
             for (Note n : note.getLowerNotes()) {
-                sb.append(prefix);
-                prefix = ",";
-                sb.append("{\"from\":\"").append(note.getNoteId())
-                        .append("\",\"to\":\"").append(n.getNoteId())
-                        .append("\"}");
+                if (n.getPublishingStatus()==2) {
+                    sb.append(prefix);
+                    prefix = ",";
+                    sb.append("{\"from\":\"").append(note.getNoteId())
+                            .append("\",\"to\":\"").append(n.getNoteId())
+                            .append("\"}");
+                }
             }
         }
 
